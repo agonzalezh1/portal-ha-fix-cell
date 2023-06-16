@@ -1,0 +1,331 @@
+@import './variables.scss';
+
+/*
+color primario 1: #1d2e42 -> cabecero
+
+fondo principal: #fbfdfe
+fondo recuadro: #ecf0f3
+
+fuente titulo: #273b49
+fuente clara: #687782
+
+rojo alerta: #ed5e76
+*/
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    background-color: $secondary-100;
+    font-family: $text-font;
+}
+
+main {
+    min-height: 100vh;
+    max-width: 100vw;
+    display: grid;
+    margin: 0 auto;
+}
+
+.footer {
+    display: block;
+    height: 120px;
+    width: 100%;
+    bottom: 0;
+    position: fixed;
+    background-color: $secondary-300;
+}
+
+h1 {
+    font-size: 1.75rem;
+    margin: 1rem 0;
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+}
+
+h3 {
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+}
+
+p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.letter-1 {
+    font-size: 0.75rem;
+    margin: 0;
+}
+
+.letter-2 {
+    font-size: 0.5rem;
+    margin: 0;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.numeric {
+    font-family: $numeric-font;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+
+/**********************************
+    Input text
+***********************************/
+.container-input-text {
+    display: block;
+    width: 100%;
+
+    &.height-1 {
+        height: 61px;
+    }
+
+    &.height-2 {
+        height: 42px;
+    }
+
+    input{
+        display: block;
+        width: 100%;
+        padding: 5px 15px;
+        font-size: 16px;
+        color: $secondary-700;
+        background-clip: padding-box;
+        border: 2px solid $secondary-400;
+        border-radius: 8px;
+        margin-top: 5px;
+        margin-bottom: 2px;
+        font-family: $text-font;
+
+        &:focus {
+            outline: auto;
+            border: 2px solid $secondary-700;
+        }
+    }
+}
+
+/**********************************
+    Checkbox Component
+***********************************/
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 2rem;
+    input {
+        cursor: pointer;
+        margin-right: 0.5rem;
+        height: 1rem;
+        width: 1rem;
+    }
+}
+
+/**********************************
+    Radio Component
+***********************************/
+.radio-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 2rem;
+    input {
+        cursor: pointer;
+        margin-right: 0.5rem;
+        height: 1rem;
+        width: 1rem;
+    }
+}
+
+/**********************************
+    Action Component
+***********************************/
+.action-container {
+    display: flex;
+    align-items: center;
+    height: 2rem;
+    margin: 0.5rem 1rem;
+    cursor: pointer;
+    .label {
+        margin-right: 0.5rem;
+    }
+}
+
+/**********************************
+    Picker
+***********************************/
+.picker-container {
+    padding-top: 5px;
+    select {
+        display: block;
+        width: 100%;
+        padding: 5px 15px;
+        font-size: 16px;
+        color: $secondary-700;
+        background-clip: padding-box;
+        border: 2px solid $secondary-400;
+        margin-top: 5px;
+        margin-bottom: 2px;
+        
+        option {
+            font-family: $text-font;
+        }
+
+        &:focus {
+            outline: auto;
+            border: 2px solid $secondary-400;
+        }
+    }
+    
+}
+
+/**********************************
+    TextArea Component
+***********************************/
+.textarea-container {
+    width: 100%;
+    height: 100%;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+
+    p {
+        margin-bottom: 10px;
+    }
+
+    textarea {
+        width: 100%;
+        height: 100%;
+        resize: none;
+        padding-top: 15px;
+        padding-left: 15px;
+        padding-right: 15px;
+        
+        font-family: $text-font;
+        font-size: 1rem;
+        border: 2px solid $secondary-400;
+    }
+}
+
+/**********************************
+    Button Primary and Secondary
+***********************************/
+button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    width: 100%;
+    height: 36px;
+    border-radius: 8px;
+    font-family: $text-font;
+
+    &.primary {
+        color: $secondary-100;
+        background-color: $primary-700;
+        position: relative;
+
+        &:disabled {
+            color: $secondary-100  !important;
+            cursor: none !important;
+            pointer-events: none !important;
+            background-color: $secondary-500  !important;
+        }
+
+        &:hover {
+            background-color: $primary-500;
+        }
+    }
+
+    &.secondary {
+        border: 2px solid $primary-700;
+        color: $primary-700;
+        background-color: $secondary-100;
+        position: relative;
+
+        &:disabled {
+            border: 2px solid $primary-300;
+            color: $primary-300  !important;
+            pointer-events: none !important;
+            cursor: none !important;
+        }
+
+        &:hover {
+            background-color: $primary-400;
+        }
+    }
+}
+
+/**********************************
+    Notifications Component
+***********************************/
+.notifications-container {
+    z-index: 10;
+    position: absolute;
+    top: 75px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    height: 5rem;
+    width: 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.success {
+        background-color: $green-300;
+        color: $green-600;
+    }
+
+    &.error {
+        background-color: $red-300;
+        color: $red-600;
+    }
+
+    &.hidden {
+        display: none;
+    }
+
+    animation-name: showNotification;
+    animation-duration: 2s;
+    animation-timing-function: ease;
+    animation-direction: alternate;   
+}
+
+@keyframes showNotification{
+    0%   {margin-top: -100px; opacity:0;}
+    100% {margin-top: 0px; opacity:1;}
+}
+
+* {
+    box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        color-scheme: dark;
+    }
+
+    body {
+        color: white;
+        background: black;
+    }
+}
+

@@ -1,0 +1,16 @@
+
+.store-details-container {
+    overflow-y: scroll;
+    display: flex;
+    gap: 50px;
+}
+
+
+/**********************************
+    AddStore Component
+***********************************/
+.add-store-container {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+}

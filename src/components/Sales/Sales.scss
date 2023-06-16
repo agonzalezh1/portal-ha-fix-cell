@@ -1,0 +1,198 @@
+@import '../../../styles/variables.scss';
+/**********************************
+    Sales Component
+***********************************/
+.sales-container {
+    width: 100%;
+
+    .sale-type-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 3rem;
+        margin: 1rem 0;
+
+        .airtime {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+    }
+}
+
+/**********************************
+    ProductsSales Component
+***********************************/
+.products-sales-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .search {
+        width: 420px;
+    }
+
+    table {
+        width: 70%;
+        margin: 1rem 0;
+        background-color: $primary-700;
+        border-collapse: collapse;
+        thead {
+            height: 2.5rem;
+            color: $secondary-200;
+        }
+
+        thead th:nth-child(1) { width: 50% }
+        thead th:nth-child(2) { width: 20% }
+        thead th:nth-child(3) { width: 20% }
+        thead th:nth-child(4) { width: 10% }
+
+        tbody tr { height: 2rem }
+
+        tbody td:nth-child(1) {
+            padding-left: 1.5rem;
+        }
+
+        tbody td:nth-child(2) {
+            text-align: center;
+        }
+
+        tbody td:nth-child(3) {
+            text-align: center;
+        }
+
+        tbody td:nth-child(4) {
+            height: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        tbody tr:nth-child(odd) { background-color: $secondary-200;}
+        tbody tr:nth-child(even) { background-color: $secondary-300;}
+    }
+
+    .total {
+        width: 70%;
+        text-align: end;
+    }
+}
+
+/**********************************
+    ProductsList Component
+***********************************/
+.products-list-container {
+    width: 40rem;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+
+    table {
+        width: 100%;
+        margin: 1rem 0;
+        background-color: $primary-700;
+        border-collapse: collapse;
+        thead {
+            height: 2.5rem;
+            color: $secondary-200;
+        }
+
+        thead th:nth-child(1) { 
+            width: 10%;
+            
+        }
+
+        thead th:nth-child(2) { 
+            width: 70%;
+            
+        }
+        thead th:nth-child(3) {
+            width: 20%;
+        }
+
+        tbody tr {
+            height: 2rem;
+            cursor: pointer;
+        }
+
+        tbody td:nth-child(3) {
+            text-align: center;
+        }
+
+        tbody tr:nth-child(odd) { background-color: $secondary-200;}
+        tbody tr:nth-child(even) { background-color: $secondary-300;}
+    }
+
+    .check {
+        height: inherit;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .price-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .counter-container {
+        display: flex;
+        width: 20rem;
+        margin: 2rem 0;
+        .label {width: 5rem;}
+        .count {
+            margin: 0 .5rem;
+        }
+    }
+}
+
+/**********************************
+    AirtimeSales Component
+***********************************/
+.airtime-container {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .amount-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .amount { width: 80px;}
+    }
+
+}
+
+/**********************************
+    ServiceSales Component
+***********************************/
+.service-sales-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+
+    .comments {
+        width: 70%;
+        height: 200px;
+    }
+
+    .id-service {
+        width: 70%;
+        div {
+            width: 150px;
+        }
+    }
+
+    .total {
+        width: 70%;
+        div {
+            width: 150px;
+        }
+    }
+    .pay-button { width: 70%;}
+}
