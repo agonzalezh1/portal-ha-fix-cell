@@ -1,0 +1,18 @@
+
+.total-sales-container{
+    display: flex;
+    margin: 0 auto;
+    max-width: 1024px;
+    height: 100%;
+    gap: 100px;
+    align-items: center;
+
+    table {
+        tbody tr {
+            height: 2rem;
+        }
+        tbody tr td:first-child {
+            width: 220px;
+        }
+    }
+}

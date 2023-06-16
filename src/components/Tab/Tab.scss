@@ -1,0 +1,50 @@
+@import '../../../styles/variables.scss';
+
+.tab-container {
+    width: 100%;
+    height: 100%;
+
+    div.nav {
+        width: 100%;
+        margin: 0;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        padding-left: 0px;
+        top: 0;
+        position: sticky;
+        background-color: $primary-800;
+        z-index: 100;
+
+        .logo {
+            margin-right: 10vw;
+            margin-left: 2vw;
+            cursor: pointer;
+        }
+    }
+
+    div.nav .item-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: 1rem;
+        width: 12rem;
+        padding: 1rem;
+        list-style: none;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.7s;
+        color: $secondary-100;
+    }
+
+    div.nav .item-nav:hover {
+        background: $primary-900;
+    }
+
+    .tab-content {
+        display: flex;
+        margin: 0 auto;
+        height: 75vh;
+        max-width: 1024px;
+    }
+}

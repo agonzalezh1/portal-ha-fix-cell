@@ -1,0 +1,12 @@
+@import '../../../styles/variables.scss';
+
+.modal-container {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid black;
+    margin-bottom: 10px;
+
+    .modal-content {
+        width: 100%;
+    }
+}

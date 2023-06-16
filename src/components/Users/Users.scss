@@ -1,0 +1,38 @@
+@import '../../../styles/variables.scss';
+
+.users-admin-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .users-search-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 25px;
+    }
+
+    .grants-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 30%;
+
+    }
+}
+
+/**********************************
+    AddUser Component
+***********************************/
+.add-user-container {
+    display: flex;
+    width: 400px;
+    flex-wrap: wrap;
+    gap: 20px;
+    
+    .user {
+        width: 190px;
+    }
+    .name {
+        width: 100%;
+    }
+}

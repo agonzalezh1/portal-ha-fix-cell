@@ -1,0 +1,11 @@
+.search-container {
+    display: flex;
+    width: 400px;
+
+    .icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0.5rem;
+    }
+}

@@ -1,0 +1,474 @@
+swagger: "2.0"
+
+info:
+  version: "0.0.1"
+  title: API Punto de venta HA-Fixcell
+  description: |
+    API Punto de venta HA-Fixcell.
+
+host: localhost:3000
+
+basePath: /ha-fix-cell/v1
+
+schemes:
+  - https
+
+produces:
+- application/json
+
+securityDefinitions:
+  Bearer:
+    description: >
+      Para acceder a la API se debe pasar un token válido en todas las consultas.
+      La siguiente sintaxis se debe utilizar en el encabezado 'Authorization' :
+        Bearer: 2zzLJmBAtTNIU8nF8e8XbmDvaNGs
+    type: apiKey
+    name: Authorization
+    in: header
+
+security:
+  - Bearer: []
+
+paths:
+
+  /users/validation:
+    post:
+      summary: Autenticacion de usuarios.
+      description: Valida las credenciales de un usuario.
+      tags:
+        - Usuarios
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              user:
+                type: string
+                example: 'user'
+              password:
+                type: string
+                example: 'pass'
+
+      responses:
+        200:
+          description: Ok
+          examples:
+            application/json:
+              {
+                'code': 0,
+                'message': 'OK',
+                'response': {
+                  'grants': [1,2,3],
+                  'profile': 1,
+                  'store': '123',
+                }
+              }
+  /users:
+    get:
+      summary: Consulta de usuarios
+      description: Consulta de permisos de los usuarios
+      tags:
+        - Usuarios
+      consumes:
+        - application/json
+      produces:
+        - application/json
+  
+      responses:
+        200:
+          description: Ok
+          examples:
+            application/json:
+              {
+                'code': 0,
+                'message': 'OK',
+                'response': {
+                  'users': [
+                    {
+                      'user': 'user1',
+                      'name': 'name1',
+                      'store': 1234,
+                      'grants': [1,2,3],
+                    }
+                  ]
+                }
+              }
+    put:
+      summary: Alta de un usuario.
+      description: Agrega un usuario con sus permisos en la base de datos.
+      tags:
+        - Usuarios
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              user:
+                type: string
+                example: 'user'
+              password:
+                type: string
+                example: 'xxxxxx'
+              name:
+                type: string
+                example: 'Nuevo usuario'
+              store:
+                type: integer
+                example: 1234
+              grants:
+                type: array
+                items:
+                  type: integer
+                  example: [1,2]
+  
+      responses:
+        200:
+          description: Ok
+          examples:
+            application/json:
+              {
+                'code': 0,
+                'message': 'OK',
+              }
+              
+    post:
+      summary: Modificacion de un usuario.
+      description: Modifica los permisos de un usuario.
+      tags:
+        - Usuarios
+      consumes:
+        - application/json
+      produces:
+        - application/json
+        
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              user:
+                type: string
+                example: 'user'
+              store:
+                type: integer
+                example: 1234
+              grants:
+                type: array
+                items:
+                  type: integer
+                  example: [1,2]
+      
+      responses:
+        200:
+          description: Ok
+          examples:
+            application/json:
+              {
+                'code': 0,
+                'message': 'OK',
+              }
+  
+  /stores/sales:
+    get:
+      summary: Consulta de la venta al día de un punto de venta.
+      description: Obtiene el acumulado de ventas al dia.
+      tags:
+        - Puntos de venta
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: idStore
+          in: query
+          type: string
+
+      responses:
+        200:
+          description: Ok
+          examples:
+            application/json:
+              {
+                'code': 0,
+                'message': 'OK',
+                'response': {
+                  'product': 100,
+                  'fixes': 100,
+                  'airtime': 100,
+                }
+              }
+  /stores:
+    get:
+      summary: Consulta la lista de los puntos de venta.
+      description: Obtiene una lista con la informacion de los diferentes puntos de venta.
+      tags:
+        - Puntos de venta
+      consumes:
+        - application/json
+      produces:
+        - application/json
+
+      responses:
+        200:
+          description: Ok
+          examples:
+            application/json:
+              {
+                'code': 0,
+                'message': 'OK',
+                'response': {
+                  'stores': [
+                    {
+                      '_id': 'dsagdfgt6456fqsd1234df',
+                      'name': 'La Rivera',
+                      'sales': [{ 'period': '01/2023', 'products': 10, 'fixes': 10, 'airtime': 10}],
+                      'dailySales': { 'products': 10, 'fixes': 10, 'airtime': 10 },
+                    },
+                  ]
+                }
+              }
+    put:
+      summary: Alta de un punto de venta.
+      description: Agrega un punto de venta en la base de datos.
+      tags:
+        - Puntos de venta
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: 'Nueva sucursal'
+  
+      responses:
+        200:
+          description: Ok
+          examples:
+            application/json:
+              {
+                "code": 0,
+                "message": "OK",
+              }
+              
+  /products:
+    put:
+      summary: Alta de un producto.
+      description: Agrega un producto con la cantidad de existencia en cada sucursal.
+      tags:
+        - Productos
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              productName:
+                type: string
+                example: 'Nuevo producto'
+              brand:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: 'xiaomi'
+                  id:
+                    type: number
+                    example: 1
+              productType:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: 'cargadores'
+                  id:
+                    type: number
+                    example: 1
+              wholesalePrice:
+                type: string
+                example: 'Nueva sucursal'
+              midWholesalePrice:
+                type: string
+                example: 'Nueva sucursal'
+              publicPrice:
+                type: string
+                example: 'Nueva sucursal'
+              cost:
+                type: string
+                example: 'Nueva sucursal'
+              stores:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 'dsfgsdag'
+                    count:
+                      type: number
+                      example: 2
+                
+      responses:
+        200:
+          description: Ok
+          examples:
+            application/json:
+              {
+                "code": 0,
+                "message": "OK",
+              }
+  
+    get:
+      summary: Consulta de informacion de un producto.
+      description: Obtiene el detalle de un producto
+      tags:
+        - Productos
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: idProduct
+          in: query
+          type: string
+  
+      responses:
+        200:
+          description: Ok
+          examples:
+            application/json:
+              {
+                'code': 0,
+                'message': 'OK',
+                'response': [{
+                  '_id': '657gdf6fsd64dfs',
+                  'productName': 'Nombre del producto',
+                  'brand': 2,
+                  'productType': 3,
+                  'wholesalePrice': 400.23,
+                  'midWholesalePrice': 150.2,
+                  'publicPrice': 100,
+                  'cost': 280.50,
+                  'stores': [{'id': 'dsfg53sdgf53sd', 'count': 7}],
+                }]
+              }
+              
+    post:
+      summary: Modificacion detalle de un producto.
+      description: Modifica los valores de precios y almacen de un producto.
+      tags:
+        - Productos
+      consumes:
+        - application/json
+      produces:
+        - application/json
+        
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                example: '6b5gf6hj3f6jf45kfh6l2cx342x'
+              wholesalePrice:
+                type: integer
+                example: 1234
+              midWholesalePrice:
+                type: integer
+                example: 1234
+              publicPrice:
+                type: integer
+                example: 1234
+              cost:
+                type: integer
+                example: 1234
+              stores:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: 'dsfgsdag'
+                    count:
+                      type: number
+                      example: 2
+      
+      responses:
+        200:
+          description: Ok
+          examples:
+            application/json:
+              {
+                'code': 0,
+                'message': 'OK',
+              }
+definitions:
+  userValidationResponse:
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      response:
+        type: object
+        properties:
+          grants:
+            type: array
+            items:
+              type: number
+          profile:
+            type: number
+
+  error400:
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      details:
+        type: string
+
+  error401:
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      details:
+        type: string
+
+  error500 :
+    type: object
+    properties:
+      code:
+        type: string
+      message:
+        type: string
+      details:
+        type: string
