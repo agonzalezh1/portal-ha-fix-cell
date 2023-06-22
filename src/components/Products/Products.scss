@@ -36,6 +36,12 @@
         //color: $secondary-300;
         color: $primary-900;
         cursor: pointer;
+
+        h3 {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
     }
 
     .productType-brand {

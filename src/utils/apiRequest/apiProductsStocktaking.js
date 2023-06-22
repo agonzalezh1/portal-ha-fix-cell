@@ -1,11 +1,11 @@
 import { urlApis } from '../constants';
 import axios from 'axios';
 
-export const updateStocktaking = async ({ products, idStore, total, saleType }) => {
+export const updateStocktaking = async ({ products, idStore, total, saleType, paymentType }) => {
     const config = {
         method: 'post',
         url: urlApis.stocktaking,
-        data: { products, idStore, total, saleType },
+        data: { products, idStore, total, saleType, paymentType },
         timeout: 5000,
     };
 

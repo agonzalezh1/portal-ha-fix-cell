@@ -5,7 +5,7 @@ import Search from '../Search/Search';
 import { getProductByName } from '../../utils/apiRequest/apiProducts';
 import { updateStocktaking } from '../../utils/apiRequest/apiProductsStocktaking';
 import { useNotification } from '../../hooks/useNotification';
-import { SALES_TYPE } from '../../utils/constants';
+import { SALES_TYPE, PAYMENT_TYPE } from '../../utils/constants';
 import { addProductSale } from '../../storage/salesSlice';
 import ProductsList from './ProductsList/ProductsList';
 import Modal from '../Modal/Modal';
@@ -82,8 +82,9 @@ const ProductsSales = () => {
      * Finaliza la compra
      * Actualiza el stock de la tienda
      * Actualiza el monto de las ventas
+     * @param {string} paymentType Forma de pago Efectivo|Tarjeta
      */
-    const payProducts = async () => {
+    const payProducts = async paymentType => {
         const productsTemp = shoppingCart.map(product => {
             return {
                 id: product.id,
@@ -91,7 +92,7 @@ const ProductsSales = () => {
             };
         });
 
-        const apiResp = await updateStocktaking({ total, products: productsTemp, idStore: currentStore, saleType: SALES_TYPE.PRODUCTS });
+        const apiResp = await updateStocktaking({ total, paymentType, products: productsTemp, idStore: currentStore, saleType: SALES_TYPE.PRODUCTS });
         setNotification(apiResp);
         setShoppingCart([]);
         dispatch(addProductSale(total));
@@ -154,7 +155,16 @@ const ProductsSales = () => {
         </table>
         <div className='total'>
             <h2 className='numeric'>{`Total: $ ${total}.00`}</h2>
-            <button className='primary' onClick={() => payProducts()} disabled={shoppingCart.length === 0} >Pagar</button>
+        </div>
+        <div className='payment-type'>
+            <button className='secondary icon' onClick={() => payProducts(PAYMENT_TYPE.CASH)} disabled={shoppingCart.length === 0} >
+                Pago en efectivo
+                <Image src={'/img/cash.png'} width={24} height={24} alt={'icon'}/>
+            </button>
+            <button className='secondary icon' onClick={() => payProducts(PAYMENT_TYPE.CARD)} disabled={shoppingCart.length === 0} >
+                Pago con tarjeta
+                <Image src={'/img/card.png'} width={24} height={24} alt={'icon'}/>
+            </button>
         </div>
         <Modal open={openModal} title={'Selecciona un producto'} onClose={() => setOpenModal(false)}>
             <ProductsList productsList={productsList} addProduct={e => addProduct(e)}/>
