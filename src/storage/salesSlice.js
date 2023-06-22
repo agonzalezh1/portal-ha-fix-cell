@@ -1,30 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { PAYMENT_TYPE } from '../utils/constants';
 
 const initialState = {
-    products: 0,
-    fixes: 0,
+    products: { cashPayment: 0, cardPayment: 0 },
+    fixes: { cashPayment: 0, cardPayment: 0 },
     airtime: 0,
 };
 
 export const salesSlice = createSlice({ name: 'sales', initialState,
     reducers: {
         addProductSale: (state, action) => {
-            state.products += action.payload;
+            if (action.payload.paymentType === PAYMENT_TYPE.CASH) {
+                state.products.cashPayment += action.payload.total;
+            } else {
+                state.products.cardPayment += action.payload.total;
+            }
         },
         addFixSale: (state, action) => {
-            state.fixes += action.payload;
+            if (action.payload.paymentType === PAYMENT_TYPE.CASH) {
+                state.fixes.cashPayment += action.payload.total;
+            } else {
+                state.fixes.cardPayment += action.payload.total;
+            }
         },
         addAirtimeSale: (state, action) => {
             state.airtime += action.payload;
         },
-        restartSales: state => {
-            state.products = 0;
-            state.fixes = 0;
-            state.airtime = 0;
+        addSales: (state, action) => {
+            state.products = action.payload.products;
+            state.fixes = action.payload.fixes;
+            state.airtime = action.payload.airtime;
         },
     },
 });
 
-export const { addProductSale, addFixSale, addAirtimeSale, restartSales} = salesSlice.actions;
+export const { addProductSale, addFixSale, addAirtimeSale, addSales } = salesSlice.actions;
 
 export default salesSlice.reducer;

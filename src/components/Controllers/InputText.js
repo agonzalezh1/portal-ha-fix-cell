@@ -17,10 +17,11 @@ import { TEXT_CONFIG } from '../../utils/constants';
  * @param {string} inputType Tipo de dato del campo
  * @param {bool} readOnly Bandera que indica si se puede realizar escritura en el campo
  * @param {object} control Objeto con la configuracion del formulario
+ * @param {function} keyDownEvent Funcion que se detona cuando se presiona una tecla
  * @returns Controlador para el CampoTexto
  */
 const InputText = ({ id, title, placeholder, changeEvent = null, disabled = false, maxLength,
-    errors, valueIn, inputType, textFormat, readOnly = false, rules, control
+    errors, valueIn, inputType, textFormat, readOnly = false, rules, control, keyDownEvent = null
 }) => {
 
     let invalidStyle = '';
@@ -64,6 +65,11 @@ const InputText = ({ id, title, placeholder, changeEvent = null, disabled = fals
                                 changeEvent(newValue);
                             }
                         }}
+                        onKeyDown={e => {
+                            if(keyDownEvent) {
+                                keyDownEvent(e.key);
+                            }
+                        }}
                     />
                 </div>
             )}
@@ -85,6 +91,7 @@ InputText.propTypes = {
     readOnly: PropTypes.bool,
     rules: PropTypes.object,
     control: PropTypes.object.isRequired,
+    keyDownEvent: PropTypes.func,
 };
 
 export default InputText;

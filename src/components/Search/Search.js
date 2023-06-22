@@ -26,6 +26,11 @@ const Search = ({ eventSearch }) => {
                 textFormat={TEXT_CONFIG.ALPHANUM_WITH_SPACES}
                 changeEvent={e => setValue(e)}
                 control={control}
+                keyDownEvent={e => {
+                    if (e === 'Enter' && value) {
+                        eventSearch(value);
+                    }
+                }}
             />
             <div className='icon' onClick={() => value && eventSearch(value)}>
                 <div>

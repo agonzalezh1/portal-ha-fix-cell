@@ -1,10 +1,16 @@
 import { connectDB, disconnectDB } from '../../../../../src/utils/dbConnect';
 import Products from '../../../../../src/models/products';
 import Stores from '../../../../../src/models/stores';
-import { SALES_TYPE, STATUS_CODE } from '../../../../../src/utils/constants';
+import { SALES_TYPE, STATUS_CODE, PAYMENT_TYPE } from '../../../../../src/utils/constants';
 import { Types } from 'mongoose';
 import { getPeriod } from '../../../../../src/utils/functions';
 
+/**
+ * Actualiza el inventario de una tienda
+ * @param {string} idProduct ObjectId del producto
+ * @param {string} idStore ObjectId de la tienda
+ * @param {number} count Cantidad a descontar del inventario
+ */
 const updateStocktaking = async ({ idProduct, idStore, count }) => {
     const result = await Products.updateOne(
         { _id: new Types.ObjectId(idProduct) },
@@ -19,14 +25,29 @@ const updateStocktaking = async ({ idProduct, idStore, count }) => {
     };
 };
 
-const updateSales = async ({idStore, total, saleType}) => {
+/**
+ * Actualizacion de ventas en una tienda
+ * @param {string} idStore ObjectId de la tienda
+ * @param {number} total Cantidad total de la venta
+ * @param {string} saleType Tipo de venta (Productos, reparacion, tiempo aire)
+ * @param {string} paymentType Forma de pago
+ */
+const updateSales = async ({idStore, total, saleType, paymentType}) => {
     const currentPeriod = getPeriod();
     let query;
 
     if (saleType === SALES_TYPE.PRODUCTS) {
-        query = { 'sales.$[updatePeriod].products': total, 'dailySales.products': total };
+        if (paymentType === PAYMENT_TYPE.CASH) {
+            query = { 'sales.$[updatePeriod].products.cashPayment': total, 'dailySales.products.cashPayment': total };
+        } else {
+            query = { 'sales.$[updatePeriod].products.cardPayment': total, 'dailySales.products.cardPayment': total };
+        }
     } else if (saleType === SALES_TYPE.SERVICES) {
-        query = { 'sales.$[updatePeriod].fixes': total, 'dailySales.fixes': total };
+        if (paymentType === PAYMENT_TYPE.CASH) {
+            query = { 'sales.$[updatePeriod].fixes.cashPayment': total, 'dailySales.fixes.cashPayment': total };
+        } else {
+            query = { 'sales.$[updatePeriod].fixes.cardPayment': total, 'dailySales.fixes.cardPayment': total };
+        }
     } else {
         query = { 'sales.$[updatePeriod].airtime': total, 'dailySales.airtime': total };
     }
@@ -44,6 +65,11 @@ const updateSales = async ({idStore, total, saleType}) => {
     };
 };
 
+/**
+ * Controlador para administrar el inventario de las tiendas
+ * @param {*} req Peticion
+ * @param {*} res Respuesta
+ */
 const handler = async (req, res) => {
     let statusCode = STATUS_CODE.SUCCESSFUL;
     let message;
@@ -52,10 +78,17 @@ const handler = async (req, res) => {
 
     try {
         await connectDB();
+        /**
+         * Actualizacion del inventario
+         * Recibe una lista de productos junto con el total
+         * Por cada producto realiza la actualizacion en la coleccion Products
+         * Al final realiza la actualizacion de las ventas en la coleccion Stores
+         */
         if (req.method === 'POST') {
-            const { products, idStore, total, saleType } = req.body;
+            const { products, idStore, total, saleType, paymentType } = req.body;
             const errores = [];
 
+            // Actualizacion del inventario
             if (saleType === SALES_TYPE.PRODUCTS) {
                 products.forEach(async product => {
                     const obj = { idStore, idProduct: product.id, count: product.count };
@@ -66,7 +99,8 @@ const handler = async (req, res) => {
                 });
             }
 
-            const resp2 = await updateSales({idStore, total, saleType});
+            // Actualizacion de las ventas
+            const resp2 = await updateSales({idStore, total, saleType, paymentType});
 
             if (resp2.esError) {
                 errores.push(resp2);

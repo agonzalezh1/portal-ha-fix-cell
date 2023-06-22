@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { addGrants } from '../src/storage/profileSlice';
 import { addCurrentStore } from '../src/storage/storesSlice';
-import { addProductSale, addFixSale, addAirtimeSale } from '../src/storage/salesSlice';
+import { addSales } from '../src/storage/salesSlice';
 import { authenticateUser } from '../src/utils/apiRequest/apiUsersValidation';
 import { getSalesByStore } from '../src/utils/apiRequest/apiStoresSales';
 import { TEXT_CONFIG } from '../src/utils/constants';
@@ -33,9 +33,11 @@ export default function Home() {
             dispatch(addCurrentStore(apiResp.response.store));
 
             getSalesByStore(apiResp.response.store).then( resp => {
-                dispatch(addProductSale(resp.response.products));
-                dispatch(addFixSale(resp.response.fixes));
-                dispatch(addAirtimeSale(resp.response.airtime));
+                dispatch(addSales({
+                    products: resp.response.products,
+                    fixes: resp.response.fixes,
+                    airtime: resp.response.airtime,
+                }));
             });
 
             history.push('/menu');

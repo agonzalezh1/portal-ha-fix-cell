@@ -270,6 +270,11 @@ button {
             background-color: $primary-400;
         }
     }
+
+    &.icon {
+        display: flex;
+        gap: 10px;
+    }
 }
 
 /**********************************

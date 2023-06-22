@@ -118,6 +118,11 @@ export const STATUS_CODE = Object.freeze({
     SERVER_ERROR: 500,
 });
 
+export const PAYMENT_TYPE = Object.freeze({
+    CASH: 'cash',
+    CARD: 'card',
+});
+
 export const REGEXP = {
     DECIMALS: '^([0-9]{1,6}(\.[0-9]{1,2})?)$',
 };
