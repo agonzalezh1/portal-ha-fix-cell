@@ -14,6 +14,7 @@ const StoresSchema = new Schema(
                 cardPayment: { type: Number },
             },
             airtime: { type: Number },
+            spend: { type: Array },
         },
     },
     { versionKey: false },
@@ -29,11 +30,13 @@ StoresSchema.statics.create = async body => {
             products: { cashPayment: 0, cardPayment: 0 },
             fixes: { cashPayment: 0, cardPayment: 0 },
             airtime: 0,
+            spend: 0,
         }],
         dailySales: {
             products: { cashPayment: 0, cardPayment: 0 },
             fixes: { cashPayment: 0, cardPayment: 0 },
             airtime: 0,
+            spend: [],
         },
     });
     return store.save();

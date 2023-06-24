@@ -37,6 +37,7 @@ export default function Home() {
                     products: resp.response.products,
                     fixes: resp.response.fixes,
                     airtime: resp.response.airtime,
+                    spend: resp.response.spend,
                 }));
             });
 

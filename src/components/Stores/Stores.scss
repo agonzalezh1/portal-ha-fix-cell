@@ -2,6 +2,7 @@
 .store-details-container {
     overflow-y: scroll;
     display: flex;
+    flex-wrap: wrap;
     gap: 50px;
 }
 

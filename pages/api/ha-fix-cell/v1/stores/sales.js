@@ -23,10 +23,15 @@ const handler = async (req, res) => {
             case 'GET':
                 const { idStore } = req.query;
                 const result = await Stores.find({ _id : new Types.ObjectId(idStore)}, { dailySales: 1 });
+                let spendAcc = 0;
+                if (result[0].dailySales.spend.length > 0) {
+                    spendAcc = result[0].dailySales.spend.reduce( (acc, current) => acc + current.amount, 0);
+                }
                 response = {
                     products: result[0].dailySales.products,
                     fixes: result[0].dailySales.fixes,
                     airtime: result[0].dailySales.airtime,
+                    spend: spendAcc,
                 };
                 message = 'Consulta correcta';
                 break;
@@ -43,6 +48,7 @@ const handler = async (req, res) => {
                         'dailySales.fixes.cashPayment': 0,
                         'dailySales.fixes.cardPayment': 0,
                         'dailySales.airtime': 0,
+                        'dailySales.spend': [],
                     }}
                 );
                 message = 'Actualizacion de ventas correcta';

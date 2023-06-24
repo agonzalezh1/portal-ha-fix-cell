@@ -12,6 +12,7 @@ export const environmentVariables = {
     URL_API_PRODUCTS: '/products',
     URL_API_STOCKTAKING: '/products/stocktaking',
     URL_API_SALES_BY_STORE: '/stores/sales',
+    URL_API_SPEND_BY_STORE: '/stores/spend',
     TIMEOUT_GLOBAL: 30000,
 };
 
@@ -24,6 +25,7 @@ export const urlApis = {
     products: `${urlBase}${environmentVariables.URL_API_PRODUCTS}`,
     stocktaking: `${urlBase}${environmentVariables.URL_API_STOCKTAKING}`,
     salesByStore: `${urlBase}${environmentVariables.URL_API_SALES_BY_STORE}`,
+    spendByStore: `${urlBase}${environmentVariables.URL_API_SPEND_BY_STORE}`,
 };
 
 export const TEXT_CONFIG = Object.freeze({
