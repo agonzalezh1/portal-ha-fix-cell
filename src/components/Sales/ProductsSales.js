@@ -95,7 +95,7 @@ const ProductsSales = () => {
         const apiResp = await updateStocktaking({ total, paymentType, products: productsTemp, idStore: currentStore, saleType: SALES_TYPE.PRODUCTS });
         setNotification(apiResp);
         setShoppingCart([]);
-        dispatch(addProductSale(total));
+        dispatch(addProductSale({ total, paymentType}));
         // TODO No borrar el console hasta que esten chidas las pruebas de las ventas
         console.log(apiResp.response);
     };
