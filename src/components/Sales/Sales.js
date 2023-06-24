@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { useForm } from 'react-hook-form';
-import { SALES_TYPE } from '../../utils/constants';
 import ProductsSales from './ProductsSales';
-import ServicesSales from './ServicesSales';
 import AirtimeSales from './AirtimeSales';
+import Spend from './Spend';
 import { useNotification } from '../../hooks/useNotification';
 import Modal from '../Modal/Modal';
-import RadioButton from '../Controllers/RadioButton';
 
 /**
- * Muestra el menu para el tipo de venta
- * Las ventas de productos y servicios son por medio de un radio
+ * Muestra el fomulario para capturar una venta
+ * La venta puede ser en efectivo o con tarjeta
  * La venta por recargas es por un modal
+ * Agregar un gasto es por modal
  */
 const Sales = () => {
 
-    const { control } = useForm({ mode: 'onChange' });
     const [openModal, setOpenModal] = useState(false);
+    const [openModalSpend, setOpenModalSpend] = useState(false);
     const [setNotification] = useNotification();
-    const [saleType, setSaleType] = useState(SALES_TYPE.PRODUCTS);
 
     /**
      * Recibe la respuesta de la venta de tiempor aire
@@ -30,33 +27,31 @@ const Sales = () => {
         setNotification(result);
     };
 
+    /**
+     * Muestra el modal para agregar un gasto
+     * @param {*} result 
+     */
+    const spendValidate = result => {
+        setOpenModalSpend(false);
+        setNotification(result);
+    };
+
     return (<div className='sales-container'>
+        <h1>Ventas</h1>
         <div className='sale-type-container'>
-            <RadioButton
-                id={`radio-button-${SALES_TYPE.PRODUCTS}`}
-                label={SALES_TYPE.PRODUCTS}
-                control={control}
-                changeEvent={e => setSaleType(e.value)}
-                value={SALES_TYPE.PRODUCTS}
-                state={saleType}
-                name={SALES_TYPE.PRODUCTS}
-            />
-            <RadioButton
-                id={`radio-button-${SALES_TYPE.SERVICES}`}
-                label={SALES_TYPE.SERVICES}
-                control={control}
-                changeEvent={e => setSaleType(e.value)}
-                value={SALES_TYPE.SERVICES}
-                state={saleType}
-                name={SALES_TYPE.SERVICES}
-            />
+            <div className='airtime' onClick={() => setOpenModalSpend(true)}>
+                <Image src={'/img/spend.png'} width={25} height={25} alt={'spend'}/>
+                <p>Gastos</p>
+            </div>
             <div className='airtime' onClick={() => setOpenModal(true)}>
-                <Image src={'/img/airtime.png'} width={25} height={25} alt={'logo'}/>
+                <Image src={'/img/airtime.png'} width={25} height={25} alt={'airtime'}/>
                 <p>Recargas</p>
             </div>
         </div>
-        { saleType === SALES_TYPE.PRODUCTS && <ProductsSales /> }
-        { saleType === SALES_TYPE.SERVICES && <ServicesSales /> }
+        <ProductsSales />
+        <Modal open={openModalSpend} title={'Agregar un gasto'} onClose={() => setOpenModalSpend(false)}>
+            <Spend onFinish={e => spendValidate(e)} />
+        </Modal>
         <Modal open={openModal} title={'Recargas tiempo aire'} onClose={() => setOpenModal(false)}>
             <AirtimeSales onFinish={e => paymentValidate(e)} />
         </Modal>

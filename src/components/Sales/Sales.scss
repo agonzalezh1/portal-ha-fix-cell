@@ -34,7 +34,7 @@
     }
 
     table {
-        width: 70%;
+        width: 100%;
         margin: 1rem 0;
         background-color: $primary-700;
         border-collapse: collapse;
@@ -75,14 +75,14 @@
     }
 
     .total {
-        width: 70%;
+        width: 100%;
         text-align: end;
     }
 
     .payment-type {
         display: flex;
         gap: 50px;
-        width: 70%;
+        width: 100%;
     }
 }
 
@@ -173,6 +173,22 @@
 
 }
 
+/**********************************
+    Spend Component
+***********************************/
+.spend-container {
+    width: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .description {
+        width: 75%;
+    }
+    .amount {
+        width: 20%;
+    }
+}
 /**********************************
     ServiceSales Component
 ***********************************/

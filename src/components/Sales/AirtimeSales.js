@@ -17,7 +17,7 @@ const AirtimeSales = ({ onFinish }) => {
     const currentStore = useSelector(state => state.stores.currentStore);
 
     const rules = {
-        require: true,
+        required: true,
         validate: value => parseInt(value, 10) >= 10,
     };
 
