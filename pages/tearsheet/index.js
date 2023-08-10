@@ -34,7 +34,7 @@ const Tearsheet = () => {
                 <button className='secondary' disabled>Secundario</button>
             </div>
         </div>
-        <style jsx>{`
+        {/*<style jsx>{`
             .container-tearsheet {
                 display: flex;
                 width: 100%;
@@ -70,7 +70,7 @@ const Tearsheet = () => {
                 width: 45%;
                 height: 80px;
             }
-        `}</style>
+        `}</style>*/}
     </div>
     );
 };
