@@ -57,29 +57,12 @@ export const PRODUCT_TYPES = Object.freeze({
 });
 
 export const BRAND_TYPES = Object.freeze({
-    1: 'Alcatel',
-    2: 'Hisense',
-    3: 'Honor',
-    4: 'HTC',
-    5: 'Huawei',
-    6: 'Iphone',
-    7: 'Lanix',
-    8: 'Lenovo',
-    9: 'LG',
-    10: 'M4',
-    11: 'Moto',
-    12: 'Nokia',
-    13: 'One plus',
-    14: 'Oppo',
-    15: 'Poco',
-    16: 'Realme',
-    17: 'Samsung',
-    18: 'Sony',
-    19: 'Universal',
-    20: 'Vivo',
-    21: 'Xiaomi',
-    22: 'ZTE',
-    23: 'Otro',
+    1: '1Hora',
+    2: 'Acteck',
+    3: 'Stylos',
+    4: 'Kingston',
+    5: 'Adata',
+    6: 'Otro',
 });
 
 export const GRANT_TYPES = Object.freeze({
