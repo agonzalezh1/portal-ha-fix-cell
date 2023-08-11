@@ -105,9 +105,13 @@ const SalesByStore = ({ name, sales, dailySales }) => {
         <div className='store-item'>
             <div className='chart'><Bar options={options} data={data} /></div>
             <h3>Venta del día</h3>
-            <p className='letter-1'>{`Productos: $${dailySales.products}`}</p>
-            <p className='letter-1'>{`Reparaciones: $${dailySales.fixes}`}</p>
-            <p className='letter-1'>{`Tiempo aire: $${dailySales.airtime}`}</p>
+            <p className='bold'>Productos:</p>
+            <p className='letter-1'>{`Efectivo: $${dailySales.products.cashPayment}`}</p>
+            <p className='letter-1'>{`Tarjeta: $${dailySales.products.cardPayment}`}</p>
+            <p className='bold'>Reparaciones:</p>
+            <p className='letter-1'>{`Efectivo: $${dailySales.fixes.cashPayment}`}</p>
+            <p className='letter-1'>{`Tarjeta: $${dailySales.fixes.cardPayment}`}</p>
+            <p className='bold'>{`Tiempo aire: $${dailySales.airtime}`}</p>
         </div>
     </>);
 };
