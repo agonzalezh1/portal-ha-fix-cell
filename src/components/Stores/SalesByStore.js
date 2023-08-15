@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { getLabelsBarChart } from '../../utils/functions';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend );
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 /*
 export const data = {
@@ -55,30 +56,25 @@ const data = {
 };
 */
 const SalesByStore = ({ name, sales, dailySales }) => {
-
-    const [products] = useState(sales.map(sale => sale.products));
-    const [fixes] = useState(sales.map(sale => sale.fixes));
+    const [products] = useState(sales.map(sale => sale.products.cashPayment + sale.products.cardPayment));
+    const [fixes] = useState(sales.map(sale => sale.fixes.cashPayment + sale.fixes.cardPayment));
     const [airtime] = useState(sales.map(sale => sale.airtime));
+    const [spends] = useState(dailySales.spend.reduce( (acc, current) => acc + current.amount, 0));
+
+    const total = dailySales.products.cashPayment + dailySales.products.cardPayment + dailySales.fixes.cashPayment + dailySales.fixes.cardPayment + dailySales.airtime - spends;
 
     const options = {
         plugins: {
-            title: {
-                display: true,
-                text: name,
-            },
+            title: { display: true, text: name },
         },
         responsive: true,
         scales: {
-            x: {
-                stacked: true,
-            },
-            y: {
-                stacked: true,
-            },
+            x: { stacked: true },
+            y: { stacked: true },
         },
     };
 
-    const labels = ['Junio', 'Julio', 'Agosto'];
+    const labels = getLabelsBarChart();
 
     const data = {
         labels,
@@ -103,15 +99,45 @@ const SalesByStore = ({ name, sales, dailySales }) => {
 
     return (<>
         <div className='store-item'>
+            <div className='daily-sale'>
+                <h3>{name}</h3>
+                <table>
+                    <thead>
+                        <tr className='bold'>
+                            <th>Venta del día</th>
+                            <th>Efectivo</th>
+                            <th>Tarjeta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td className='bold'>Productos</td>
+                            <td>{`$${dailySales.products.cashPayment}.00`}</td>
+                            <td>{`$${dailySales.products.cardPayment}.00`}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Reparaciones</td>
+                            <td>{`$${dailySales.fixes.cashPayment}.00`}</td>
+                            <td>{`$${dailySales.fixes.cardPayment}.00`}</td>
+                        </tr>
+                        <tr>
+                            <td className='bold'>Tiempo aire</td>
+                            <td>{`$${dailySales.airtime}.00`}</td>
+                            <td />
+                        </tr>
+                        <tr>
+                            <td className='bold'>Gastos</td>
+                            <td>{`$${spends}.00`}</td>
+                            <td />
+                        </tr>
+                        <tr className='bold'>
+                            <td>Total</td>
+                            <td colSpan={2}>{`$${total}.00`}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div className='chart'><Bar options={options} data={data} /></div>
-            <h3>Venta del día</h3>
-            <p className='bold'>Productos:</p>
-            <p className='letter-1'>{`Efectivo: $${dailySales.products.cashPayment}`}</p>
-            <p className='letter-1'>{`Tarjeta: $${dailySales.products.cardPayment}`}</p>
-            <p className='bold'>Reparaciones:</p>
-            <p className='letter-1'>{`Efectivo: $${dailySales.fixes.cashPayment}`}</p>
-            <p className='letter-1'>{`Tarjeta: $${dailySales.fixes.cardPayment}`}</p>
-            <p className='bold'>{`Tiempo aire: $${dailySales.airtime}`}</p>
         </div>
     </>);
 };

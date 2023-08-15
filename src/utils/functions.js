@@ -1,4 +1,4 @@
-import { TEXT_CONFIG, GRANT_TYPES } from './constants';
+import { TEXT_CONFIG, GRANT_TYPES, MONTHS } from './constants';
 
 export const stringTrim = valor => valor.trim();
 
@@ -67,4 +67,10 @@ export const createCatalog = catalog => {
     });
 
     return newCatalog;
+};
+
+export const getLabelsBarChart = () => {
+    const month = new Date().getMonth();
+
+    return [MONTHS[month]];
 };
