@@ -1,11 +1,24 @@
+@import '../../../styles/variables.scss';
 
-.store-details-container {
-    overflow-y: scroll;
+.sales-admin-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 50px;
-}
+    flex-direction: column;
+    width: 100%;
 
+    .reset-create-store-container {
+        display: flex;
+        button {
+            width: 50%;
+        }
+        justify-content: space-between;
+        margin-bottom: 25px;
+    }
+
+    .store-details-container {
+        overflow-y: scroll;
+        width: 100%;
+    }
+}
 
 /**********************************
     AddStore Component
@@ -14,4 +27,52 @@
     display: flex;
     flex-direction: column;
     width: 350px;
+}
+
+/**********************************
+    SalesByStore Component
+***********************************/
+.store-item {
+    display: flex;
+    margin-bottom: 40px;
+    width: 100%;
+    .daily-sale {
+        width: 40%;
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: $primary-700;
+
+            thead th:nth-child(1) { width: 40% }
+            thead th:nth-child(2) { width: 30% }
+            thead th:nth-child(3) { width: 30% }
+            thead {
+                height: 30px;
+                background-color: $primary-700;
+                color: $secondary-200;
+            }
+            tbody td {
+                height: 30px;
+            }
+
+            tbody tr:nth-child(odd) { background-color: $secondary-200;}
+            tbody tr:nth-child(even) { background-color: $secondary-300;}
+
+            td:nth-child(2), td:nth-child(3) {
+                text-align: center;
+            }
+        }
+
+    }
+
+    .chart {
+        width: 60%;
+        height: 100%;
+        padding: 0 20px;
+    }
+}
+
+.borde {
+    border: 2px solid #c56262 !important;
 }

@@ -72,6 +72,21 @@ export const GRANT_TYPES = Object.freeze({
     4: 'Usuarios',
 });
 
+export const MONTHS = Object.freeze({
+    0: 'Enero',
+    1: 'Febrero',
+    2: 'Marzo',
+    3: 'Abril',
+    4: 'Mayo',
+    5: 'Junio',
+    6: 'Juilio',
+    7: 'Agosto',
+    8: 'Septiembre',
+    9: 'Octubre',
+    10: 'Noviembre',
+    11: 'Diciembre',
+});
+
 export const NOTIFICATION_TYPES = Object.freeze({
     SUCCESS: 1,
     ERROR: 2,

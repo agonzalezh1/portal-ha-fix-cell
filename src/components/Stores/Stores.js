@@ -41,10 +41,12 @@ const Stores = () => {
         }
     };
 
-    return (<div>
+    return (<div className='sales-admin-container'>
         <h1>Tiendas</h1>
-        <button className='primary' onClick={() => restartDailySales()}>Realizar corte del día</button>
-        <Action label={'Agregar tienda'} type={ACTION_TYPES.INCREASE} action={() => setOpenModal(true)} />
+        <div className='reset-create-store-container'>
+            <button className='primary' onClick={() => restartDailySales()}>Realizar corte del día</button>
+            <Action label={'Agregar tienda'} type={ACTION_TYPES.INCREASE} action={() => setOpenModal(true)} />
+        </div>
         <div className='store-details-container'>
             {
                 stores.map(store => <SalesByStore name={store.name} sales={store.sales} dailySales={store.dailySales} key={store.name}/>)
