@@ -8,6 +8,7 @@ import QueryProducts from './QueryProducts';
 import { useSelector } from 'react-redux';
 import { getProductByName } from '../../utils/apiRequest/apiProducts';
 import { useNotification } from '../../hooks/useNotification';
+import { useSpinner } from '../../hooks/useSpinner';
 import { ACTION_TYPES, USER_TYPE } from '../../utils/constants';
 
 /**
@@ -22,6 +23,7 @@ const Products = () => {
 
     const [openModal, setOpenModal] = useState(false);
     const [setNotification] = useNotification();
+    const [loadingSpinner] = useSpinner();
     const userType = useSelector(state => state.profile.profile);
     const [productsList, setProductsList] = useState([]);
 
@@ -40,10 +42,12 @@ const Products = () => {
      * Revisar api GET /products
      * Si la respuesta es correcta, actualiza el estado productsList que es la lista de productos
      * que se muestra en el modal (resultado de la busqueda)
-     * @param {string} idProduct Cadena para eealizar la busqueda por coincidencias
+     * @param {string} idProduct Cadena para realizar la busqueda por coincidencias
      */
     const searchProduct = async idProduct => {
+        loadingSpinner(true, 'Buscando productos...');
         const apiResp = await getProductByName(idProduct);
+        loadingSpinner(false, '');
         if (apiResp.code === 0) {
             setProductsList(apiResp.response);
         } else {

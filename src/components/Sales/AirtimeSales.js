@@ -4,6 +4,7 @@ import InputText from '../Controllers/InputText';
 import { TEXT_CONFIG, SALES_TYPE } from '../../utils/constants';
 import { addAirtimeSale } from '../../storage/salesSlice';
 import { updateStocktaking } from '../../utils/apiRequest/apiProductsStocktaking';
+import { useSpinner } from '../../hooks/useSpinner';
 
 /**
  * Formulario para las ventas de tiempo aire
@@ -15,6 +16,7 @@ const AirtimeSales = ({ onFinish }) => {
     const { handleSubmit, control, formState } = useForm({ mode: 'onChange' });
     const dispatch = useDispatch();
     const currentStore = useSelector(state => state.stores.currentStore);
+    const [loadingSpinner] = useSpinner();
 
     const rules = {
         required: true,
@@ -26,12 +28,14 @@ const AirtimeSales = ({ onFinish }) => {
      * @param {object} form Campos del formulario (solo el monto)
      */
     const payAirtime = async form => {
+        loadingSpinner(true, 'Guardando venta tiempo aire...');
         const apiResp = await updateStocktaking({
             total: Number(form.amount),
             products: [],
             idStore: currentStore,
             saleType: SALES_TYPE.AIRTIME,
         });
+        loadingSpinner(false, '');
 
         dispatch(addAirtimeSale(Number(form.amount)));
         onFinish(apiResp);

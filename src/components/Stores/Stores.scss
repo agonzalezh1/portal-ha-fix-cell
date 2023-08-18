@@ -64,6 +64,11 @@
             }
         }
 
+        .spend-style {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
     }
 
     .chart {
@@ -75,4 +80,19 @@
 
 .borde {
     border: 2px solid #c56262 !important;
+}
+
+/**********************************
+    Spends List Component
+***********************************/
+.spends-list-container {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+
+    .item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+    }
 }

@@ -4,6 +4,7 @@ import TextArea from '../Controllers/TextArea';
 import InputText from '../Controllers/InputText';
 import { TEXT_CONFIG, SALES_TYPE } from '../../utils/constants';
 import { useNotification } from '../../hooks/useNotification';
+import { useSpinner } from '../../hooks/useSpinner';
 import { addFixSale } from '../../storage/salesSlice';
 import { updateStocktaking } from '../../utils/apiRequest/apiProductsStocktaking';
 
@@ -16,6 +17,7 @@ const ServicesSales = () => {
     const dispatch = useDispatch();
     const requiredField = { required: true };
     const [setNotification] = useNotification();
+    const [loadingSpinner] = useSpinner();
     const currentStore = useSelector(state => state.stores.currentStore);
 
     /**
@@ -23,7 +25,9 @@ const ServicesSales = () => {
      * @param {object} form Objeto con los datos del formilario
      */
     const payService = async form => {
+        loadingSpinner(true, 'Guardando venta de reparacion...');
         const apiResp = await updateStocktaking({ total: Number(form.total), products: [], idStore: currentStore, saleType: SALES_TYPE.SERVICES });
+        loadingSpinner(false, '');
         setNotification(apiResp);
         dispatch(addFixSale(Number(form.total)));
         // TODO No borrar el console hasta que esten chidas las pruebas de las ventas
