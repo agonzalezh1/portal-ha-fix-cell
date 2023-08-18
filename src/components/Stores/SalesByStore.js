@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { getLabelsBarChart } from '../../utils/functions';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import Modal from '../Modal/Modal';
+import SpendsList from './SpendsList';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -60,6 +62,7 @@ const SalesByStore = ({ name, sales, dailySales }) => {
     const [fixes] = useState(sales.map(sale => sale.fixes.cashPayment + sale.fixes.cardPayment));
     const [airtime] = useState(sales.map(sale => sale.airtime));
     const [spends] = useState(dailySales.spend.reduce( (acc, current) => acc + current.amount, 0));
+    const [openModal, setOpenModal] = useState(false);
 
     const total = dailySales.products.cashPayment + dailySales.products.cardPayment + dailySales.fixes.cashPayment + dailySales.fixes.cardPayment + dailySales.airtime - spends;
 
@@ -112,33 +115,36 @@ const SalesByStore = ({ name, sales, dailySales }) => {
                     <tbody>
                         <tr>
                             <td className='bold'>Productos</td>
-                            <td>{`$${dailySales.products.cashPayment}.00`}</td>
-                            <td>{`$${dailySales.products.cardPayment}.00`}</td>
+                            <td className='numeric'>{`$${dailySales.products.cashPayment}.00`}</td>
+                            <td className='numeric'>{`$${dailySales.products.cardPayment}.00`}</td>
                         </tr>
                         <tr>
                             <td className='bold'>Reparaciones</td>
-                            <td>{`$${dailySales.fixes.cashPayment}.00`}</td>
-                            <td>{`$${dailySales.fixes.cardPayment}.00`}</td>
+                            <td className='numeric'>{`$${dailySales.fixes.cashPayment}.00`}</td>
+                            <td className='numeric'>{`$${dailySales.fixes.cardPayment}.00`}</td>
                         </tr>
                         <tr>
                             <td className='bold'>Tiempo aire</td>
-                            <td>{`$${dailySales.airtime}.00`}</td>
+                            <td className='numeric'>{`$${dailySales.airtime}.00`}</td>
                             <td />
                         </tr>
                         <tr>
-                            <td className='bold'>Gastos</td>
-                            <td>{`$${spends}.00`}</td>
+                            <td className='bold spend-style' onClick={() => setOpenModal(true)}>Gastos</td>
+                            <td className='numeric'>{`$${spends}.00`}</td>
                             <td />
                         </tr>
                         <tr className='bold'>
                             <td>Total</td>
-                            <td colSpan={2}>{`$${total}.00`}</td>
+                            <td className='numeric' colSpan={2}>{`$${total}.00`}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div className='chart'><Bar options={options} data={data} /></div>
         </div>
+        <Modal open={openModal} title={'Detalle de gastos'} onClose={() => setOpenModal(false)}>
+            <SpendsList list={dailySales.spend}/>
+        </Modal>
     </>);
 };
 

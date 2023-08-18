@@ -3,6 +3,7 @@ import profileReducer from './profileSlice';
 import notificationReducer from './notificationSlice';
 import storesReducer from './storesSlice';
 import salesReducer from './salesSlice';
+import spinnerReducer from './spinnerSlice';
 
 export const store = configureStore({
     reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
         notification: notificationReducer,
         stores: storesReducer,
         sales: salesReducer,
+        spinner: spinnerReducer,
     },
 });

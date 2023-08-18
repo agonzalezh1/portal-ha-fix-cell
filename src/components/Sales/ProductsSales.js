@@ -5,6 +5,7 @@ import Search from '../Search/Search';
 import { getProductByName } from '../../utils/apiRequest/apiProducts';
 import { updateStocktaking } from '../../utils/apiRequest/apiProductsStocktaking';
 import { useNotification } from '../../hooks/useNotification';
+import { useSpinner } from '../../hooks/useSpinner';
 import { SALES_TYPE, PAYMENT_TYPE } from '../../utils/constants';
 import { addProductSale } from '../../storage/salesSlice';
 import ProductsList from './ProductsList/ProductsList';
@@ -20,6 +21,7 @@ import Modal from '../Modal/Modal';
 const ProductsSales = () => {
 
     const [setNotification] = useNotification();
+    const [loadingSpinner] = useSpinner();
     const dispatch = useDispatch();
     const currentStore = useSelector(state => state.stores.currentStore);
     const [openModal, setOpenModal] = useState(false);
@@ -35,7 +37,9 @@ const ProductsSales = () => {
      * @param {string} idProduct Nombre del producto
      */
     const searchProduct = async idProduct => {
+        loadingSpinner(true, 'Buscando producto...');
         const apiResp = await getProductByName(idProduct);
+        loadingSpinner(false, '');
         if (apiResp.code === 0) {
             // Elimina coincidencias de la busqueda
             const productsTemp = [...apiResp.response];
@@ -92,7 +96,9 @@ const ProductsSales = () => {
             };
         });
 
+        loadingSpinner(true, 'Guardando venta y actualizando el inventario...');
         const apiResp = await updateStocktaking({ total, paymentType, products: productsTemp, idStore: currentStore, saleType: SALES_TYPE.PRODUCTS });
+        loadingSpinner(false, '');
         setNotification(apiResp);
         setShoppingCart([]);
         dispatch(addProductSale({ total, paymentType}));

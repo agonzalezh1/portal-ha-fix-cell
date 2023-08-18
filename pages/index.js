@@ -9,6 +9,7 @@ import { authenticateUser } from '../src/utils/apiRequest/apiUsersValidation';
 import { getSalesByStore } from '../src/utils/apiRequest/apiStoresSales';
 import { TEXT_CONFIG } from '../src/utils/constants';
 import { useNotification } from '../src/hooks/useNotification';
+import { useSpinner } from '../src/hooks/useSpinner';
 import InputText from '../src/components/Controllers/InputText';
 import styles from '../styles/Home.module.css';
 
@@ -16,6 +17,7 @@ export default function Home() {
 
     const { handleSubmit, control, formState, formState:{errors} } = useForm({ mode: 'onChange' });
     const [setNotification] = useNotification();
+    const [loadingSpinner] = useSpinner();
     const history = useRouter();
     const dispatch = useDispatch();
 
@@ -27,7 +29,9 @@ export default function Home() {
      * @param {object} form { user, password}
      */
     const validateUser = async (form) => {
+        loadingSpinner(true, 'Validando usuario...');
         const apiResp = await authenticateUser(form.user, form.password);
+        loadingSpinner(false, '');
         if (apiResp.code === 0) {
             dispatch(addGrants(apiResp.response));
             dispatch(addCurrentStore(apiResp.response.store));

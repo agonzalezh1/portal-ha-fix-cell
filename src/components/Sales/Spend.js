@@ -4,6 +4,7 @@ import InputText from '../Controllers/InputText';
 import { TEXT_CONFIG } from '../../utils/constants';
 import { addSpendInStore } from '../../utils/apiRequest/apiStoresSales';
 import { addSpend } from '../../storage/salesSlice';
+import { useSpinner } from '../../hooks/useSpinner';
 
 /**
  * Formulario para declarar los gastos
@@ -15,19 +16,22 @@ const Spend = ({ onFinish }) => {
     const { handleSubmit, control, formState } = useForm({ mode: 'onChange' });
     const dispatch = useDispatch();
     const currentStore = useSelector(state => state.stores.currentStore);
+    const [loadingSpinner] = useSpinner();
 
     const rules = { required: true };
 
     /**
-     * Invoca el api para el acumulado de las ventas
+     * Invoca el api para guardar un gasto
      * @param {object} form Campos del formulario (descripcion y monto)
      */
     const addNewSpend = async form => {
+        loadingSpinner(true, 'Guardando gasto...');
         const apiResp = await addSpendInStore({
             idStore: currentStore,
             description: form.description,
             amount: Number(form.amount),
         });
+        loadingSpinner(false, '');
 
         dispatch(addSpend(Number(form.amount)));
         onFinish(apiResp);
