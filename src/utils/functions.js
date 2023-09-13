@@ -72,5 +72,5 @@ export const createCatalog = catalog => {
 export const getLabelsBarChart = () => {
     const month = new Date().getMonth();
 
-    return [MONTHS[month]];
+    return [MONTHS[month - 1], MONTHS[month]];
 };
