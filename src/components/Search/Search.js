@@ -8,9 +8,10 @@ import { TEXT_CONFIG } from '../../utils/constants';
 /**
  * Buscador de productos
  * Solo realiza busquedas si el input tiene algo
+ * @param {string} label Leyenda que se muestra en el placeholder
  * @param {func} eventSearch Evento que se detona cuando se le da click en buscar
  */
-const Search = ({ eventSearch }) => {
+const Search = ({ label, eventSearch }) => {
 
     const { control } = useForm({ mode: 'onChange' });
     const [ value, setValue] = useState('');
@@ -20,7 +21,7 @@ const Search = ({ eventSearch }) => {
             <InputText
                 id={'search'}
                 title={''}
-                placeholder={'Introduce el Nombre del producto'}
+                placeholder={label}
                 maxLength={50}
                 valueIn={value}
                 textFormat={TEXT_CONFIG.ALPHANUM_WITH_SPACES}
@@ -42,6 +43,7 @@ const Search = ({ eventSearch }) => {
 };
 
 Search.propTypes = {
+    label: Proptypes.string,
     eventSearch: Proptypes.func.isRequired,
 };
 

@@ -1,4 +1,4 @@
-import { TEXT_CONFIG, GRANT_TYPES, MONTHS } from './constants';
+import { TEXT_CONFIG, MONTHS } from './constants';
 
 export const stringTrim = valor => valor.trim();
 
@@ -45,13 +45,13 @@ export const formatText = (inText, formatTextType) => {
     }
 };
 
-export const getGrantsList = () => {
-    const grantsList = [];
-    Object.entries(GRANT_TYPES).forEach(([key, value]) => {
-        grantsList.push({ key, value, checked: false });
+export const getListFromObject = object => {
+    const list = [];
+    Object.entries(object).forEach(([key, value]) => {
+        list.push({ key, value, checked: false });
     });
 
-    return grantsList;
+    return list;
 };
 
 export const getPeriod = () => {

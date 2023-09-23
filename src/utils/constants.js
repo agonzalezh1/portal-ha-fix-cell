@@ -13,6 +13,8 @@ export const environmentVariables = {
     URL_API_STOCKTAKING: '/products/stocktaking',
     URL_API_SALES_BY_STORE: '/stores/sales',
     URL_API_SPEND_BY_STORE: '/stores/spend',
+    URL_API_FIXES: '/fixes',
+    URL_API_FIXES_PAYMENTS: '/fixes/payments',
     TIMEOUT_GLOBAL: 30000,
 };
 
@@ -26,6 +28,8 @@ export const urlApis = {
     stocktaking: `${urlBase}${environmentVariables.URL_API_STOCKTAKING}`,
     salesByStore: `${urlBase}${environmentVariables.URL_API_SALES_BY_STORE}`,
     spendByStore: `${urlBase}${environmentVariables.URL_API_SPEND_BY_STORE}`,
+    fixes: `${urlBase}${environmentVariables.URL_API_FIXES}`,
+    fixesPayments: `${urlBase}${environmentVariables.URL_API_FIXES_PAYMENTS}`,
 };
 
 export const TEXT_CONFIG = Object.freeze({
@@ -65,11 +69,32 @@ export const BRAND_TYPES = Object.freeze({
     6: 'Otro',
 });
 
+export const FIXES_TYPES = Object.freeze({
+    1: 'Cambio de pantalla',
+    2: 'Cambio de centro de carga',
+    3: 'Cambio de batería',
+    4: 'Cambio de micrófono' ,
+    5: 'Cambio de altavoz',
+    6: 'Cambio de auricular',
+    7: 'Eliminar cuenta Google',
+    8: 'Liberación',
+    9: 'Servicio general',
+});
+
+export const STATUS_FIXES_TYPES = Object.freeze({
+    1: 'Nuevo ingreso',
+    2: 'En reparación',
+    3: 'Reparado correctamente',
+    4: 'No se pudo reparar',
+    5: 'Entregado',
+});
+
 export const GRANT_TYPES = Object.freeze({
     1: 'Inventario',
     2: 'Tiendas',
     3: 'Ventas',
     4: 'Usuarios',
+    5: 'Reparaciones',
 });
 
 export const MONTHS = Object.freeze({
@@ -144,5 +169,9 @@ export const SERVICE_TYPE = Object.freeze({
     4: {
         name: 'Usuarios',
         icon: '/img/users.png',
+    },
+    5: {
+        name: 'Reparaciones',
+        icon: '/img/fix.png',
     },
 });

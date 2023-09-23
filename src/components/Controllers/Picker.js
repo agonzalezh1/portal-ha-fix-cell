@@ -11,8 +11,9 @@ import { Controller } from 'react-hook-form';
  * @param {object} rules Objeto con las reglas del campo. Revisar doc useForm
  * @param {string} label Leyenda superior del selector
  * @param {string} defaultValue Opcion defauilt inicial
+ * @param {bool} disabled Bandera que deshabilita/habilita el selector
  */
-const Picker = ({ id, control, changeEvent = null, options = [], rules, label, defaultValue }) => {
+const Picker = ({ id, control, changeEvent = null, options = [], rules, label, defaultValue, disabled = false }) => {
 
     /**
      * Crea la opciones para el selector
@@ -33,7 +34,7 @@ const Picker = ({ id, control, changeEvent = null, options = [], rules, label, d
                 }) => (
                     <div className={'picker-container'} >
                         <p className='letter-1'>{label}</p>
-                        <select id={id} onChange={e => {
+                        <select id={id} disabled={disabled} onChange={e => {
                             onChange(e);
                             if (changeEvent) {
                                 changeEvent(e.target.value);
@@ -58,6 +59,7 @@ Picker.propTypes = {
     rules: PropTypes.object,
     label: PropTypes.string.isRequired,
     defaultValue: PropTypes.string,
+    disabled: PropTypes.bool,
 };
 
 export default Picker;

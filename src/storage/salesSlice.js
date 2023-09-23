@@ -18,11 +18,8 @@ export const salesSlice = createSlice({ name: 'sales', initialState,
             }
         },
         addFixSale: (state, action) => {
-            if (action.payload.paymentType === PAYMENT_TYPE.CASH) {
-                state.fixes.cashPayment += action.payload.total;
-            } else {
-                state.fixes.cardPayment += action.payload.total;
-            }
+            state.fixes.cashPayment += action.payload.cashPayment;
+            state.fixes.cardPayment += action.payload.cardPayment;
         },
         addAirtimeSale: (state, action) => {
             state.airtime += action.payload;
