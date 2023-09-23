@@ -5,8 +5,8 @@ import Modal from '../Modal/Modal';
 import AddUser from './AddUser';
 import Picker from '../Controllers/Picker';
 import Checkbox from '../Controllers/Checkbox';
-import { ACTION_TYPES } from '../../utils/constants';
-import { getGrantsList } from '../../utils/functions';
+import { ACTION_TYPES, GRANT_TYPES } from '../../utils/constants';
+import { getListFromObject } from '../../utils/functions';
 import { useNotification } from '../../hooks/useNotification';
 import { useStores } from '../../hooks/useStores';
 import { getUsers, modifyUser } from '../../utils/apiRequest/apiUsers';
@@ -86,7 +86,7 @@ const Users = () => {
      */
     const setGrantsInContent = username => {
         const userTemp = usersList.find(user => user.username === username);
-        const grantsList = getGrantsList();
+        const grantsList = getListFromObject(GRANT_TYPES);
 
         userTemp.grants.forEach(grant => {
             grantsList[grant - 1].checked = true;

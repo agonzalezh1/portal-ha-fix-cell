@@ -6,8 +6,8 @@ import Checkbox from '../Controllers/Checkbox';
 import Picker from '../Controllers/Picker';
 import { useStores } from '../../hooks/useStores';
 import { createUser } from '../../utils/apiRequest/apiUsers';
-import { getGrantsList } from '../../utils/functions';
-import { TEXT_CONFIG } from '../../utils/constants';
+import { getListFromObject } from '../../utils/functions';
+import { TEXT_CONFIG, GRANT_TYPES } from '../../utils/constants';
 
 /**
  * Agrega un suario en la base de datos
@@ -17,7 +17,7 @@ import { TEXT_CONFIG } from '../../utils/constants';
 const AddUser = ({ onFinish }) => {
     const { handleSubmit, control, formState, formState: { errors } } = useForm({ mode: 'onChange' });
     const requiredField = { required: true };
-    const [grants, setGrants] = useState(getGrantsList());
+    const [grants, setGrants] = useState(getListFromObject(GRANT_TYPES));
     const [storesList, setStoresList] = useState([]);
     const [stores] = useStores();
 

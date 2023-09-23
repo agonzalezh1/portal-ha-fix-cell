@@ -22,7 +22,7 @@ const handler = async (req, res) => {
                 break;
             case 'GET':
                 const result = await Products.find({ productName: {$regex: upperCase(idProduct), $options: 'i'}});
-
+                await disconnectDB();
                 if (result.length > 0) {
                     response = result.map(product => {
                         return {

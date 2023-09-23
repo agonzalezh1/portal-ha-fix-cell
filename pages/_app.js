@@ -12,6 +12,7 @@ import '../src/components/Stores/Stores.scss';
 import '../src/components/Products/Products.scss';
 import '../src/components/Sales/Sales.scss';
 import '../src/components/Users/Users.scss';
+import '../src/components/Fixes/Fixes.scss';
 import '../src/components/Footer/Footer.scss';
 import '../src/components/Spinner/Spinner.scss';
 
