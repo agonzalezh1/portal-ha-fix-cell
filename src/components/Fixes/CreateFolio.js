@@ -38,7 +38,6 @@ const CreateFolio = ({ onFinish }) => {
         }
 
         const newFolio = {
-            folio: Number(form.folio),
             customerName: upperCase(form.customerName),
             fixes: fixesTemp,
             comments: form.comments,
@@ -114,33 +113,18 @@ const CreateFolio = ({ onFinish }) => {
 
     return (<>
         <form className='create-folio-container'>
-            <div className='folio-container'>
-                <div className='folio'>
-                    <InputText
-                        id={'folio'}
-                        title={'Número de folio'}
-                        placeholder={'Folio'}
-                        maxLength={5}
-                        errors={errors.folio}
-                        valueIn={''}
-                        textFormat={TEXT_CONFIG.NUMBER}
-                        rules={requiredField}
-                        control={control}
-                    />
-                </div>
-                <div className='customer-name'>
-                    <InputText
-                        id={'customerName'}
-                        title={'Nombre del cliente'}
-                        placeholder={'Baby shark'}
-                        maxLength={30}
-                        errors={errors.customerName}
-                        valueIn={''}
-                        textFormat={TEXT_CONFIG.ALPHANUM_WITH_SPACES}
-                        rules={requiredField}
-                        control={control}
-                    />
-                </div>
+            <div className='customer-name'>
+                <InputText
+                    id={'customerName'}
+                    title={'Nombre del cliente'}
+                    placeholder={'Baby shark'}
+                    maxLength={30}
+                    errors={errors.customerName}
+                    valueIn={''}
+                    textFormat={TEXT_CONFIG.ALPHANUM_WITH_SPACES}
+                    rules={requiredField}
+                    control={control}
+                />
             </div>
             <p className='bold'>Selecciona el tipo de reparación</p>
             <div className='fixes-container'>

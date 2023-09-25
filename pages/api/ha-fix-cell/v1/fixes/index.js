@@ -20,9 +20,12 @@ const handler = async (req, res) => {
         await connectDB();
         switch (req.method) {
             case 'PUT':
-                await Fixes.create({ folio, customerName, fixes, store, comments, total, advancePayment });
+                const fix = await Fixes.find().sort({ _id: -1 }).limit(1);
+                const newFolio = fix[0].folio + 1;
+                await Fixes.create({ customerName, fixes, store, comments, total, advancePayment, folio: newFolio });
                 await disconnectDB();
                 message = 'Alta de folio correcta';
+                response = { folio: newFolio };
                 break;
             case 'GET':
                 let result;
@@ -62,7 +65,7 @@ const handler = async (req, res) => {
         if (errorCode === 11000) {
             statusCode = STATUS_CODE.BAD_REQUEST;
             code = errorCode;
-            message = `Error en el alta del producto: ${errorCode}`;
+            message = `Error en el alta del servicio: ${errorCode}`;
         } else {
             statusCode = STATUS_CODE.SERVER_ERROR;
             code = errorCode;

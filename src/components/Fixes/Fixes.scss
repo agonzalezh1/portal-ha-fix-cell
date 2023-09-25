@@ -25,20 +25,10 @@
 .create-folio-container {
     width: 500px;
 
-    .folio-container {
+    .customer-name {
         width: 100%;
         display: flex;
-        flex-wrap: wrap;
-        align-content: flex-start;
-        gap: 20px;
         margin-bottom: 20px;
-
-        .folio {
-            width: 90px;
-        }
-        .customer-name {
-            width: 390px;
-        }
     }
 
     .fixes-container {
