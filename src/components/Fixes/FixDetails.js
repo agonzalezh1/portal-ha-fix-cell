@@ -45,7 +45,7 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
     const toLocalDateString = inputDate => {
 
         const inDate = new Date(inputDate);
-        const day = inDate.getDay();
+        const day = inDate.getDate();
         const month = MONTHS[inDate.getMonth()];
 
         return `${day} de ${month}`;

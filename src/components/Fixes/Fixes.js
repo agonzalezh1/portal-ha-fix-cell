@@ -21,6 +21,7 @@ const Fixes = () => {
     const [openModal, setOpenModal] = useState(false);
     const [fixDetails, setFixDetails] = useState({ folio: 0, customerName: '', fixType: [], comments: '', date: '', deliveryDate: '', status: 0, advancePayment: [], total: 0 });
     const [folio, setFolio] = useState(0);
+    const [newFolio, setNewFolio] = useState(0);
 
     /**
      * Recibe la respuesta del modal de crear folios
@@ -30,7 +31,12 @@ const Fixes = () => {
      */
     const validateIsCreated = result => {
         setOpenModal(false);
+        setFixDetails({ folio: 0, customerName: '', fixType: [], comments: '', date: '', deliveryDate: '', status: 0, advancePayment: [], total: 0 });
         setNotification(result);
+
+        if (result.code === 0) {
+            setNewFolio(result.response.folio);
+        }
     };
 
     /**
@@ -38,7 +44,7 @@ const Fixes = () => {
      */
     const searchFolio = async data => {
         let apiResp;
-
+        setNewFolio(0);
         loadingSpinner(true, 'Buscando información...');
         if ( Number(data) ) {
             setFolio(Number(data));
@@ -80,6 +86,7 @@ const Fixes = () => {
         </div>
         <div className='details-container'>
             {Boolean(fixDetails.folio) && <FixDetails {...fixDetails} onFinish={reloadDetails}/>}
+            {Boolean(newFolio) && <h3>Se ha guardado correctamente la información con el folio: {newFolio.toString().padStart(4, '0')}</h3>}
         </div>
         <Modal open={openModal} title={'Nuevo folio de reparación'} onClose={() => setOpenModal(false)}>
             <CreateFolio onFinish={e => validateIsCreated(e)} />
