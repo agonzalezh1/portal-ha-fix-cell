@@ -35,7 +35,7 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
     const [openModalAdvancePay, setOpenModalAdvancePay] = useState(false);
     const [openModalPayFix, setOpenModalPayFix] = useState(false);
     const [payType, setPayType] = useState('');
-    const [disabledComponent] = useState(status === 5 ? true : false);
+    const [disabledComponent, setDisabledComponent] = useState(status === 5 ? true : false);
     const requiredField = { required: true };
 
     /**
@@ -51,6 +51,10 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
         return `${day} de ${month}`;
     };
 
+    /**
+     * Calcula la garantia de la reparacion
+     * La constante esta a 30 dias en milisegundos
+     */
     const getWarranty = () => {
         const warranty = 2592000000;
 
@@ -105,6 +109,13 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
             setOpenModalPayFix(true);
         }
     },[payType]);
+
+    /**
+     * Efecto para reiniciar la bandera del bloqueo de componentes
+     */
+    useEffect(() => {
+        setDisabledComponent(status === 5 ? true : false);
+    },[status]);
 
     return (<div>
         <form className='fix-details-container' onSubmit={handleSubmit(updateFixDetails)}>
