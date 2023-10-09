@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Controller } from 'react-hook-form';
 import { formatText } from '../../utils/functions';
@@ -24,6 +24,8 @@ const InputText = ({ id, title, placeholder, changeEvent = null, disabled = fals
     errors, valueIn, inputType, textFormat, readOnly = false, rules, control, keyDownEvent = null
 }) => {
 
+    const [text, setText] = useState(valueIn);
+
     let invalidStyle = '';
     const errorMessage = errors && errors.message ? errors.message : '';
     const isDisabled = disabled || readOnly;
@@ -36,6 +38,10 @@ const InputText = ({ id, title, placeholder, changeEvent = null, disabled = fals
     if (errorMessage) {
         invalidStyle = 'invalid';
     }
+
+    useEffect(() => {
+        setText(valueIn)
+    },[valueIn]);
 
     return (
         <Controller
@@ -52,7 +58,7 @@ const InputText = ({ id, title, placeholder, changeEvent = null, disabled = fals
                         id={id}
                         type={inputType}
                         name={id}
-                        value={value}
+                        value={text !== '' ? text : value}
                         placeholder={placeholder}
                         readOnly={readOnly}
                         maxLength={maxLength}
@@ -60,6 +66,7 @@ const InputText = ({ id, title, placeholder, changeEvent = null, disabled = fals
                         disabled={disabled}
                         onChange={e => {
                             const newValue = formatText(e.target.value, textFormat);
+                            setText('');
                             onChange(newValue);
                             if (changeEvent) {
                                 changeEvent(newValue);

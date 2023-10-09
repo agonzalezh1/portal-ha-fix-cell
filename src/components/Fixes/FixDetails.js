@@ -36,6 +36,7 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
     const [openModalPayFix, setOpenModalPayFix] = useState(false);
     const [payType, setPayType] = useState('');
     const [disabledComponent, setDisabledComponent] = useState(status === 5 ? true : false);
+    const [statusOptions, setStatusOptions] = useState([]);
     const requiredField = { required: true };
 
     /**
@@ -102,6 +103,20 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
     };
 
     /**
+     * Funcion para crear la lista de opciones
+     * Elimina la ultima opcion (Entregado) en caso de que no se tenga ese estatus de entrada
+     * status = 5 -> Entregado
+     */
+    const getStatusOptions = () => {
+        const catalogTemp = createCatalog(STATUS_FIXES_TYPES);
+        if (status === 5) {
+            setStatusOptions(catalogTemp);
+        } else {
+            setStatusOptions(catalogTemp.slice(0, catalogTemp.length - 1));
+        }
+    };
+
+    /**
      * Efecto para abrir/cerrar el modal de liquidar reparación
      */
     useEffect(() => {
@@ -115,6 +130,7 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
      */
     useEffect(() => {
         setDisabledComponent(status === 5 ? true : false);
+        getStatusOptions();
     },[status]);
 
     return (<div>
@@ -133,7 +149,7 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
                         <Picker
                             id={'status'}
                             label={''}
-                            options={createCatalog(STATUS_FIXES_TYPES)}
+                            options={statusOptions}
                             control={control}
                             defaultValue={String(status)}
                             disabled={disabledComponent}

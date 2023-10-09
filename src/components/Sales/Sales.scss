@@ -91,10 +91,14 @@
 ***********************************/
 .products-list-container {
     width: 40rem;
-    height: auto;
+    height: 450px;
     display: flex;
     flex-direction: column;
 
+    .list {
+        height: 300px;
+        overflow-y: scroll;
+    }
     table {
         width: 100%;
         margin: 1rem 0;
