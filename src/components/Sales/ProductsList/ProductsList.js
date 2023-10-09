@@ -10,7 +10,12 @@ const ProductsList = ({ productsList, addProduct }) => {
     const currentStore = useSelector(state => state.stores.currentStore);
     const userType = useSelector(state => state.profile.profile);
     const { control } = useForm({ mode: 'onChange' });
-    const [productSelected, setProductSelected] = useState(productsList[0]);
+    const [productSelected, setProductSelected] = useState({
+        productName: '',
+        publicPrice: 0,
+        midWholesalePrice: 0,
+        wholesalePrice: 0,
+    });
     const [priceType, setPriceType] = useState({ type: PRICES_TYPE.PUBLIC, price: productsList[0].publicPrice });
     const [count, setCount] = useState(1);
 
@@ -68,18 +73,20 @@ const ProductsList = ({ productsList, addProduct }) => {
     };
 
     return (<div className='products-list-container'>
-        <table>
-            <thead>
-                <tr>
-                    <th/>
-                    <th>Nombre</th>
-                    <th>En stock</th>
-                </tr>
-            </thead>
-            <tbody>
-                {productsList.map(product => createRowOfProduct(product))}
-            </tbody>
-        </table>
+        <div className='list'>
+            <table>
+                <thead>
+                    <tr>
+                        <th/>
+                        <th>Nombre</th>
+                        <th>En stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {productsList.map(product => createRowOfProduct(product))}
+                </tbody>
+            </table>
+        </div>
         <div className='price-container'>
             <RadioButton
                 id={`radio-button-${PRICES_TYPE.PUBLIC}`}
@@ -122,7 +129,7 @@ const ProductsList = ({ productsList, addProduct }) => {
                 <Image src={'/img/icons/plus.png'} width={20} height={20} alt={'icon'}/>
             </div>
         </div>
-        <button className='primary' onClick={() => returnProduct()}>Agregar al carrito</button>
+        <button className='primary' onClick={() => returnProduct()} disabled={productSelected.productName === ''}>Agregar al carrito</button>
     </div>
     );
 };
