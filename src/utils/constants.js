@@ -132,6 +132,7 @@ export const PRICES_TYPE = Object.freeze({
     PUBLIC: 'Precio público',
     MID_WHOLE_SALE: 'Precio medio mayoreo',
     WHOLE_SALE: 'Precio mayoreo',
+    FIX: 'Reparación',
 });
 
 export const STATUS_CODE = Object.freeze({

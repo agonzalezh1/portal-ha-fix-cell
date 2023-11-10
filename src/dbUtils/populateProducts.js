@@ -42,13 +42,13 @@ const createProduct = async() => {
          * Modificar el arreglo de acuerdo a las sucursales que haya en la base
          */
         const storesArray = [
-            { id: '64d44b7a249ba6229207e2f8', count: Number(productTemp[7]) },
-            { id: '64d44b6a249ba6229207e2f0', count: Number(productTemp[8]) },
-            { id: '64d44b51249ba6229207e2e4', count: Number(productTemp[9]) },
-            { id: '64d44b42249ba6229207e2df', count: Number(productTemp[10]) },
-            { id: '64d44b58249ba6229207e2e8', count: Number(productTemp[11]) },
-            { id: '64d44b63249ba6229207e2ec', count: Number(productTemp[12]) },
-            { id: '64d44b73249ba6229207e2f4', count: Number(productTemp[13]) },
+            { id: '64d44b42249ba6229207e2df', count: Number(productTemp[7]) }, // Puertecito
+            { id: '64d44b51249ba6229207e2e4', count: Number(productTemp[8]) }, // Consti
+            { id: '64d44b58249ba6229207e2e8', count: Number(productTemp[9]) }, // Macario
+            { id: '64d44b7a249ba6229207e2f8', count: Number(productTemp[10]) }, // Bodega
+            { id: '64d44b6a249ba6229207e2f0', count: Number(productTemp[11]) }, // Monte Verde
+            { id: '64d44b63249ba6229207e2ec', count: 0 }, // Jesus Maria
+            { id: '64d44b73249ba6229207e2f4', count: 0 }, // Chairez
         ];
 
         const newProduct = {
