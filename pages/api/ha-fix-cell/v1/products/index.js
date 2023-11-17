@@ -16,12 +16,21 @@ const handler = async (req, res) => {
         await connectDB();
         switch (req.method) {
             case 'PUT':
-                await Products.create({ productName, brand, productType, wholesalePrice, midWholesalePrice, publicPrice, cost, stores });
+                const idTemp = await Products.find().sort({ idProduct: -1 }).limit(1);
+                const newID = idTemp[0].idProduct + 1;
+                await Products.create({ idProduct: newID, productName, brand, productType, wholesalePrice, midWholesalePrice, publicPrice, cost, stores });
                 await disconnectDB();
                 message = 'Alta de producto correcta';
                 break;
             case 'GET':
-                const result = await Products.find({ productName: {$regex: upperCase(idProduct), $options: 'i'}});
+                let result;
+
+                if (Number(idProduct)) {
+                    result = await Products.find({ idProduct: Number(idProduct) });
+                } else {
+                    result = await Products.find({ productName: {$regex: upperCase(idProduct), $options: 'i'}});
+                }
+
                 await disconnectDB();
                 if (result.length > 0) {
                     response = result.map(product => {

@@ -42,29 +42,30 @@ const createProduct = async() => {
          * Modificar el arreglo de acuerdo a las sucursales que haya en la base
          */
         const storesArray = [
-            { id: '64d44b42249ba6229207e2df', count: Number(productTemp[7]) }, // Puertecito
-            { id: '64d44b51249ba6229207e2e4', count: Number(productTemp[8]) }, // Consti
-            { id: '64d44b58249ba6229207e2e8', count: Number(productTemp[9]) }, // Macario
-            { id: '64d44b7a249ba6229207e2f8', count: Number(productTemp[10]) }, // Bodega
-            { id: '64d44b6a249ba6229207e2f0', count: Number(productTemp[11]) }, // Monte Verde
+            { id: '64d44b42249ba6229207e2df', count: Number(productTemp[8]) }, // Puertecito
+            { id: '64d44b51249ba6229207e2e4', count: Number(productTemp[9]) }, // Consti
+            { id: '64d44b58249ba6229207e2e8', count: Number(productTemp[10]) }, // Macario
+            { id: '64d44b7a249ba6229207e2f8', count: Number(productTemp[11]) }, // Bodega
+            { id: '64d44b6a249ba6229207e2f0', count: Number(productTemp[12]) }, // Monte Verde
             { id: '64d44b63249ba6229207e2ec', count: 0 }, // Jesus Maria
             { id: '64d44b73249ba6229207e2f4', count: 0 }, // Chairez
         ];
 
         const newProduct = {
-            productName: productTemp[0],
+            idProduct: productTemp[0],
+            productName: productTemp[1],
             productType: {
-                name: PRODUCT_TYPES[Number(productTemp[1])],
-                id: Number(productTemp[1]),
-            },
-            brand: {
-                name: BRAND_TYPES[Number(productTemp[2])],
+                name: PRODUCT_TYPES[Number(productTemp[2])],
                 id: Number(productTemp[2]),
             },
-            publicPrice: Number(productTemp[3]),
-            wholesalePrice: Number(productTemp[4]),
-            midWholesalePrice: Number(productTemp[5]),
-            cost: Number(productTemp[6]),
+            brand: {
+                name: BRAND_TYPES[Number(productTemp[3])],
+                id: Number(productTemp[3]),
+            },
+            publicPrice: Number(productTemp[4]),
+            wholesalePrice: Number(productTemp[5]),
+            midWholesalePrice: Number(productTemp[6]),
+            cost: Number(productTemp[7]),
             stores: storesArray,
         };
         try {
