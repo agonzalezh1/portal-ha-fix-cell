@@ -95,6 +95,7 @@ export const GRANT_TYPES = Object.freeze({
     3: 'Ventas',
     4: 'Usuarios',
     5: 'Reparaciones',
+    6: 'Utilerias',
 });
 
 export const MONTHS = Object.freeze({
@@ -174,5 +175,9 @@ export const SERVICE_TYPE = Object.freeze({
     5: {
         name: 'Reparaciones',
         icon: '/img/fix.png',
+    },
+    6: {
+        name: 'Utilerias',
+        icon: '/img/control.png',
     },
 });

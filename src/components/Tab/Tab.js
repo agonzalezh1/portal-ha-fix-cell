@@ -7,6 +7,7 @@ import Products from '../Products/Products';
 import Sales from '../Sales/Sales';
 import Users from '../Users/Users';
 import Fixes from '../Fixes/Fixes';
+import Tools from '../Tools/Tools';
 import TabNavItem from './TabNavItem/TabNavItem';
 import TabContent from './TabContent/TabContent';
 import Footer from '../Footer/Footer';
@@ -64,6 +65,9 @@ const Tab = ({ items }) => {
                 </TabContent>
                 <TabContent id={5} activeTab={activeTab}>
                     <Fixes />
+                </TabContent>
+                <TabContent id={6} activeTab={activeTab}>
+                    <Tools />
                 </TabContent>
             </div>
             <div className='footer'>
