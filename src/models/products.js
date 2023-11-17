@@ -3,6 +3,7 @@ import { upperCase } from '../utils/functions';
 
 const ProductsSchema = new Schema(
     {
+        idProduct: { type: Number, required: true },
         productName: { type: String, required: true },
         brand: {
             name: { type: String, required: true },
@@ -25,6 +26,7 @@ const ProductsSchema = new Schema(
 ProductsSchema.statics.create = async body => {
 
     const products = new Products({
+        idProduct: Number(body.idProduct),
         productName: upperCase(body.productName),
         brand: {
             name: body.brand.name,
@@ -43,6 +45,8 @@ ProductsSchema.statics.create = async body => {
 
     return products.save();
 };
+
+ProductsSchema.index({ idProduct: 1 }, { unique: true });
 
 const Products = models.Products || model('Products', ProductsSchema);
 
