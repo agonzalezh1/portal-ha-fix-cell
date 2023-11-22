@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
@@ -12,6 +13,7 @@ import { useNotification } from '../src/hooks/useNotification';
 import { useSpinner } from '../src/hooks/useSpinner';
 import InputText from '../src/components/Controllers/InputText';
 import styles from '../styles/Home.module.css';
+import { useReactToPrint } from 'react-to-print';
 
 export default function Home() {
 
@@ -20,6 +22,10 @@ export default function Home() {
     const [loadingSpinner] = useSpinner();
     const history = useRouter();
     const dispatch = useDispatch();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
+    const componentRef = useRef();
 
     /**
      * Autentica un usuario
@@ -29,6 +35,7 @@ export default function Home() {
      * @param {object} form { user, password}
      */
     const validateUser = async (form) => {
+        /*
         loadingSpinner(true, 'Validando usuario...');
         const apiResp = await authenticateUser(form.user, form.password);
         loadingSpinner(false, '');
@@ -49,6 +56,9 @@ export default function Home() {
         } else {
             setNotification(apiResp);
         }
+        */
+        console.log('imprimir');
+        handlePrint();
     };
 
     return (<div className={styles.main_container}>
@@ -82,5 +92,8 @@ export default function Home() {
             />
             <button className='primary' disabled={!formState.isValid}>Login</button>
         </form>
+        <div style={{ display: "none" }}>
+            <h1 ref={componentRef}>Componente para imprimir</h1>
+        </div>
     </div>);
 }
