@@ -38,6 +38,11 @@
     width: 100%;
     .daily-sale {
         width: 40%;
+
+        .branch-name {
+            cursor: pointer;
+            text-decoration: underline;
+        }
         
         table {
             width: 100%;

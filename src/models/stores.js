@@ -8,6 +8,7 @@ const StoresSchema = new Schema(
             products: {
                 cashPayment: { type: Number },
                 cardPayment: { type: Number },
+                list: { type: Array },
             },
             fixes: {
                 cashPayment: { type: Number },
@@ -33,7 +34,7 @@ StoresSchema.statics.create = async body => {
             spend: 0,
         }],
         dailySales: {
-            products: { cashPayment: 0, cardPayment: 0 },
+            products: { cashPayment: 0, cardPayment: 0, list: [] },
             fixes: { cashPayment: 0, cardPayment: 0 },
             airtime: 0,
             spend: [],

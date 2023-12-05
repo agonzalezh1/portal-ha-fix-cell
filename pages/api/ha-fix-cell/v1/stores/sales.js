@@ -45,6 +45,7 @@ const handler = async (req, res) => {
                     {$set: {
                         'dailySales.products.cashPayment': 0,
                         'dailySales.products.cardPayment': 0,
+                        'dailySales.products.list': [],
                         'dailySales.fixes.cashPayment': 0,
                         'dailySales.fixes.cardPayment': 0,
                         'dailySales.airtime': 0,
