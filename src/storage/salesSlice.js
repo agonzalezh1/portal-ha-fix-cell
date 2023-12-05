@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { PAYMENT_TYPE } from '../utils/constants';
 
 const initialState = {
-    products: { cashPayment: 0, cardPayment: 0 },
+    products: { cashPayment: 0, cardPayment: 0, list: [] },
     fixes: { cashPayment: 0, cardPayment: 0 },
     airtime: 0,
     spend: 0,
@@ -16,6 +16,7 @@ export const salesSlice = createSlice({ name: 'sales', initialState,
             } else {
                 state.products.cardPayment += action.payload.total;
             }
+            state.products.list = state.products.list.concat(action.payload.products);
         },
         addFixSale: (state, action) => {
             state.fixes.cashPayment += action.payload.cashPayment;

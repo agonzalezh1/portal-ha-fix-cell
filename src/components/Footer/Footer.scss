@@ -1,4 +1,4 @@
-
+@import '../../../styles/variables.scss';
 .total-sales-container{
     display: flex;
     margin: 0 auto;
@@ -7,6 +7,11 @@
     gap: 100px;
     align-items: center;
 
+    .total-sales-style {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
     table {
         tbody tr {
             height: 2rem;
@@ -14,5 +19,68 @@
         tbody tr td:first-child {
             width: 220px;
         }
+    }
+}
+
+/**********************************
+    Spends List Component
+***********************************/
+.sales-list-container {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 250px;
+    overflow-y: scroll;
+
+    table {
+        width: 100%;
+        background-color: $primary-700;
+        border-collapse: collapse;
+        thead {
+            height: 2.5rem;
+            color: $secondary-200;
+        }
+
+        thead th:nth-child(1) { 
+            width: 60%;
+        }
+
+        thead th:nth-child(2) { 
+            width: 15%;
+        }
+
+        thead th:nth-child(3) {
+            width: 15%;
+        }
+
+        thead th:nth-child(4) {
+            width: 10%;
+        }
+
+        tbody tr {
+            height: 2rem;
+        }
+
+        tbody td:nth-child(1) {
+            padding-left: 10px;
+        }
+        
+        tbody td:nth-child(2) {
+            text-align: center;
+        }
+
+        tbody td:nth-child(3) {
+            text-align: center;
+        }
+
+        tbody tr:nth-child(odd) { background-color: $secondary-200;}
+        tbody tr:nth-child(even) { background-color: $secondary-300;}
+    }
+
+    .payment-type {
+        display: flex;
+        height: inherit;
+        justify-content: center;
+        align-items: center;
     }
 }

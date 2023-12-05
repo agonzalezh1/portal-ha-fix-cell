@@ -91,8 +91,11 @@ const ProductsSales = () => {
     const payProducts = async paymentType => {
         const productsTemp = shoppingCart.map(product => {
             return {
+                paymentType,
                 id: product.id,
                 count: product.count,
+                amount: product.amount,
+                productName: product.productName,
             };
         });
 
@@ -101,7 +104,7 @@ const ProductsSales = () => {
         loadingSpinner(false, '');
         setNotification(apiResp);
         setShoppingCart([]);
-        dispatch(addProductSale({ total, paymentType}));
+        dispatch(addProductSale({ total, paymentType, products: productsTemp }));
         // TODO No borrar el console hasta que esten chidas las pruebas de las ventas
         console.log(apiResp.response);
     };

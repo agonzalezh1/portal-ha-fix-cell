@@ -31,8 +31,9 @@ const updateStocktaking = async ({ idProduct, idStore, count }) => {
  * @param {number} total Cantidad total de la venta
  * @param {string} saleType Tipo de venta (Productos, reparacion, tiempo aire)
  * @param {string} paymentType Forma de pago
+ * @param {array} prodyct Lista de productos vendidos (id, cantidad, total, nombre)
  */
-const updateSales = async ({idStore, total, saleType, paymentType}) => {
+const updateSales = async ({idStore, total, saleType, paymentType, products}) => {
     const currentPeriod = getPeriod();
     let query;
 
@@ -54,7 +55,10 @@ const updateSales = async ({idStore, total, saleType, paymentType}) => {
 
     const result = await Stores.updateOne(
         { _id: new Types.ObjectId(idStore) },
-        { $inc: query },
+        {
+            $inc: query,
+            $push: { 'dailySales.products.list': { $each: products? products : [] } },
+        },
         { arrayFilters: [{ 'updatePeriod.period': currentPeriod }] },
     );
 
@@ -100,7 +104,7 @@ const handler = async (req, res) => {
             }
 
             // Actualizacion de las ventas
-            const resp2 = await updateSales({idStore, total, saleType, paymentType});
+            const resp2 = await updateSales({idStore, total, saleType, paymentType, products});
 
             if (resp2.esError) {
                 errores.push(resp2);

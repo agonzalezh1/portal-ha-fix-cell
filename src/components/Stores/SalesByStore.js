@@ -4,6 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { Bar } from 'react-chartjs-2';
 import Modal from '../Modal/Modal';
 import SpendsList from './SpendsList';
+import SalesList from '../Footer/SalesList';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -63,6 +64,7 @@ const SalesByStore = ({ name, sales, dailySales }) => {
     const [airtime] = useState(sales.map(sale => sale.airtime));
     const [spends] = useState(dailySales.spend.reduce( (acc, current) => acc + current.amount, 0));
     const [openModal, setOpenModal] = useState(false);
+    const [openSalesModal, setOpenSalesModal] = useState(false);
 
     const total = dailySales.products.cashPayment + dailySales.products.cardPayment + dailySales.fixes.cashPayment + dailySales.fixes.cardPayment + dailySales.airtime - spends;
 
@@ -77,7 +79,7 @@ const SalesByStore = ({ name, sales, dailySales }) => {
         },
     };
 
-    const labels = getLabelsBarChart();
+    const labels = getLabelsBarChart(sales.length);
 
     const data = {
         labels,
@@ -103,7 +105,7 @@ const SalesByStore = ({ name, sales, dailySales }) => {
     return (<>
         <div className='store-item'>
             <div className='daily-sale'>
-                <h3>{name}</h3>
+                <h3 className='branch-name' onClick={() => setOpenSalesModal(true)}>{name}</h3>
                 <table>
                     <thead>
                         <tr className='bold'>
@@ -144,6 +146,9 @@ const SalesByStore = ({ name, sales, dailySales }) => {
         </div>
         <Modal open={openModal} title={'Detalle de gastos'} onClose={() => setOpenModal(false)}>
             <SpendsList list={dailySales.spend}/>
+        </Modal>
+        <Modal open={openSalesModal} title={'Detalle de ventas'} onClose={() => setOpenSalesModal(false)}>
+            <SalesList list={dailySales.products.list}/>
         </Modal>
     </>);
 };

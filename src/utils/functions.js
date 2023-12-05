@@ -69,8 +69,12 @@ export const createCatalog = catalog => {
     return newCatalog;
 };
 
-export const getLabelsBarChart = () => {
+export const getLabelsBarChart = months => {
     const month = new Date().getMonth();
+    const arrayOfMonths = [];
+    for(let i = 0; i < months; i++) {
+        arrayOfMonths.unshift(MONTHS[month - i]);
+    }
 
-    return [ MONTHS[month - 3], MONTHS[month - 2], MONTHS[month - 1], MONTHS[month] ];
+    return arrayOfMonths;
 };
