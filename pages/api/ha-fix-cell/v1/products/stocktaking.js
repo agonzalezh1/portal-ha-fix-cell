@@ -1,22 +1,61 @@
 import { connectDB, disconnectDB } from '../../../../../src/utils/dbConnect';
+import { v4 as uuidv4 } from 'uuid';
 import Products from '../../../../../src/models/products';
 import Stores from '../../../../../src/models/stores';
-import { SALES_TYPE, STATUS_CODE, PAYMENT_TYPE } from '../../../../../src/utils/constants';
+import Logs from '../../../../../src/models/log';
+import { SALES_TYPE, STATUS_CODE, PAYMENT_TYPE, SEVERITY_TYPE } from '../../../../../src/utils/constants';
 import { Types } from 'mongoose';
 import { getPeriod } from '../../../../../src/utils/functions';
+
+const logTransaction = ({uuid, severity, component, store, msg}) => {
+    try {
+        const obj = {
+            time: new Date(),
+            severity,
+            uuid,
+            component,
+            context: { store },
+            message: msg,
+        };
+        Logs.create(obj);
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 /**
  * Actualiza el inventario de una tienda
  * @param {string} idProduct ObjectId del producto
  * @param {string} idStore ObjectId de la tienda
  * @param {number} count Cantidad a descontar del inventario
+ * @param {string} uuid Identificador de la transaccion
  */
-const updateStocktaking = async ({ idProduct, idStore, count }) => {
+const updateStocktaking = async ({ idProduct, idStore, count, uuid }) => {
+    logTransaction({
+        uuid,
+        severity: SEVERITY_TYPE.INFO,
+        component: 'updateStocktaking',
+        store: idStore,
+        msg: JSON.stringify({
+            _id: idProduct,
+            $inc: { count: (count * -1) },
+            arrayFilters: { store: idStore },
+        }),
+    });
+
     const result = await Products.updateOne(
         { _id: new Types.ObjectId(idProduct) },
         { $inc: { 'stores.$[updateID].count': (count * -1) } },
         { arrayFilters: [{ 'updateID.id': idStore }] },
     );
+
+    logTransaction({
+        uuid,
+        severity: SEVERITY_TYPE.INFO,
+        component: 'updateStocktaking',
+        store: idStore,
+        msg: JSON.stringify(result),
+    });
 
     return {
         producto: result.matchedCount === 1 ? 'OK' : idProduct,
@@ -32,8 +71,9 @@ const updateStocktaking = async ({ idProduct, idStore, count }) => {
  * @param {string} saleType Tipo de venta (Productos, reparacion, tiempo aire)
  * @param {string} paymentType Forma de pago
  * @param {array} prodyct Lista de productos vendidos (id, cantidad, total, nombre)
+ * @param {string} uuid Identificador de la transaccion
  */
-const updateSales = async ({idStore, total, saleType, paymentType, products}) => {
+const updateSales = async ({idStore, total, saleType, paymentType, products, uuid }) => {
     const currentPeriod = getPeriod();
     let query;
 
@@ -53,6 +93,19 @@ const updateSales = async ({idStore, total, saleType, paymentType, products}) =>
         query = { 'sales.$[updatePeriod].airtime': total, 'dailySales.airtime': total };
     }
 
+    logTransaction({
+        uuid,
+        severity: SEVERITY_TYPE.INFO,
+        component: 'updateSales',
+        store: idStore,
+        msg: JSON.stringify({
+            _id: idStore,
+            $inc: query,
+            $push: { 'dailySales.products.list': { $each: products? products : [] } },
+            arrayFilters: [{ 'updatePeriod.period': currentPeriod }],
+        }),
+    });
+
     const result = await Stores.updateOne(
         { _id: new Types.ObjectId(idStore) },
         {
@@ -61,6 +114,14 @@ const updateSales = async ({idStore, total, saleType, paymentType, products}) =>
         },
         { arrayFilters: [{ 'updatePeriod.period': currentPeriod }] },
     );
+
+    logTransaction({
+        uuid,
+        severity: SEVERITY_TYPE.INFO,
+        component: 'updateSales',
+        store: idStore,
+        msg: JSON.stringify(result),
+    });
 
     return {
         sucursal: result.modifiedCount === 1 ? 'OK' : idStore,
@@ -80,6 +141,8 @@ const handler = async (req, res) => {
     let code = 0;
     let response;
 
+    const uuid = uuidv4();
+
     try {
         await connectDB();
         /**
@@ -94,17 +157,17 @@ const handler = async (req, res) => {
 
             // Actualizacion del inventario
             if (saleType === SALES_TYPE.PRODUCTS) {
-                products.forEach(async product => {
-                    const obj = { idStore, idProduct: product.id, count: product.count };
+                for ( const product of products ) {
+                    const obj = { idStore, idProduct: product.id, count: product.count, uuid };
                     const resp = await updateStocktaking(obj);
                     if (resp.esError) {
                         errores.push(resp);
                     }
-                });
+                }
             }
 
             // Actualizacion de las ventas
-            const resp2 = await updateSales({idStore, total, saleType, paymentType, products});
+            const resp2 = await updateSales({idStore, total, saleType, paymentType, products, uuid});
 
             if (resp2.esError) {
                 errores.push(resp2);

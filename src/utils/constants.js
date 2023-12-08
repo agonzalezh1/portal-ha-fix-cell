@@ -181,3 +181,8 @@ export const SERVICE_TYPE = Object.freeze({
         icon: '/img/control.png',
     },
 });
+
+export const SEVERITY_TYPE = Object.freeze({
+    INFO: 'I',
+    ERROR: 'E',
+});
