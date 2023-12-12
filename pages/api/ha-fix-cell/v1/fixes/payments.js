@@ -1,7 +1,7 @@
 import { connectDB, disconnectDB } from '../../../../../src/utils/dbConnect';
 import Stores from '../../../../../src/models/stores';
 import Fixes from '../../../../../src/models/fixes';
-import { SALES_TYPE, STATUS_CODE } from '../../../../../src/utils/constants';
+import { SALES_TYPE, STATUS_CODE, PAYMENT_TYPE } from '../../../../../src/utils/constants';
 import { Types } from 'mongoose';
 import { getPeriod } from '../../../../../src/utils/functions';
 
@@ -10,8 +10,9 @@ import { getPeriod } from '../../../../../src/utils/functions';
  * @param {string} idStore Identificador de la tienda
  * @param {object} fixPayment Objeto con la información de los pagos del folio.
  *                  Acumulado de todos los abonos y agrupados por tipo
+ * @param {number} folio Identificador de la reparacion
  */
-const updateFixSales = async ({ idStore, fixPayment }) => {
+const updateFixSales = async ({ idStore, fixPayment, folio }) => {
     const currentPeriod = getPeriod();
     const query = {
         'sales.$[updatePeriod].fixes.cashPayment': fixPayment.cashPayment,
@@ -20,12 +21,28 @@ const updateFixSales = async ({ idStore, fixPayment }) => {
         'dailySales.fixes.cardPayment': fixPayment.cardPayment,
     };
 
+    const arrayFixes = [];
+    if ( fixPayment.cashPayment !== 0 ) {
+        arrayFixes.push({
+            paymentType: PAYMENT_TYPE.CASH,id: 'N/A', count: 0, amount: fixPayment.cashPayment, productName: `Reparación - ${folio}`,
+        });
+    }
+
+    if ( fixPayment.cardPayment !== 0 ) {
+        arrayFixes.push({
+            paymentType: PAYMENT_TYPE.CARD, id: 'N/A', count: 0, amount: fixPayment.cardPayment, productName: `Reparación - ${folio}`,
+        });
+    }
+
     const result = await Stores.updateOne(
         { _id: new Types.ObjectId(idStore) },
-        { $inc: query },
+        {
+            $inc: query,
+            $push: { 'dailySales.products.list': { $each: arrayFixes } },
+        },
         { arrayFilters: [{ 'updatePeriod.period': currentPeriod }] },
     );
-        console.log(result);
+
     return {
         sucursal: result.modifiedCount === 1 ? 'OK' : idStore,
         tipo: SALES_TYPE.SERVICES,
@@ -55,7 +72,7 @@ const handler = async (req, res) => {
             case 'PUT':
                 const errores = [];
 
-                const resp1 = await updateFixSales({ idStore, fixPayment });
+                const resp1 = await updateFixSales({ idStore, fixPayment, folio });
                 if (resp1.esError) {
                     errores.push(resp1);
                 } else {

@@ -31,31 +31,12 @@ const logTransaction = ({uuid, severity, component, store, msg}) => {
  * @param {string} uuid Identificador de la transaccion
  */
 const updateStocktaking = async ({ idProduct, idStore, count, uuid }) => {
-    logTransaction({
-        uuid,
-        severity: SEVERITY_TYPE.INFO,
-        component: 'updateStocktaking',
-        store: idStore,
-        msg: JSON.stringify({
-            _id: idProduct,
-            $inc: { count: (count * -1) },
-            arrayFilters: { store: idStore },
-        }),
-    });
 
     const result = await Products.updateOne(
         { _id: new Types.ObjectId(idProduct) },
         { $inc: { 'stores.$[updateID].count': (count * -1) } },
         { arrayFilters: [{ 'updateID.id': idStore }] },
     );
-
-    logTransaction({
-        uuid,
-        severity: SEVERITY_TYPE.INFO,
-        component: 'updateStocktaking',
-        store: idStore,
-        msg: JSON.stringify(result),
-    });
 
     return {
         producto: result.matchedCount === 1 ? 'OK' : idProduct,
@@ -93,19 +74,6 @@ const updateSales = async ({idStore, total, saleType, paymentType, products, uui
         query = { 'sales.$[updatePeriod].airtime': total, 'dailySales.airtime': total };
     }
 
-    logTransaction({
-        uuid,
-        severity: SEVERITY_TYPE.INFO,
-        component: 'updateSales',
-        store: idStore,
-        msg: JSON.stringify({
-            _id: idStore,
-            $inc: query,
-            $push: { 'dailySales.products.list': { $each: products? products : [] } },
-            arrayFilters: [{ 'updatePeriod.period': currentPeriod }],
-        }),
-    });
-
     const result = await Stores.updateOne(
         { _id: new Types.ObjectId(idStore) },
         {
@@ -114,14 +82,6 @@ const updateSales = async ({idStore, total, saleType, paymentType, products, uui
         },
         { arrayFilters: [{ 'updatePeriod.period': currentPeriod }] },
     );
-
-    logTransaction({
-        uuid,
-        severity: SEVERITY_TYPE.INFO,
-        component: 'updateSales',
-        store: idStore,
-        msg: JSON.stringify(result),
-    });
 
     return {
         sucursal: result.modifiedCount === 1 ? 'OK' : idStore,
