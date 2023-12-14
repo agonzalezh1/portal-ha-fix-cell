@@ -32,11 +32,11 @@ export const getProductByName = async productName => {
     }
 };
 
-export const updateProduct = async ({ id, wholesalePrice, midWholesalePrice, publicPrice, cost, stores }) => {
+export const updateProduct = async ({ id, productName, wholesalePrice, midWholesalePrice, publicPrice, cost, stores }) => {
     const config = {
         method: 'post',
         url: urlApis.products,
-        data: { id, wholesalePrice, midWholesalePrice, publicPrice, cost, stores },
+        data: { id, productName, wholesalePrice, midWholesalePrice, publicPrice, cost, stores },
         timeout: 5000,
     };
 

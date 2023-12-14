@@ -55,7 +55,7 @@ const handler = async (req, res) => {
             case 'POST':
                 await Products.updateOne(
                     { _id : new Types.ObjectId(id)},
-                    { $set: { wholesalePrice, midWholesalePrice, publicPrice, cost, stores} },
+                    { $set: { productName, wholesalePrice, midWholesalePrice, publicPrice, cost, stores} },
                 );
                 message = 'Actualizacion correcta';
                 break;
