@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useStores } from '../../hooks/useStores';
@@ -56,17 +57,26 @@ const UpdateProduct = ({ product }) => {
      */
     const updateForm = async form => {
         const storesArray = stores.map(store => {
-            return {
-                id: store._id,
-                count: Number(form[store._id]),
-            };
+            if(form[store._id]) {
+                return {
+                    id: store._id,
+                    count: Number(form[store._id]),
+                };
+            } else {
+                return {
+                    id: store._id,
+                    count: Number(product.stores.find(storeTemp => storeTemp.id === store._id).count),
+                };
+            }
+            
         });
         const newProduct = {
             id: product.id,
-            wholesalePrice: Number(form.wholesalePrice),
-            midWholesalePrice: Number(form.midWholesalePrice),
-            publicPrice: Number(form.publicPrice),
-            cost: Number(form.cost),
+            productName: form.productName,
+            wholesalePrice: Number(form.wholesalePrice? form.wholesalePrice: product.wholesalePrice ),
+            midWholesalePrice: Number(form.midWholesalePrice? form.midWholesalePrice: product.midWholesalePrice ),
+            publicPrice: Number(form.publicPrice? form.publicPrice : product.publicPrice),
+            cost: Number(form.cost? form.cost : product.cost),
             stores: storesArray,
         };
         const apiResp = await updateProduct(newProduct);
@@ -74,8 +84,20 @@ const UpdateProduct = ({ product }) => {
     };
 
     return (<form className='product-table' onSubmit={handleSubmit(updateForm)}>
-        <div className='product-name bold' onClick={() => setHiddenContent(!hiddenContent)}>
-            <h3>{product.productName}</h3>
+        <div className='product-name'>
+            <div className={`icon ${!hiddenContent? 'rotate': ''}`} onClick={() => setHiddenContent(!hiddenContent)}>
+                <Image src={'/img/icons/arrow.png'} width={24} height={24} alt={'icon'}/>
+            </div>
+            <InputText
+                id={'productName'}
+                placeholder={'Nombre del producto'}
+                maxLength={130}
+                errors={errors.productName}
+                valueIn={product.productName}
+                textFormat={TEXT_CONFIG.ALPHANUM_WITH_SPACES}
+                rules={requiredField}
+                control={control}
+            />
             {formState.isValid &&
                 <Action type={ACTION_TYPES.SAVE} action={handleSubmit(updateForm)} />
             }
