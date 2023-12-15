@@ -37,8 +37,10 @@ const CreateFolio = ({ onFinish }) => {
             fixesTemp.push(form.otherFix);
         }
 
+        const currentDate = new Date().setHours(12,0,0,0);
         const newFolio = {
             customerName: upperCase(form.customerName),
+            date: currentDate,
             fixes: fixesTemp,
             comments: form.comments,
             advancePayment: {

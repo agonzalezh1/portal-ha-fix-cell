@@ -1,11 +1,11 @@
 import { urlApis, PAYMENT_TYPE } from '../constants';
 import axios from 'axios';
 
-export const createFolio = async ({ folio, customerName, fixes, comments, advancePayment, total, store }) => {
+export const createFolio = async ({ folio, date, customerName, fixes, comments, advancePayment, total, store }) => {
     const config = {
         method: 'put',
         url: urlApis.fixes,
-        data: { folio, customerName, fixes, comments, advancePayment, total, store },
+        data: { folio, date, customerName, fixes, comments, advancePayment, total, store },
         timeout: 5000,
     };
 
@@ -64,7 +64,7 @@ export const addAdvancePayment = async({ folio, advancePayment }) => {
     }
 };
 
-export const fixTotalPayment = async({ idStore, folio, total, advancePayment, paymentType }) => {
+export const fixTotalPayment = async({ idStore, folio, total, advancePayment, paymentType, deliveryDate }) => {
     const totalAdvancePayment = advancePayment.reduce( (acc, current) => acc + current.amount, 0);
     const missingAmount = total - totalAdvancePayment;
     const initialPayment = { cashPayment: 0, cardPayment: 0 };
@@ -92,7 +92,7 @@ export const fixTotalPayment = async({ idStore, folio, total, advancePayment, pa
     const config = {
         method: 'put',
         url: urlApis.fixesPayments,
-        data: { idStore, folio, fixPayment: {...payment} },
+        data: { idStore, folio, deliveryDate, fixPayment: {...payment} },
         timeout: 5000,
     };
 

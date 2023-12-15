@@ -46,10 +46,8 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
     const toLocalDateString = inputDate => {
 
         const inDate = new Date(inputDate);
-        // const timezoneOffset = inDate.getTimezoneOffset() * 60000;
-        const newDate = new Date(inDate.getTime()); // + timezoneOffset);
-        const day = newDate.getDate();
-        const month = MONTHS[newDate.getMonth()];
+        const day = inDate.getDate();
+        const month = MONTHS[inDate.getMonth()];
 
         return `${day} de ${month}`;
     };
