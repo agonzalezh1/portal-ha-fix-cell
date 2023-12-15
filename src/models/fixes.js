@@ -18,7 +18,7 @@ const FixesSchema = new Schema(
 );
 
 FixesSchema.statics.create = async body => {
-    const currentDate = new Date().setHours(0,0,0,0);
+
     const comment = [];
     comment.push(body.comments);
     const fixes = new Fixes({
@@ -29,8 +29,8 @@ FixesSchema.statics.create = async body => {
         comments: comment,
         total: body.total,
         advancePayment: body.advancePayment,
-        date: currentDate,
-        deliveryDate: currentDate,
+        date: body.date,
+        deliveryDate: body.date,
         status: 1,
     });
     return fixes.save();

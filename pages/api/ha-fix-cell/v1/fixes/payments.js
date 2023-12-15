@@ -63,7 +63,7 @@ const handler = async (req, res) => {
     let response;
 
     try {
-        const { advancePayment, idStore, folio, fixPayment } = req.body;
+        const { advancePayment, idStore, folio, fixPayment, deliveryDate } = req.body;
         await connectDB();
         switch (req.method) {
             /**
@@ -76,10 +76,9 @@ const handler = async (req, res) => {
                 if (resp1.esError) {
                     errores.push(resp1);
                 } else {
-                    const currentDate = new Date().setHours(0, 0, 0, 0);
                     const resp2 = await Fixes.updateOne(
                         { folio },
-                        { $set: { status: 5, deliveryDate: currentDate } } );
+                        { $set: { status: 5, deliveryDate } } );
 
                     if (resp2.esError) {
                         errores.push(resp2);
