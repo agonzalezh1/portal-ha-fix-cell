@@ -36,6 +36,7 @@ const handler = async (req, res) => {
                     response = result.map(product => {
                         return {
                             id: product._id,
+                            idProduct: product.idProduct,
                             productName: capitalize(product.productName),
                             brand: product.brand.id,
                             productType: product.productType.id,

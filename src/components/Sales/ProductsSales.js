@@ -63,6 +63,7 @@ const ProductsSales = () => {
     const addProduct = event => {
         const newProduct = {
             id: event.productSelected.id,
+            idProduct: event.productSelected.idProduct,
             productName: event.productSelected.productName,
             count: event.count,
             amount: event.amount,
@@ -117,6 +118,7 @@ const ProductsSales = () => {
     const createRowOfProduct = (product, index) => {
         return (
             <tr key={product.productName}>
+                <td>{product.idProduct}</td>
                 <td>{product.productName}</td>
                 <td className='numeric'>{product.count}</td>
                 <td className='numeric'>{product.amount}</td>
@@ -152,6 +154,7 @@ const ProductsSales = () => {
         <table>
             <thead>
                 <tr>
+                    <th>Id</th>
                     <th>Nombre</th>
                     <th>Cantidad</th>
                     <th>Subtotal</th>
