@@ -105,12 +105,13 @@ const UpdateProduct = ({ product }) => {
         {!hiddenContent && <>
             <div className='productType-brand'>
                 <div className='item'>
-                    <p>Marca: </p>
-                    <p className='bold'>{BRAND_TYPES[product.brand]}</p>
+                    <p>Id: <span className='bold'>{product.idProduct}</span></p>
                 </div>
                 <div className='item'>
-                    <p>Tipo: </p>
-                    <p className='bold'>{PRODUCT_TYPES[product.productType]}</p>
+                    <p>Marca: <span className='bold'>{BRAND_TYPES[product.brand]}</span></p>
+                </div>
+                <div className='item'>
+                    <p>Tipo: <span className='bold'>{PRODUCT_TYPES[product.productType]}</span></p>
                 </div>
             </div>
             <div className='prices-container'>

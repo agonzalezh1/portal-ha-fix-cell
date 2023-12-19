@@ -43,26 +43,23 @@
             color: $secondary-200;
         }
 
-        thead th:nth-child(1) { width: 50% }
-        thead th:nth-child(2) { width: 20% }
-        thead th:nth-child(3) { width: 20% }
-        thead th:nth-child(4) { width: 10% }
+        thead th:nth-child(1) { width: 8% }
+        thead th:nth-child(2) { width: 58% }
+        thead th:nth-child(3) { width: 13% }
+        thead th:nth-child(4) { width: 13% }
+        thead th:nth-child(5) { width: 8% }
 
         tbody tr { height: 2rem }
 
-        tbody td:nth-child(1) {
+        tbody td:nth-child(2) {
             padding-left: 1.5rem;
         }
 
-        tbody td:nth-child(2) {
+        tbody td:nth-child(1), td:nth-child(3), td:nth-child(4) {
             text-align: center;
         }
 
-        tbody td:nth-child(3) {
-            text-align: center;
-        }
-
-        tbody td:nth-child(4) {
+        tbody td:nth-child(5) {
             height: inherit;
             display: flex;
             justify-content: center;
@@ -90,7 +87,7 @@
     ProductsList Component
 ***********************************/
 .products-list-container {
-    width: 40rem;
+    width: 700px;
     height: 450px;
     display: flex;
     flex-direction: column;
@@ -110,16 +107,18 @@
         }
 
         thead th:nth-child(1) { 
-            width: 10%;
-            
+            width: 10%;  
+        }
+        thead th:nth-child(2) { 
+            width: 10%;  
         }
 
-        thead th:nth-child(2) { 
-            width: 70%;
+        thead th:nth-child(3) { 
+            width: 65%;
             
         }
-        thead th:nth-child(3) {
-            width: 20%;
+        thead th:nth-child(4) {
+            width: 15%;
         }
 
         tbody tr {
@@ -127,7 +126,7 @@
             cursor: pointer;
         }
 
-        tbody td:nth-child(3) {
+        tbody td:nth-child(2), td:nth-child(4) {
             text-align: center;
         }
 

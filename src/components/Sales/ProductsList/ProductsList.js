@@ -93,6 +93,7 @@ const ProductsList = ({ productsList, addProduct }) => {
                 <td className='check'>{ product.productName === productSelected.productName &&
                     <Image src={'/img/icons/check.png'} width={20} height={20} alt={'icon'}/>
                 }</td>
+                <td>{product.idProduct}</td>
                 <td>{product.productName}</td>
                 <td>{stock}</td>
             </tr>
@@ -105,6 +106,7 @@ const ProductsList = ({ productsList, addProduct }) => {
                 <thead>
                     <tr>
                         <th/>
+                        <th>Id</th>
                         <th>Nombre</th>
                         <th>En stock</th>
                     </tr>
