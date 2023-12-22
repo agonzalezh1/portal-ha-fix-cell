@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import Proptypes from 'prop-types';
 import Image from 'next/image';
-import { useForm } from 'react-hook-form';
-import InputText from '../Controllers/InputText';
-import { TEXT_CONFIG } from '../../utils/constants';
 
 /**
  * Buscador de productos
@@ -13,27 +10,36 @@ import { TEXT_CONFIG } from '../../utils/constants';
  */
 const Search = ({ label, eventSearch }) => {
 
-    const { control } = useForm({ mode: 'onChange' });
-    const [ value, setValue] = useState('');
+    const [ value, setValue ] = useState('');
+
+    /**
+     * Funcion que se detona cuando se quiere detonar la funcion de busqueda
+     * @param {string} e Valor de la busqueda 
+     */
+    const execEventSearch = e => {
+        eventSearch(e);
+        setValue('');
+    };
 
     return (
         <div className='search-container'>
-            <InputText
-                id={'search'}
-                title={''}
-                placeholder={label}
-                maxLength={50}
-                valueIn={value}
-                textFormat={TEXT_CONFIG.ALPHANUM_WITH_SPACES}
-                changeEvent={e => setValue(e)}
-                control={control}
-                keyDownEvent={e => {
-                    if (e === 'Enter' && value) {
-                        eventSearch(value);
-                    }
-                }}
-            />
-            <div className='icon' onClick={() => value && eventSearch(value)}>
+            <div className={`container-input-text`}  >
+                <input
+                    id={'search'}
+                    name={'search'}
+                    value={value}
+                    placeholder={label}
+                    maxLength={50}
+                    autoComplete='off'
+                    onChange={e => setValue(e.target.value)}
+                    onKeyDown={e => {
+                        if (e.key === 'Enter' && value) {
+                            execEventSearch(value);
+                        }
+                    }}
+                />
+            </div>
+            <div className='icon' onClick={() => value && execEventSearch(value)}>
                 <div>
                     <Image src={'/img/icons/search.png'} width={32} height={32} alt={'search'} />
                 </div>
