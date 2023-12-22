@@ -116,7 +116,7 @@ const handler = async (req, res) => {
             const errores = [];
 
             // Actualizacion del inventario
-            if (saleType === SALES_TYPE.PRODUCTS) {
+            if (saleType === SALES_TYPE.PRODUCTS && products[0].id != null) {
                 for ( const product of products ) {
                     const obj = { idStore, idProduct: product.id, count: product.count, uuid };
                     const resp = await updateStocktaking(obj);
