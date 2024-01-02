@@ -79,7 +79,7 @@ const SalesByStore = ({ name, sales, dailySales }) => {
         },
     };
 
-    const labels = getLabelsBarChart(sales.length);
+    const labels = getLabelsBarChart(6);
 
     const data = {
         labels,
