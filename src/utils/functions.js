@@ -73,7 +73,11 @@ export const getLabelsBarChart = months => {
     const month = new Date().getMonth();
     const arrayOfMonths = [];
     for(let i = 0; i < months; i++) {
-        arrayOfMonths.unshift(MONTHS[month - i]);
+        if (month === -1) {
+            month = 11;
+        }
+        arrayOfMonths.unshift(MONTHS[month]);
+        month = month - 1;
     }
 
     return arrayOfMonths;
