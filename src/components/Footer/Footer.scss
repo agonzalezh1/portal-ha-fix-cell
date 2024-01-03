@@ -13,11 +13,15 @@
     }
 
     table {
-        tbody tr {
-            height: 2rem;
+        tbody tr, td {
+            height: 25px;
         }
-        tbody tr td:first-child {
-            width: 220px;
+        tbody tr td:nth-child(1), td:nth-child(4) {
+            width: 150px;
+        }
+
+        tbody tr td:nth-child(2), td:nth-child(3), td:nth-child(5) {
+            width: 80px;
         }
     }
 }

@@ -22,7 +22,7 @@ const handler = async (req, res) => {
              */
             case 'GET':
                 const { idStore } = req.query;
-                const result = await Stores.find({ _id : new Types.ObjectId(idStore)}, { dailySales: 1 });
+                const result = await Stores.find({ _id : new Types.ObjectId(idStore)}, { dailySales: 1, cashFund: 1 });
                 let spendAcc = 0;
                 if (result[0].dailySales.spend.length > 0) {
                     spendAcc = result[0].dailySales.spend.reduce( (acc, current) => acc + current.amount, 0);
@@ -32,6 +32,7 @@ const handler = async (req, res) => {
                     fixes: result[0].dailySales.fixes,
                     airtime: result[0].dailySales.airtime,
                     spend: spendAcc,
+                    cashFund: result[0].cashFund,
                 };
                 message = 'Consulta correcta';
                 break;
@@ -40,9 +41,11 @@ const handler = async (req, res) => {
              * El reinicio es en todas las tiendas
              */
             case 'POST':
+                const { cashFund } = req.body;
                 await Stores.updateMany(
                     {},
                     {$set: {
+                        'cashFund': cashFund,
                         'dailySales.products.cashPayment': 0,
                         'dailySales.products.cardPayment': 0,
                         'dailySales.products.list': [],

@@ -6,6 +6,7 @@ const initialState = {
     fixes: { cashPayment: 0, cardPayment: 0 },
     airtime: 0,
     spend: 0,
+    cashFund: 0,
 };
 
 export const salesSlice = createSlice({ name: 'sales', initialState,
@@ -33,6 +34,7 @@ export const salesSlice = createSlice({ name: 'sales', initialState,
             state.fixes = action.payload.fixes;
             state.airtime = action.payload.airtime;
             state.spend = action.payload.spend;
+            state.cashFund = action.payload.cashFund;
         },
     },
 });

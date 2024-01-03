@@ -1,4 +1,4 @@
-import { urlApis } from '../constants';
+import { urlApis, environmentVariables } from '../constants';
 import axios from 'axios';
 
 export const updateStocktaking = async ({ products, idStore, total, saleType, paymentType }) => {
@@ -6,7 +6,7 @@ export const updateStocktaking = async ({ products, idStore, total, saleType, pa
         method: 'post',
         url: urlApis.stocktaking,
         data: { products, idStore, total, saleType, paymentType },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {

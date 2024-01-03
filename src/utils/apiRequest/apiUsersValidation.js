@@ -1,4 +1,4 @@
-import { urlApis } from '../constants';
+import { urlApis, environmentVariables } from '../constants';
 import axios from 'axios';
 
 export const authenticateUser =  async(user, password) => {
@@ -6,7 +6,7 @@ export const authenticateUser =  async(user, password) => {
         method: 'post',
         url: urlApis.usersValidation,
         data: { user, password },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {

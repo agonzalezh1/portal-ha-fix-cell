@@ -1,4 +1,4 @@
-import { urlApis } from '../constants';
+import { urlApis, environmentVariables } from '../constants';
 import { getPeriod } from '../functions';
 import axios from 'axios';
 
@@ -6,7 +6,7 @@ export const getStores = async() => {
     const config = {
         method: 'get',
         url: urlApis.stores,
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -22,7 +22,7 @@ export const createStore = async name => {
         method: 'put',
         url: urlApis.stores,
         data: { name, period: getPeriod() },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {

@@ -4,6 +4,7 @@ const StoresSchema = new Schema(
     {
         name: { type: String, required: true},
         sales: { type: Array },
+        cashFund: { type: Number },
         dailySales: {
             products: {
                 cashPayment: { type: Number },
