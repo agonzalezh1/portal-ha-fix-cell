@@ -1,4 +1,4 @@
-import { urlApis, PAYMENT_TYPE } from '../constants';
+import { urlApis, PAYMENT_TYPE, environmentVariables } from '../constants';
 import axios from 'axios';
 
 export const createFolio = async ({ folio, date, customerName, fixes, comments, advancePayment, total, store }) => {
@@ -6,7 +6,7 @@ export const createFolio = async ({ folio, date, customerName, fixes, comments, 
         method: 'put',
         url: urlApis.fixes,
         data: { folio, date, customerName, fixes, comments, advancePayment, total, store },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -21,7 +21,7 @@ export const findFolio = async({ folio }) => {
     const config = {
         method: 'get',
         url: `${urlApis.fixes}?data=${folio}`,
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -37,7 +37,7 @@ export const updateFix = async({ folio, comments, status, total }) => {
         method: 'post',
         url: `${urlApis.fixes}`,
         data: { folio, comments, status, total },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -53,7 +53,7 @@ export const addAdvancePayment = async({ folio, advancePayment }) => {
         method: 'post',
         url: `${urlApis.fixesPayments}`,
         data: { folio, advancePayment },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -93,7 +93,7 @@ export const fixTotalPayment = async({ idStore, folio, total, advancePayment, pa
         method: 'put',
         url: urlApis.fixesPayments,
         data: { idStore, folio, deliveryDate, fixPayment: {...payment} },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {

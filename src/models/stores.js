@@ -3,6 +3,7 @@ import { Schema, model, models } from 'mongoose';
 const StoresSchema = new Schema(
     {
         name: { type: String, required: true},
+        cashFund: { type: Number },
         sales: { type: Array },
         dailySales: {
             products: {
@@ -26,6 +27,7 @@ const StoresSchema = new Schema(
 StoresSchema.statics.create = async body => {
     const store = new Stores({
         name: body.name,
+        cashFund: 0,
         sales: [{
             period: body.period,
             products: { cashPayment: 0, cardPayment: 0 },

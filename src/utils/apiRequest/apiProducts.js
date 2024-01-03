@@ -1,4 +1,4 @@
-import { urlApis } from '../constants';
+import { urlApis, environmentVariables } from '../constants';
 import axios from 'axios';
 
 export const createProduct = async ({ productName, brand, productType, wholesalePrice, midWholesalePrice, publicPrice, cost, stores }) => {
@@ -6,7 +6,7 @@ export const createProduct = async ({ productName, brand, productType, wholesale
         method: 'put',
         url: urlApis.products,
         data: { productName, brand, productType, wholesalePrice, midWholesalePrice, publicPrice, cost, stores },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -21,7 +21,7 @@ export const getProductByName = async productName => {
     const config = {
         method: 'get',
         url: `${urlApis.products}?idProduct=${productName}`,
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -37,7 +37,7 @@ export const updateProduct = async ({ id, productName, wholesalePrice, midWholes
         method: 'post',
         url: urlApis.products,
         data: { id, productName, wholesalePrice, midWholesalePrice, publicPrice, cost, stores },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {

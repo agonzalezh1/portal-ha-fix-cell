@@ -39,6 +39,7 @@ const FixPayment = ({ folio, total, advancePayment, paymentType, onFinish }) => 
                 fixes: resp.response.fixes,
                 airtime: resp.response.airtime,
                 spend: resp.response.spend,
+                cashFund: resp.response.cashFund,
             }));
         });
     };

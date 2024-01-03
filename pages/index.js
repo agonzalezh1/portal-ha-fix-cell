@@ -42,6 +42,7 @@ export default function Home() {
                     fixes: resp.response.fixes,
                     airtime: resp.response.airtime,
                     spend: resp.response.spend,
+                    cashFund: resp.response.cashFund,
                 }));
             });
 

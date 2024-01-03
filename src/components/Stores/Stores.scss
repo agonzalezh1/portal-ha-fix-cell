@@ -12,6 +12,15 @@
         }
         justify-content: space-between;
         margin-bottom: 25px;
+
+        .cash-fund-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .cash-fund {
+                width: 70px;
+            }
+        }
     }
 
     .store-details-container {

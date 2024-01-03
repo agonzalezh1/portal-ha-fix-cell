@@ -1,11 +1,11 @@
-import { urlApis } from '../constants';
+import { urlApis, environmentVariables } from '../constants';
 import axios from 'axios';
 
 export const getSalesByStore = async idStore => {
     const config = {
         method: 'get',
         url: `${urlApis.salesByStore}?idStore=${idStore}`,
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -16,11 +16,12 @@ export const getSalesByStore = async idStore => {
     }
 };
 
-export const restartSales = async () => {
+export const restartSales = async ({ cashFund }) => {
     const config = {
         method: 'post',
         url: urlApis.salesByStore,
-        timeout: 5000,
+        data: { cashFund },
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -36,7 +37,7 @@ export const addSpendInStore = async ({ idStore, description, amount }) => {
         method: 'post',
         url: urlApis.spendByStore,
         data: { idStore, description, amount },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {

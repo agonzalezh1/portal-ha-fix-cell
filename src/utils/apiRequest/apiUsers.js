@@ -1,4 +1,4 @@
-import { urlApis } from '../constants';
+import { urlApis, environmentVariables } from '../constants';
 import axios from 'axios';
 
 export const createUser = async ({ username, name, password, store, grants, profile }) => {
@@ -6,7 +6,7 @@ export const createUser = async ({ username, name, password, store, grants, prof
         method: 'put',
         url: urlApis.users,
         data: { username, password, name, store, grants, profile },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -21,7 +21,7 @@ export const getUsers = async() => {
     const config = {
         method: 'get',
         url: urlApis.users,
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
@@ -37,7 +37,7 @@ export const modifyUser = async ({ username, grants, store }) => {
         method: 'post',
         url: urlApis.users,
         data: { username, grants, store },
-        timeout: 5000,
+        timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
     try {
