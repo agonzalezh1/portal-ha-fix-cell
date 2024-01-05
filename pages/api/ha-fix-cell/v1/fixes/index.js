@@ -15,14 +15,14 @@ const handler = async (req, res) => {
     let response;
 
     try {
-        const { folio, date, customerName, fixes, comments, advancePayment, total, store, status } = req.body;
+        const { folio, date, customerName, phoneNumber, fixes, comments, advancePayment, total, store, status } = req.body;
         const { data } = req.query;
         await connectDB();
         switch (req.method) {
             case 'PUT':
                 const fix = await Fixes.find().sort({ _id: -1 }).limit(1);
                 const newFolio = fix[0].folio + 1;
-                await Fixes.create({ customerName, date, fixes, store, comments, total, advancePayment, folio: newFolio });
+                await Fixes.create({ customerName, phoneNumber, date, fixes, store, comments, total, advancePayment, folio: newFolio });
                 await disconnectDB();
                 message = 'Alta de folio correcta';
                 response = { folio: newFolio };

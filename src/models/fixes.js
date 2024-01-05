@@ -4,6 +4,7 @@ const FixesSchema = new Schema(
     {
         folio: { type: Number, required: true},
         customerName: { type: String, required: true },
+        phoneNumber: { type: String },
         fixType: { type: Array },
         store: { type: String, required: true },
         comments: { type: Array },
@@ -24,6 +25,7 @@ FixesSchema.statics.create = async body => {
     const fixes = new Fixes({
         folio: body.folio,
         customerName: body.customerName,
+        phoneNumber: body.phoneNumber,
         fixType: body.fixes,
         store: body.store,
         comments: comment,

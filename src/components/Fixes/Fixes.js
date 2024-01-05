@@ -62,6 +62,7 @@ const Fixes = () => {
                 setFixDetails({
                     folio: apiResp.response[0].folio,
                     customerName: apiResp.response[0].customerName,
+                    phoneNumber: apiResp.response[0].phoneNumber,
                     fixType: apiResp.response[0].fixType,
                     comments: apiResp.response[0].comments,
                     date: apiResp.response[0].date,

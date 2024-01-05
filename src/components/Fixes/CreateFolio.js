@@ -25,6 +25,10 @@ const CreateFolio = ({ onFinish }) => {
     const validateFixes = {
         validate: () => fixes.some(fix => fix.checked === true) || !!watch('otherFix'),
     };
+    const numberFormat = {
+        required: true,
+        validate: value => value.length === 10,
+    };
 
     /**
      * Ejecuta el api de crear folio con la información del formulario
@@ -37,9 +41,10 @@ const CreateFolio = ({ onFinish }) => {
             fixesTemp.push(form.otherFix);
         }
 
-        const currentDate = new Date().setHours(12,0,0,0);
+        const currentDate = new Date().setSeconds(0,0);
         const newFolio = {
             customerName: upperCase(form.customerName),
+            phoneNumber: form.phoneNumber,
             date: currentDate,
             fixes: fixesTemp,
             comments: form.comments,
@@ -115,18 +120,33 @@ const CreateFolio = ({ onFinish }) => {
 
     return (<>
         <form className='create-folio-container'>
-            <div className='customer-name'>
-                <InputText
-                    id={'customerName'}
-                    title={'Nombre del cliente'}
-                    placeholder={'Baby shark'}
-                    maxLength={30}
-                    errors={errors.customerName}
-                    valueIn={''}
-                    textFormat={TEXT_CONFIG.ALPHANUM_WITH_SPACES}
-                    rules={requiredField}
-                    control={control}
-                />
+            <div className='customer-info'>
+                <div className='customer-name'>
+                    <InputText
+                        id={'customerName'}
+                        title={'Nombre del cliente'}
+                        placeholder={'Baby shark'}
+                        maxLength={30}
+                        errors={errors.customerName}
+                        valueIn={''}
+                        textFormat={TEXT_CONFIG.ALPHANUM_WITH_SPACES}
+                        rules={requiredField}
+                        control={control}
+                    />
+                </div>
+                <div className='phone-number'>
+                    <InputText
+                        id={'phoneNumber'}
+                        title={'Número de contacto'}
+                        placeholder={'9999999999'}
+                        maxLength={10}
+                        errors={errors.phoneNumber}
+                        valueIn={''}
+                        textFormat={TEXT_CONFIG.NUMBER}
+                        rules={numberFormat}
+                        control={control}
+                    />
+                </div>
             </div>
             <p className='bold'>Selecciona el tipo de reparación</p>
             <div className='fixes-container'>

@@ -18,6 +18,8 @@ export const upperCase = valor => valor.toUpperCase();
 
 export const capitalize = valor => valor.toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
 
+export const phoneMask = value => value.replace(/(\d{3})(\d)/, '$1 $2').replace(/(\d{3}\s\d{3})(\d{1,2})/, '$1 $2').replace(/(\d{3}\s\d{3}\s\d{4})\d+?$/, '$1');
+
 /**
  * Función que determina el formato de texto que se va a aplicar a una cadena de entrada
  * @param {string} textoEntrada Cadena a dar formato

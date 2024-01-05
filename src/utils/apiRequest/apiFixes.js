@@ -1,11 +1,11 @@
 import { urlApis, PAYMENT_TYPE, environmentVariables } from '../constants';
 import axios from 'axios';
 
-export const createFolio = async ({ folio, date, customerName, fixes, comments, advancePayment, total, store }) => {
+export const createFolio = async ({ folio, date, customerName, phoneNumber, fixes, comments, advancePayment, total, store }) => {
     const config = {
         method: 'put',
         url: urlApis.fixes,
-        data: { folio, date, customerName, fixes, comments, advancePayment, total, store },
+        data: { folio, date, customerName, phoneNumber, fixes, comments, advancePayment, total, store },
         timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
