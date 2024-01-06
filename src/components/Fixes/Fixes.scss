@@ -25,10 +25,22 @@
 .create-folio-container {
     width: 500px;
 
-    .customer-name {
+    .customer-info {
         width: 100%;
         display: flex;
-        margin-bottom: 20px;
+        justify-content: space-between;
+
+        .customer-name {
+            width: 65%;
+            display: flex;
+            margin-bottom: 20px;
+        }
+    
+        .phone-number {
+            width: 30%;
+            display: flex;
+            margin-bottom: 20px;
+        }
     }
 
     .fixes-container {
@@ -76,8 +88,9 @@
         align-items: center;
         margin-bottom: 20px;
 
-        .folio { width: 20% }
+        .folio { width: 15% }
         .customer-name { width: 40% }
+        .phone-number { width: 25% }
         .date-admission {
             display: flex;
             gap: 10px;

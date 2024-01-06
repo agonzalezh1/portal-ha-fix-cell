@@ -7,7 +7,7 @@ import Picker from '../Controllers/Picker';
 import AdvancePayment from './AdvancePayment';
 import FixPayment from './FixPayment';
 import Modal from '../Modal/Modal';
-import { createCatalog, capitalize } from '../../utils/functions';
+import { createCatalog, capitalize, phoneMask } from '../../utils/functions';
 import { STATUS_FIXES_TYPES, MONTHS, TEXT_CONFIG, PAYMENT_TYPE } from '../../utils/constants';
 import { useSpinner } from '../../hooks/useSpinner';
 import { useNotification } from '../../hooks/useNotification';
@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
  * Consulta de información de un folio de reparación
  * @param {number} folio Identificador de la reparación
  * @param {string} customerName Nombre del cliente
+ * @param {string} phoneNumber Numero telefónico del cliente
  * @param {array} fixType Lista de las reparaciones a realizar
  * @param {array} comments Historial de comentarios de la reparación
  * @param {string} date Fecha de ingreso del equipo
@@ -27,7 +28,7 @@ import PropTypes from 'prop-types';
  * @param {number} total Costo total de la reparación
  * @param {func} onFinish Funcion que se detona cuando termina el proceso de guardar cambios, agregar abono o liquidar reparación
  */
-const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate, status, advancePayment, total, onFinish }) => {
+const FixDetails = ({ folio, customerName, phoneNumber = '', fixType, comments, date, deliveryDate, status, advancePayment, total, onFinish }) => {
 
     const { handleSubmit, control, formState, formState: { errors } } = useForm({ mode: 'onChange' });
     const [loadingSpinner] = useSpinner();
@@ -44,12 +45,13 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
      * @param {string} inputDate Fecha completa
      */
     const toLocalDateString = inputDate => {
-
         const inDate = new Date(inputDate);
-        const day = inDate.getDate();
-        const month = MONTHS[inDate.getMonth()];
-
-        return `${day} de ${month}`;
+        const day = String(inDate.getDate()).padStart(2, '0');
+        const month = String(inDate.getMonth() + 1).padStart(2, '0');
+        const year = inDate.getFullYear();
+        const hour = String(inDate.getHours()).padStart(2, '0');
+        const mins = String(inDate.getMinutes()).padStart(2, '0');
+        return `${day}/${month}/${year} ${hour}:${mins}`;
     };
 
     /**
@@ -136,8 +138,9 @@ const FixDetails = ({ folio, customerName, fixType, comments, date, deliveryDate
     return (<div>
         <form className='fix-details-container' onSubmit={handleSubmit(updateFixDetails)}>
             <div className='info'>
-                <h3 className='bold folio'>{`Folio: ${folio}`}</h3>
-                <h3 className='bold customer-name'>{`Cliente: ${capitalize(customerName)}`}</h3>
+                <p className='bold folio'>{`Folio: ${folio}`}</p>
+                <p className='bold customer-name'>{`Cliente: ${capitalize(customerName)}`}</p>
+                <p className='bold phone-number'>{`Contacto: ${phoneMask(phoneNumber)}`}</p>
                 {status === 5 && <div className='date-admission'>
                     <p>Fecha de entrega: <span className='bold'>{toLocalDateString(deliveryDate)}</span></p>
                     <Image src={`/img/icons/${getWarranty() ? 'warranty': 'noWarranty'}.png`} width={20} height={20} alt={'icon'} />

@@ -26,7 +26,7 @@ const FixPayment = ({ folio, total, advancePayment, paymentType, onFinish }) => 
      * Se envían todos los abonos para que sean agregados a la venta total del dia y al acumulado
      */
     const paymentFix = async() => {
-        const currentDate = new Date().setHours(13,0,0,0);
+        const currentDate = new Date().setSeconds(0,0);
 
         loadingSpinner(true, 'Guardando venta...');
         const apiResp = await fixTotalPayment({ folio, total, advancePayment, paymentType, deliveryDate: currentDate, idStore: currentStore });
