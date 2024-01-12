@@ -48,6 +48,7 @@ export const ACTION_TYPES = Object.freeze({
     DELETE: 'delete',
     SAVE: 'save',
     SEARCH: 'search',
+    PRINT: 'print',
 });
 
 export const PRODUCT_TYPES = Object.freeze({

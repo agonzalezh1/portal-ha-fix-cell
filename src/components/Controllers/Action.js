@@ -15,6 +15,8 @@ const Action = ({label = null, type, action}) => {
                 return '/img/icons/delete.png';
             case ACTION_TYPES.SAVE:
                 return '/img/icons/save.png';
+            case ACTION_TYPES.PRINT:
+                return '/img/icons/print.png';
             default:
                 return '/img/icons/seacrh.png';
         }
