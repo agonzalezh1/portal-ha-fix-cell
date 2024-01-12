@@ -16,6 +16,9 @@
 
     .details-container {
         overflow-y: scroll;
+        .new-folio {
+            display: flex;
+        }
     }
 }
 
@@ -162,5 +165,70 @@
     .advance-payment {
         width: 80px;
         margin-bottom: 20px;
+    }
+}
+
+/**********************************
+    FixTicket Component
+***********************************/
+
+.fix-ticket-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 8cm;
+    height: auto;
+    padding: 30px 15px 0px 15px;
+
+    .logo {
+        width: 150px;
+    }
+
+    .info-store {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-top: 10px;
+        padding: 0 40px;
+        text-align: center;
+
+        .contact {
+            display: flex;
+            margin-bottom: 5px;
+            gap: 5px;
+        }
+    }
+
+    .customer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .services {
+        font-size: 12px;
+        ol {
+            list-style: none;
+        }
+        ol li:before {
+            content: '✓';
+            margin-right: 10px;
+        }
+    }
+
+    p { font-size: 12px }
+    ol {
+        padding: 0 10px;
+    }
+    .block {
+        width: 100%;
+        border-top-style: dotted;
+        padding: 10px 0;
+    }
+    .title { text-align: center }
+    .notes {
+        font-size: 9px;
+        text-align: justify;
     }
 }
