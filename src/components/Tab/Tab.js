@@ -40,7 +40,7 @@ const Tab = ({ items }) => {
         <div className='tab-container'>
             <div className='nav'>
                 <div className='logo' onClick={() => history.push('/')}>
-                    <Image src={'/img/logo.jpg'} width={150} height={50} alt={'logo'}/>
+                    <Image src={'/img/logo.svg'} width={150} height={50} alt={'logo'}/>
                 </div>
                 {items.map(item => <TabNavItem
                     key={`tabnav-${item}`}
