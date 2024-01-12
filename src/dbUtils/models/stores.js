@@ -3,6 +3,7 @@ const { Schema, model, models } = require('mongoose');
 const StoresSchema = new Schema(
     {
         name: { type: String, required: true},
+        address: { type: String },
         sales: { type: Array },
         cashFund: { type: Number },
         dailySales: {

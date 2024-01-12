@@ -25,7 +25,7 @@ const handler = async (req, res) => {
                 await Fixes.create({ customerName, phoneNumber, date, fixes, store, comments, total, advancePayment, folio: newFolio });
                 await disconnectDB();
                 message = 'Alta de folio correcta';
-                response = { folio: newFolio };
+                response = { folio: newFolio, customerName, phoneNumber, date, comments, fixes };
                 break;
             case 'GET':
                 let result;

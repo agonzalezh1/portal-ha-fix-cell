@@ -22,12 +22,14 @@ const handler = async (req, res) => {
              */
             case 'GET':
                 const { idStore } = req.query;
-                const result = await Stores.find({ _id : new Types.ObjectId(idStore)}, { dailySales: 1, cashFund: 1 });
+                const result = await Stores.find({ _id : new Types.ObjectId(idStore)}, { dailySales: 1, cashFund: 1, address: 1, name: 1 });
                 let spendAcc = 0;
                 if (result[0].dailySales.spend.length > 0) {
                     spendAcc = result[0].dailySales.spend.reduce( (acc, current) => acc + current.amount, 0);
                 }
                 response = {
+                    address: result[0].address,
+                    name: result[0].name,
                     products: result[0].dailySales.products,
                     fixes: result[0].dailySales.fixes,
                     airtime: result[0].dailySales.airtime,

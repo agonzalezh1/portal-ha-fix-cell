@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Action from '../Controllers/Action';
 import Modal from '../Modal/Modal';
 import Search from '../Search/Search';
 import CreateFolio from './CreateFolio';
 import FixDetails from './FixDetails';
+import FixTicket from './FixTicket';
 import { ACTION_TYPES } from '../../utils/constants';
 import { useNotification } from '../../hooks/useNotification';
 import { useSpinner } from '../../hooks/useSpinner';
 import { findFolio } from '../../utils/apiRequest/apiFixes';
+import { useReactToPrint } from 'react-to-print';
 
 /**
  * Muestra la funcionalidad de Reparaciones
@@ -22,6 +24,15 @@ const Fixes = () => {
     const [fixDetails, setFixDetails] = useState({ folio: 0, customerName: '', fixType: [], comments: '', date: '', deliveryDate: '', status: 0, advancePayment: [], total: 0 });
     const [folio, setFolio] = useState(0);
     const [newFolio, setNewFolio] = useState(0);
+    const [ticketInfo, setTicketInfo] = useState({folio: 0, customerName: '', customerPhone: '', admissionDate: '', notes: '', services: []})
+    const componentTicketRef = useRef();
+    
+    /**
+     * Función para imprimir el ticket
+     */
+    const handlePrint = useReactToPrint({
+        content: () => componentTicketRef.current,
+    });
 
     /**
      * Recibe la respuesta del modal de crear folios
@@ -36,6 +47,14 @@ const Fixes = () => {
 
         if (result.code === 0) {
             setNewFolio(result.response.folio);
+            setTicketInfo({
+                folio: result.response.folio,
+                customerName: result.response.customerName,
+                customerPhone: result.response.phoneNumber,
+                admissionDate: result.response.date,
+                notes: result.response.comments,
+                services: result.response.fixes,
+            });
         }
     };
 
@@ -87,11 +106,19 @@ const Fixes = () => {
         </div>
         <div className='details-container'>
             {Boolean(fixDetails.folio) && <FixDetails {...fixDetails} onFinish={reloadDetails}/>}
-            {Boolean(newFolio) && <h3>Se ha guardado correctamente la información con el folio: {newFolio.toString().padStart(4, '0')}</h3>}
+            {Boolean(newFolio) && <div className='new-folio'>
+                <h3>Se ha guardado correctamente la información con el folio: {newFolio.toString().padStart(4, '0')}</h3>
+                <Action type={ACTION_TYPES.PRINT} action={() => handlePrint()} />
+            </div>}
         </div>
         <Modal open={openModal} title={'Nuevo folio de reparación'} onClose={() => setOpenModal(false)}>
             <CreateFolio onFinish={e => validateIsCreated(e)} />
         </Modal>
+        <div style={{display: 'none'}}>
+            <div ref={componentTicketRef}>
+                <FixTicket {...ticketInfo}/>
+            </div>
+        </div>
     </div>);
 };
 
