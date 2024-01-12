@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { phoneMask } from '../../utils/functions';
 
@@ -43,18 +42,16 @@ const FixTicket = ({ folio, customerName, customerPhone, admissionDate, notes, s
 
     return(
         <div className='fix-ticket-container'>
-            <div className='logo'>
-                <Image src={'/img/logoBW.svg'} width={150} height={50} alt={'logo'}/>
-            </div>
+            <img src={'/img/logoBW.svg'} alt={'logo'}/>
             <div className='info-store'>
                 <p>Sucursal {storeName}</p>
                 <p>{address}</p>
                 <div className='contact'>
-                    <Image src={'/img/icons/whatsapp.png'} width={15} height={10} alt={'whatsapp'}/>
+                    <img src={'/img/icons/whatsapp.png'} alt={'whatsapp'}/>
                     <p>{cellPhone}</p>
                 </div>
                 <div className='contact'>
-                    <Image src={'/img/icons/phone.png'} width={15} height={10} alt={'phone'}/>
+                    <img src={'/img/icons/phone.png'} alt={'phone'}/>
                     <p>{localPhone}</p>
                 </div>
             </div>
