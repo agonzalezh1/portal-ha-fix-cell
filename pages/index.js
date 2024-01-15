@@ -46,7 +46,11 @@ export default function Home() {
                 }));
                 dispatch(addStoreInfo({
                     name: resp.response.name,
-                    address: resp.response.address,
+                    contactInfo: {
+                        address: resp.response.contactInfo.address,
+                        whatsapp: resp.response.contactInfo.whatsapp,
+                        phone: resp.response.contactInfo.phone,
+                    }
                 }));
             });
 

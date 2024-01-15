@@ -24,7 +24,7 @@ const Fixes = () => {
     const [fixDetails, setFixDetails] = useState({ folio: 0, customerName: '', fixType: [], comments: '', date: '', deliveryDate: '', status: 0, advancePayment: [], total: 0 });
     const [folio, setFolio] = useState(0);
     const [newFolio, setNewFolio] = useState(0);
-    const [ticketInfo, setTicketInfo] = useState({folio: 0, customerName: '', customerPhone: '', admissionDate: '', notes: '', services: []})
+    const [ticketInfo, setTicketInfo] = useState({folio: 0, customerName: '', customerPhone: '', admissionDate: '', notes: '', services: [], advancePayment: 0, total: 0})
     const componentTicketRef = useRef();
     
     /**
@@ -54,6 +54,8 @@ const Fixes = () => {
                 admissionDate: result.response.date,
                 notes: result.response.comments,
                 services: result.response.fixes,
+                advancePayment: result.response.advancePayment.amount,
+                total: result.response.total,
             });
         }
     };

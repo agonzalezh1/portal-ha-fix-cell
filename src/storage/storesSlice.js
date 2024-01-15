@@ -3,7 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     stores: [],
     currentStore: '',
-    address: '',
+    contactInfo: {
+        address: '',
+        whatsapp: '',
+        phone: '',
+    },
     name: '',
 };
 
@@ -17,7 +21,9 @@ export const storesSlice = createSlice({ name: 'stores', initialState,
         },
         addStoreInfo: (state, action) => {
             state.name = action.payload.name;
-            state.address = action.payload.address;
+            state.contactInfo.address = action.payload.contactInfo.address;
+            state.contactInfo.whatsapp = action.payload.contactInfo.whatsapp;
+            state.contactInfo.phone = action.payload.contactInfo.phone;
         },
     },
 });
