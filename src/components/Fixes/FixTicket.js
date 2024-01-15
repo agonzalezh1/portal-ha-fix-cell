@@ -9,13 +9,15 @@ import { phoneMask } from '../../utils/functions';
  * @param {string} admissionDate Fecha de recepcion
  * @param {string} notes Observaciones de la reparacion
  * @param {array} services Servicios a realizar
+ * @param {number} adAdvancePayment Adelanto del pago del servicio
+ * @param {total} total Costo total de la reparacion
  */
-const FixTicket = ({ folio, customerName, customerPhone, admissionDate, notes, services }) => {
+const FixTicket = ({ folio, customerName, customerPhone, admissionDate, notes, services, advancePayment, total }) => {
 
-    const storeName = useSelector(state => state.stores.name);;
-    const address = useSelector(state => state.stores.address);;
-    const cellPhone = '449 907 0774';
-    const localPhone = '449 158 2438';
+    const storeName = useSelector(state => state.stores.name);
+    const address = useSelector(state => state.stores.contactInfo.address);
+    const cellPhone = useSelector(state => state.stores.contactInfo.whatsapp);
+    const localPhone = useSelector(state => state.stores.contactInfo.phone);
 
     /**
      * Crea la lista de servicios para el ticket 
@@ -48,11 +50,11 @@ const FixTicket = ({ folio, customerName, customerPhone, admissionDate, notes, s
                 <p>{address}</p>
                 <div className='contact'>
                     <img src={'/img/icons/whatsapp.png'} alt={'whatsapp'}/>
-                    <p>{cellPhone}</p>
+                    <p>{phoneMask(cellPhone)}</p>
                 </div>
                 <div className='contact'>
                     <img src={'/img/icons/phone.png'} alt={'phone'}/>
-                    <p>{localPhone}</p>
+                    <p>{phoneMask(localPhone)}</p>
                 </div>
             </div>
             <div className='customer block'>
@@ -60,6 +62,8 @@ const FixTicket = ({ folio, customerName, customerPhone, admissionDate, notes, s
                 <p>Contacto: {phoneMask(customerPhone)}</p>
                 <p>Folio: {folio}</p>
                 <p>Fecha de recepción: {toLocalDateString(admissionDate)}</p>
+                <p>Total: ${total}.00</p>
+                <p>Anticipo: ${advancePayment}.00</p>
             </div>
             <div className='notes block'>
                 <p className='title bold'>Observaciones</p>
@@ -84,7 +88,7 @@ const FixTicket = ({ folio, customerName, customerPhone, admissionDate, notes, s
                     <li>NO contamos con seguro en caso de robo al establecimiento</li>
                 </ol>
             </div>
-            <div className='block'>
+            <div className='mini-ticket block'>
                 <p>Nombre: {customerName}</p>
                 <p>Contacto: {phoneMask(customerPhone)}</p>
                 <p>Folio: {folio}</p>
