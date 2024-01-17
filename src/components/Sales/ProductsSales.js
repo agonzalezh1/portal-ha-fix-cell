@@ -1,15 +1,18 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Search from '../Search/Search';
 import { getProductByName } from '../../utils/apiRequest/apiProducts';
 import { updateStocktaking } from '../../utils/apiRequest/apiProductsStocktaking';
 import { useNotification } from '../../hooks/useNotification';
 import { useSpinner } from '../../hooks/useSpinner';
-import { SALES_TYPE, PAYMENT_TYPE } from '../../utils/constants';
+import { SALES_TYPE, PAYMENT_TYPE, ACTION_TYPES } from '../../utils/constants';
 import { addProductSale } from '../../storage/salesSlice';
 import ProductsList from './ProductsList/ProductsList';
 import Modal from '../Modal/Modal';
+import { useReactToPrint } from 'react-to-print';
+import Action from '../Controllers/Action';
+import SalesTicket from './SalesTicket';
 
 /**
  * Formulariop para realiza una venta de productos
@@ -28,6 +31,16 @@ const ProductsSales = () => {
     const [productsList, setProductsList] = useState([]);
     const [shoppingCart, setShoppingCart] = useState([]);
     const [total, setTotal] = useState(0);
+    const [printTicket, setPrintTicket] = useState(false);
+    const [productsTicket, setProductsTicket] = useState({ list: [], total: 0});
+    const componentTicketRef = useRef();
+
+    /**
+     * Función para imprimir el ticket
+     */
+    const handlePrint = useReactToPrint({
+        content: () => componentTicketRef.current,
+    });
 
     /**
      * Busqueda de articulos por coincidencia de nombres
@@ -37,6 +50,7 @@ const ProductsSales = () => {
      * @param {string} idProduct Nombre del producto
      */
     const searchProduct = async idProduct => {
+        setPrintTicket(false);
         loadingSpinner(true, 'Buscando producto...');
         const apiResp = await getProductByName(idProduct);
         loadingSpinner(false, '');
@@ -105,6 +119,8 @@ const ProductsSales = () => {
         loadingSpinner(false, '');
         setNotification(apiResp);
         setShoppingCart([]);
+        setPrintTicket(true);
+        setProductsTicket({list: productsTemp, total});
         dispatch(addProductSale({ total, paymentType, products: productsTemp }));
         // TODO No borrar el console hasta que esten chidas las pruebas de las ventas
         console.log(apiResp.response);
@@ -178,9 +194,15 @@ const ProductsSales = () => {
                 <Image src={'/img/card.png'} width={24} height={24} alt={'icon'}/>
             </button>
         </div>
+        {printTicket && <Action label={'Imprimir ticket de compra'} type={ACTION_TYPES.PRINT} action={() => handlePrint()} />}
         <Modal open={openModal} title={'Selecciona un producto'} onClose={() => setOpenModal(false)}>
             <ProductsList productsList={productsList} addProduct={e => addProduct(e)}/>
         </Modal>
+        <div style={{display: 'none'}}>
+            <div ref={componentTicketRef}>
+                <SalesTicket productsList={productsTicket.list} total={productsTicket.total}/>
+            </div>
+        </div>
     </div>);
 };
 
