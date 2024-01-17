@@ -84,3 +84,17 @@ export const getLabelsBarChart = months => {
 
     return arrayOfMonths;
 };
+
+/**
+ * Transformala fecha de entrada a un formato legible
+ * @param {string} inputDate Fecha completa
+ */
+export const toLocalDateString = inputDate => {
+    const inDate = new Date(inputDate);
+    const day = String(inDate.getDate()).padStart(2, '0');
+    const month = String(inDate.getMonth() + 1).padStart(2, '0');
+    const year = inDate.getFullYear();
+    const hour = String(inDate.getHours()).padStart(2, '0');
+    const mins = String(inDate.getMinutes()).padStart(2, '0');
+    return `${day}/${month}/${year} ${hour}:${mins}`;
+};

@@ -34,7 +34,7 @@ const Action = ({label = null, type, action}) => {
 Action.propTypes = {
     label: PropTypes.string,
     type: PropTypes.oneOf([ACTION_TYPES.INCREASE, ACTION_TYPES.DECREASE, ACTION_TYPES.DELETE,
-        ACTION_TYPES.SAVE, ACTION_TYPES.SEARCH]).isRequired,
+        ACTION_TYPES.SAVE, ACTION_TYPES.SEARCH, ACTION_TYPES.PRINT]).isRequired,
     action: PropTypes.func.isRequired,
 };
 

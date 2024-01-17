@@ -7,7 +7,7 @@ import Picker from '../Controllers/Picker';
 import AdvancePayment from './AdvancePayment';
 import FixPayment from './FixPayment';
 import Modal from '../Modal/Modal';
-import { createCatalog, capitalize, phoneMask } from '../../utils/functions';
+import { createCatalog, capitalize, phoneMask, toLocalDateString } from '../../utils/functions';
 import { STATUS_FIXES_TYPES, MONTHS, TEXT_CONFIG, PAYMENT_TYPE } from '../../utils/constants';
 import { useSpinner } from '../../hooks/useSpinner';
 import { useNotification } from '../../hooks/useNotification';
@@ -39,20 +39,6 @@ const FixDetails = ({ folio, customerName, phoneNumber = '', fixType, comments, 
     const [disabledComponent, setDisabledComponent] = useState(status === 5 ? true : false);
     const [statusOptions, setStatusOptions] = useState([]);
     const requiredField = { required: true };
-
-    /**
-     * Transformala fecha de entrada a un formato legible
-     * @param {string} inputDate Fecha completa
-     */
-    const toLocalDateString = inputDate => {
-        const inDate = new Date(inputDate);
-        const day = String(inDate.getDate()).padStart(2, '0');
-        const month = String(inDate.getMonth() + 1).padStart(2, '0');
-        const year = inDate.getFullYear();
-        const hour = String(inDate.getHours()).padStart(2, '0');
-        const mins = String(inDate.getMinutes()).padStart(2, '0');
-        return `${day}/${month}/${year} ${hour}:${mins}`;
-    };
 
     /**
      * Calcula la garantia de la reparacion

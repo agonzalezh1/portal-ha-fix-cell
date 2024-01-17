@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { phoneMask } from '../../utils/functions';
+import { phoneMask, toLocalDateString } from '../../utils/functions';
 
 /**
  * Componente que contiene el formato del ticket para las reparaciones
@@ -26,20 +26,6 @@ const FixTicket = ({ folio, customerName, customerPhone, admissionDate, notes, s
         return(<ol className='services'>
             {services.map( (service, index) => <li key={index}>{service}</li>)}
         </ol>);
-    };
-
-    /**
-     * Transformala fecha de entrada a un formato legible
-     * @param {string} inputDate Fecha completa
-     */
-    const toLocalDateString = inputDate => {
-        const inDate = new Date(inputDate);
-        const day = String(inDate.getDate()).padStart(2, '0');
-        const month = String(inDate.getMonth() + 1).padStart(2, '0');
-        const year = inDate.getFullYear();
-        const hour = String(inDate.getHours()).padStart(2, '0');
-        const mins = String(inDate.getMinutes()).padStart(2, '0');
-        return `${day}/${month}/${year} ${hour}:${mins}`;
     };
 
     return(
