@@ -43,7 +43,6 @@ const Sales = () => {
      * @param {object} result respuesta del api POST /sales/stocktaking
      */
     const externalSaleValidate = result => {
-        setOpenModalExternalSale(false);
         setNotification(result);
     }
 
