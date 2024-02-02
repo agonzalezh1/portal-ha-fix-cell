@@ -65,6 +65,7 @@ const SalesByStore = ({ name, sales, dailySales }) => {
     const [spends] = useState(dailySales.spend.reduce( (acc, current) => acc + current.amount, 0));
     const [openModal, setOpenModal] = useState(false);
     const [openSalesModal, setOpenSalesModal] = useState(false);
+    const monthsToShow = 6;
 
     const total = dailySales.products.cashPayment + dailySales.products.cardPayment + dailySales.fixes.cashPayment + dailySales.fixes.cardPayment + dailySales.airtime - spends;
 
@@ -79,24 +80,24 @@ const SalesByStore = ({ name, sales, dailySales }) => {
         },
     };
 
-    const labels = getLabelsBarChart(6);
+    const labels = getLabelsBarChart(monthsToShow);
 
     const data = {
         labels,
         datasets: [
             {
                 label: 'Productos',
-                data: products,
+                data: products.slice(-1 * monthsToShow),
                 backgroundColor: 'rgb(255, 99, 132)',
             },
             {
                 label: 'Reparaciones',
-                data: fixes,
+                data: fixes.slice(-1 * monthsToShow),
                 backgroundColor: 'rgb(75, 192, 192)',
             },
             {
                 label: 'Recargas',
-                data: airtime,
+                data: airtime.slice(-1 * monthsToShow),
                 backgroundColor: 'rgb(53, 162, 235)',
             },
         ],
