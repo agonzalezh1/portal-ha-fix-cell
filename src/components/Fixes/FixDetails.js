@@ -38,6 +38,7 @@ const FixDetails = ({ folio, customerName, phoneNumber = '', fixType, comments, 
     const [payType, setPayType] = useState('');
     const [disabledComponent, setDisabledComponent] = useState(status === 5 ? true : false);
     const [statusOptions, setStatusOptions] = useState([]);
+    const [fixTotal, setFixTotal] =useState(total);
     const requiredField = { required: true };
 
     /**
@@ -114,6 +115,15 @@ const FixDetails = ({ folio, customerName, phoneNumber = '', fixType, comments, 
     },[payType]);
 
     /**
+     * Efecto que actualiza el Input para el total, se evita que se quede un valor anterior
+     */
+    useEffect(() => {
+        if(total) {
+            setFixTotal(total);
+        }
+    },[total])
+
+    /**
      * Efecto para reiniciar la bandera del bloqueo de componentes
      */
     useEffect(() => {
@@ -187,7 +197,7 @@ const FixDetails = ({ folio, customerName, phoneNumber = '', fixType, comments, 
                     placeholder={'0000'}
                     maxLength={5}
                     errors={errors.total}
-                    valueIn={String(total)}
+                    valueIn={String(fixTotal)}
                     textFormat={TEXT_CONFIG.NUMBER}
                     rules={requiredField}
                     control={control}
