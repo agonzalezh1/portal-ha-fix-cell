@@ -79,6 +79,7 @@ const FixTicket = ({ folio, customerName, customerPhone, admissionDate, notes, s
                 <p>Contacto: {phoneMask(customerPhone)}</p>
                 <p>Folio: {folio}</p>
                 <p>Fecha de recepción: {toLocalDateString(admissionDate)}</p>
+                <p>Observaciones: {notes}</p>
             </div>
         </div>
     );
