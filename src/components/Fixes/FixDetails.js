@@ -30,7 +30,7 @@ import PropTypes from 'prop-types';
  */
 const FixDetails = ({ folio, customerName, phoneNumber = '', fixType, comments, date, deliveryDate, status, advancePayment, total, onFinish }) => {
 
-    const { handleSubmit, control, formState, formState: { errors } } = useForm({ mode: 'onChange' });
+    const { handleSubmit, control, formState, formState: { errors }, setValue } = useForm({ mode: 'onChange' });
     const [loadingSpinner] = useSpinner();
     const [setNotification] = useNotification();
     const [openModalAdvancePay, setOpenModalAdvancePay] = useState(false);
@@ -119,6 +119,7 @@ const FixDetails = ({ folio, customerName, phoneNumber = '', fixType, comments, 
      */
     useEffect(() => {
         if(total) {
+            setValue('total', total);
             setFixTotal(total);
         }
     },[total])
