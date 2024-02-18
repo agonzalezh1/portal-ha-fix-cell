@@ -118,7 +118,7 @@ const FixDetails = ({ folio, customerName, phoneNumber = '', fixType, comments, 
      * Efecto que actualiza el Input para el total, se evita que se quede un valor anterior
      */
     useEffect(() => {
-        if(total) {
+        if(total !== undefined) {
             setValue('total', total);
             setFixTotal(total);
         }
