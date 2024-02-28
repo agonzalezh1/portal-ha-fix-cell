@@ -15,6 +15,7 @@ export const environmentVariables = {
     URL_API_SPEND_BY_STORE: '/stores/spend',
     URL_API_FIXES: '/fixes',
     URL_API_FIXES_PAYMENTS: '/fixes/payments',
+    URL_API_TOOLS: '/tools',
     TIMEOUT_GLOBAL: 30000,
 };
 
@@ -30,6 +31,7 @@ export const urlApis = {
     spendByStore: `${urlBase}${environmentVariables.URL_API_SPEND_BY_STORE}`,
     fixes: `${urlBase}${environmentVariables.URL_API_FIXES}`,
     fixesPayments: `${urlBase}${environmentVariables.URL_API_FIXES_PAYMENTS}`,
+    tools: `${urlBase}${environmentVariables.URL_API_TOOLS}`,
 };
 
 export const TEXT_CONFIG = Object.freeze({
@@ -186,4 +188,19 @@ export const SERVICE_TYPE = Object.freeze({
 export const SEVERITY_TYPE = Object.freeze({
     INFO: 'I',
     ERROR: 'E',
+});
+
+export const OPERATION_TYPE_TOOLS = Object.freeze({
+    LOAD_STOCKTAKING: 1,
+});
+
+
+export const BRANCHES = Object.freeze({
+    '64d44b42249ba6229207e2df': 'PUERTECITO',
+    '64d44b51249ba6229207e2e4': 'CONSTITUCION',
+    '64d44b58249ba6229207e2e8': 'MACARIO',
+    '64d44b7a249ba6229207e2f8': 'BODEGA',
+    '64d44b6a249ba6229207e2f0': 'MONTE VERDE',
+    '64d44b63249ba6229207e2ec': 'JESUS MARIA',
+    '64d44b73249ba6229207e2f4': 'CHAIREZ',
 });
