@@ -32,7 +32,7 @@
 .sales-list-container {
     display: flex;
     flex-direction: column;
-    width: 600px;
+    width: 650px;
     height: 250px;
     overflow-y: scroll;
 
@@ -46,7 +46,7 @@
         }
 
         thead th:nth-child(1) { 
-            width: 60%;
+            width: 55%;
         }
 
         thead th:nth-child(2) { 
@@ -59,6 +59,10 @@
 
         thead th:nth-child(4) {
             width: 10%;
+        }
+
+        thead th:nth-child(5) {
+            width: 5%;
         }
 
         tbody tr {
@@ -74,6 +78,11 @@
         }
 
         tbody td:nth-child(3) {
+            text-align: center;
+        }
+
+        tbody td:nth-child(5) {
+            cursor: pointer;
             text-align: center;
         }
 

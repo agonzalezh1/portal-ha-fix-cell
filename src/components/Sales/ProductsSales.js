@@ -8,6 +8,7 @@ import { useNotification } from '../../hooks/useNotification';
 import { useSpinner } from '../../hooks/useSpinner';
 import { SALES_TYPE, PAYMENT_TYPE, ACTION_TYPES } from '../../utils/constants';
 import { addProductSale } from '../../storage/salesSlice';
+import { v4 as uuidv4 } from 'uuid';
 import ProductsList from './ProductsList/ProductsList';
 import Modal from '../Modal/Modal';
 import { useReactToPrint } from 'react-to-print';
@@ -111,6 +112,7 @@ const ProductsSales = () => {
                 count: product.count,
                 amount: product.amount,
                 productName: product.productName,
+                idSale: uuidv4(),
             };
         });
 

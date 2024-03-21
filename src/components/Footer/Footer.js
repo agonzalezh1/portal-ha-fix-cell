@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Modal from '../Modal/Modal';
+import { useNotification } from '../../hooks/useNotification';
+import { useStores } from '../../hooks/useStores';
+import { getSalesByStore } from '../../utils/apiRequest/apiStoresSales';
+import { addSales } from '../../storage/salesSlice';
 import SalesList from './SalesList';
 
 /**
@@ -10,6 +14,8 @@ import SalesList from './SalesList';
 const Footer = () => {
 
     const sales = useSelector(state => state.sales);
+    const currentStore = useSelector(state => state.stores.currentStore);
+    const dispatch = useDispatch();
     const [productsSales, setProductsSale] = useState(0);
     const [fixesSales, setfixesSale] = useState(0);
     const [airtimeSales, setAirtimeSale] = useState(0);
@@ -17,6 +23,30 @@ const Footer = () => {
     const [cashFund, setCashFund] = useState(0);
     const [total, setTotal] = useState(0);
     const [openModal, setOpenModal] = useState(false);
+    const [setNotification] = useNotification();
+    const [_, udpateStores] = useStores();
+
+    /**
+     * Elimina una venta
+     * Actualiza el almacenamiento de las ventas de las tiendas
+     * Actualiza el almacenamiento de las ventas de la tienda
+     * @param {object} result Resultado del api de Borrar venta
+     */
+    const deleteSaleValidate = result => {
+        setNotification(result);
+        setOpenModal(false);
+        udpateStores();
+
+        getSalesByStore(currentStore).then( resp => {
+            dispatch(addSales({
+                products: resp.response.products,
+                fixes: resp.response.fixes,
+                airtime: resp.response.airtime,
+                spend: resp.response.spend,
+                cashFund: resp.response.cashFund,
+            }));
+        });
+    }
 
     /**
      * Por cada venta agregada al store, se actualizan los valores en la pantalla
@@ -60,7 +90,7 @@ const Footer = () => {
             </table>
         </div>
         <Modal open={openModal} title={'Detalle de ventas'} onClose={() => setOpenModal(false)}>
-            <SalesList list={sales.products.list}/>
+            <SalesList list={sales.products.list} onFinish={e => deleteSaleValidate(e)}/>
         </Modal>
     </>
     );

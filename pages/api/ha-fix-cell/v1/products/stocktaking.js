@@ -91,6 +91,37 @@ const updateSales = async ({idStore, total, saleType, paymentType, products, uui
 };
 
 /**
+ * Borra una venta de la base de datos
+ * Elimina lo que se insertó de la venta diaria y acumulada
+ * @param {string} idSale Identificador de la venta relacionada al producto
+ * @param {string} idStore Identificador de la tienda
+ * @param {string} paymentType Forma de pago
+ * @param {number} total Monto de la venta del producto
+ * @returns Resultado de la actualización. Valor de la base de datos
+ */
+const deleteSale = async ({ idSale, idStore, paymentType, total }) => {
+    const currentPeriod = getPeriod();
+    let query;
+
+    if ( paymentType === PAYMENT_TYPE.CASH) {
+        query = { 'sales.$[updatePeriod].products.cashPayment': (total * -1), 'dailySales.products.cashPayment': (total * -1) }
+    } else {
+        query = { 'sales.$[updatePeriod].products.cardPayment': (total * -1), 'dailySales.products.cardPayment': (total * -1) }
+    }
+  
+    const result = await Stores.updateOne(
+        { _id: new Types.ObjectId(idStore) },
+        {
+            $pull: { 'dailySales.products.list': { idSale } },
+            $inc: query,
+        },
+        { arrayFilters: [{ 'updatePeriod.period': currentPeriod }] },
+    );
+
+    return { modifiedCount: result.modifiedCount };
+};
+
+/**
  * Controlador para administrar el inventario de las tiendas
  * @param {*} req Peticion
  * @param {*} res Respuesta
@@ -105,6 +136,7 @@ const handler = async (req, res) => {
 
     try {
         await connectDB();
+        const { products, idStore, total, saleType, paymentType, idSale } = req.body;
         /**
          * Actualizacion del inventario
          * Recibe una lista de productos junto con el total
@@ -112,7 +144,6 @@ const handler = async (req, res) => {
          * Al final realiza la actualizacion de las ventas en la coleccion Stores
          */
         if (req.method === 'POST') {
-            const { products, idStore, total, saleType, paymentType } = req.body;
             const errores = [];
 
             // Actualizacion del inventario
@@ -136,6 +167,17 @@ const handler = async (req, res) => {
             message = 'Venta guardada correctamente';
             response = errores;
 
+        } else if( req.method === 'DELETE') {
+
+            const resp3 = await deleteSale({ idSale, idStore, paymentType, total });
+
+            if (resp3.modifiedCount !== 0) {
+                message = 'Se eliminó la venta correctamente';
+            } else {
+                message = 'Error al eliminar la venta';
+                code = STATUS_CODE.SERVER_ERROR;
+            }
+            
         } else {
             code = STATUS_CODE.BAD_REQUEST;
             message = 'Consulta incorrecta';
