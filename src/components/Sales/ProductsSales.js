@@ -10,6 +10,7 @@ import { SALES_TYPE, PAYMENT_TYPE, ACTION_TYPES } from '../../utils/constants';
 import { addProductSale } from '../../storage/salesSlice';
 import { v4 as uuidv4 } from 'uuid';
 import ProductsList from './ProductsList/ProductsList';
+import ChangeModal from './ChangeModal/ChangeModal';
 import Modal from '../Modal/Modal';
 import { useReactToPrint } from 'react-to-print';
 import Action from '../Controllers/Action';
@@ -29,6 +30,7 @@ const ProductsSales = () => {
     const dispatch = useDispatch();
     const currentStore = useSelector(state => state.stores.currentStore);
     const [openModal, setOpenModal] = useState(false);
+    const [openChangeModal, setOpenChangeModal] = useState(false);
     const [productsList, setProductsList] = useState([]);
     const [shoppingCart, setShoppingCart] = useState([]);
     const [total, setTotal] = useState(0);
@@ -96,6 +98,14 @@ const ProductsSales = () => {
         const shoppingTemp = [...shoppingCart];
         shoppingTemp.splice(index,1);
         setShoppingCart([...shoppingTemp]);
+    };
+
+    /**
+     * Continua con el pago y la actualización en la base de datos despues de que se valida el cambio
+     */
+    const continuePayment = () => {
+        setOpenChangeModal(false);
+        payProducts(PAYMENT_TYPE.CASH);
     };
 
     /**
@@ -187,7 +197,7 @@ const ProductsSales = () => {
             <h2 className='numeric'>{`Total: $ ${total}.00`}</h2>
         </div>
         <div className='payment-type'>
-            <button className='secondary icon' onClick={() => payProducts(PAYMENT_TYPE.CASH)} disabled={shoppingCart.length === 0} >
+            <button className='secondary icon' onClick={() => setOpenChangeModal(true)} disabled={shoppingCart.length === 0} >
                 Pago en efectivo
                 <Image src={'/img/cash.png'} width={24} height={24} alt={'icon'}/>
             </button>
@@ -205,6 +215,9 @@ const ProductsSales = () => {
                 <SalesTicket productsList={productsTicket.list} total={productsTicket.total}/>
             </div>
         </div>
+        <Modal open={openChangeModal} title={'Cantidad a pagar'} onClose={() => setOpenChangeModal(false)}>
+            <ChangeModal total={total} onFinish={() => continuePayment()}/>
+        </Modal>
     </div>);
 };
 

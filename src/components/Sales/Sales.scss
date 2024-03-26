@@ -318,3 +318,24 @@
     }
     .title { text-align: center }
 }
+
+/**********************************
+    ChangeModal Component
+***********************************/
+.change-modal-container {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    //flex-wrap: wrap;
+    gap: 10px;
+    .payment {
+        width: 100px;
+    }
+
+    .change {
+        padding: 5px;
+        border-top-color: black;
+        border-top-width: 1;
+        border-top-style: solid;
+    }
+}
