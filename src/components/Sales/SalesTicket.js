@@ -22,7 +22,8 @@ const SalesTicket = ({ productsList, total }) => {
 
     return(
         <div className='sale-ticket-container'>
-            <img src={'/img/logoBW.svg'} alt={'logo'}/>
+            {storeName === 'Jesus Maria' && <img src={'/img/logoNumaCom.jpeg'} alt={'logo'}/>}
+            {storeName !== 'Jesus Maria' && <img src={'/img/logoBW.svg'} alt={'logo'}/>}
             <div className='info-store'>
                 <p>Sucursal {storeName}</p>
                 <p>{address}</p>
