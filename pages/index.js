@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
@@ -18,6 +19,7 @@ export default function Home() {
     const { handleSubmit, control, formState, formState:{errors} } = useForm({ mode: 'onChange' });
     const [setNotification] = useNotification();
     const [loadingSpinner] = useSpinner();
+    const [userLocation, setUserLocation] = useState(null);
     const history = useRouter();
     const dispatch = useDispatch();
 
@@ -30,7 +32,7 @@ export default function Home() {
      */
     const validateUser = async (form) => {
         loadingSpinner(true, 'Validando usuario...');
-        const apiResp = await authenticateUser(form.user, form.password);
+        const apiResp = await authenticateUser(form.user, form.password, userLocation);
         loadingSpinner(false, '');
         if (apiResp.code === 0) {
             dispatch(addGrants(apiResp.response));
@@ -59,6 +61,27 @@ export default function Home() {
             setNotification(apiResp);
         }
     };
+
+    /**
+     * Obtiene la posicion de donse se hara el inicio de sesion
+     * Con esta info, se va a comparar contra la ubicación de la tienda a la que se quiere hace login
+     * Las coordenadas deberan ser iguales para que el inicio sea valido
+     */
+    useEffect(() => {
+        if (navigator.geolocation) { // Se puede usar la geolocalizacion
+            navigator.geolocation.getCurrentPosition( // Pregunta por el permiso de geolocalizacion
+                position => {
+                    const { latitude, longitude } = position.coords;
+                    console.log({ latitude, longitude })
+                    setUserLocation({ latitude, longitude });
+                },
+                error => setNotification({code: 1, message: error.message})
+            );
+        }
+        else {
+            setNotification({code: 1, message: 'La geolocalización no se puede utilizar en este navegador'});
+        }
+    },[]);
 
     return (<div className={styles.main_container}>
         <form onSubmit={handleSubmit(validateUser)} className={styles.login_container}>
@@ -89,7 +112,7 @@ export default function Home() {
                 rules={{ required: true }}
                 control={control}
             />
-            <button className='primary' disabled={!formState.isValid}>Login</button>
+            {userLocation && <button className='primary' disabled={!formState.isValid}>Login</button>}
         </form>
     </div>);
 }

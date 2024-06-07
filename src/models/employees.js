@@ -8,6 +8,7 @@ const EmployeesSchema = new Schema(
         store: { type: String, required: true },
         grants: { type: Array },
         profile: { type: Number },
+        attendance: { type: Array },
     },
     { versionKey: false },
     { collection: 'employees' },
