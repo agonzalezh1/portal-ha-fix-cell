@@ -111,13 +111,13 @@ export const toLocalDateString = inputDate => {
 export const validateLocation = ({user, storeInfo, latitude, longitude}) => {
     const lat = Math.abs(Math.abs(storeInfo.latitude) - Math.abs(latitude));
     const long = Math.abs(Math.abs(storeInfo.longitude) - Math.abs(longitude));
-    const exceptions = ['keka', 'lajefa', 'pita', 'huesito', 'bombis', 'vibora', 'diego', 'gerardo', 'ventas' ];
+    const exceptions = ['keka', 'lajefa', 'pita' ];
 
     if (exceptions.includes(user)) {
         return true;
     }
 
-    if (lat > 0.0000400 || long > 0.0000400) {
+    if (lat > 0.0000500 || long > 0.0000500) {
         return false;             
     } else {
         return true;
