@@ -98,3 +98,47 @@ export const toLocalDateString = inputDate => {
     const mins = String(inDate.getMinutes()).padStart(2, '0');
     return `${day}/${month}/${year} ${hour}:${mins}`;
 };
+
+/**
+ * Valida que un usuario se encuentre dentro de la ubicación de la tienda que le correspnde para hacer login
+ * Si es un usuario especial, no se realiza la validación
+ * @param {string} user Nombre del usuario
+ * @param {object} storeInfo Coordenadas de la tienda
+ * @param {number} latitude latitud del usuario
+ * @param {number} longitude longitud del usuario
+ * @returns Bandera que indica si puede iniciar sesión
+ */
+export const validateLocation = ({user, storeInfo, latitude, longitude}) => {
+    const lat = Math.abs(Math.abs(storeInfo.latitude) - Math.abs(latitude));
+    const long = Math.abs(Math.abs(storeInfo.longitude) - Math.abs(longitude));
+    const exceptions = ['keka', 'lajefa', 'pita'];
+
+    if (exceptions.includes(user)) {
+        return true;
+    }
+
+    if (lat > 0.0000400 || long > 0.0000400) {
+        return false;             
+    } else {
+        return true;
+    }
+}
+
+/**
+ * Valida si el usuario ya hizo login en el dia actual
+ * @param {date} lastLogin Fecha del ultimo login 
+ * @returns Bandera que indica si ya tiene login en el dia actual
+ */
+export const hasLoginToday = (lastLogin) => {
+    const dateLastlogin = new Date(lastLogin);
+    const currentDate = new Date();
+
+    currentDate.setHours(0,0,0,0);
+    dateLastlogin.setHours(0,0,0,0);
+
+    if(currentDate.getTime() === dateLastlogin.getTime()) {
+        return true;
+    } else {
+        return false;
+    }
+};
