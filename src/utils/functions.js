@@ -109,6 +109,8 @@ export const toLocalDateString = inputDate => {
  * @returns Bandera que indica si puede iniciar sesión
  */
 export const validateLocation = ({user, storeInfo, latitude, longitude}) => {
+    return true;
+    /* NO FUNCIONA LA GEOLOCALIZACION, SE CAMBIA A CADA RATO
     const lat = Math.abs(Math.abs(storeInfo.latitude) - Math.abs(latitude));
     const long = Math.abs(Math.abs(storeInfo.longitude) - Math.abs(longitude));
     const exceptions = ['keka', 'lajefa', 'pita' ];
@@ -122,6 +124,7 @@ export const validateLocation = ({user, storeInfo, latitude, longitude}) => {
     } else {
         return true;
     }
+    */
 }
 
 /**
