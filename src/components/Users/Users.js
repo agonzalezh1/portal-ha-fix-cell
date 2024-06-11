@@ -5,6 +5,7 @@ import Modal from '../Modal/Modal';
 import AddUser from './AddUser';
 import Picker from '../Controllers/Picker';
 import Checkbox from '../Controllers/Checkbox';
+import Attendance from './Attendance';
 import { ACTION_TYPES, GRANT_TYPES } from '../../utils/constants';
 import { getListFromObject } from '../../utils/functions';
 import { useNotification } from '../../hooks/useNotification';
@@ -27,6 +28,7 @@ const Users = () => {
     const [grants, setGrants] = useState([]);
     const [currentStore, setCurrentStore] = useState('');
     const [currentUser, setCurrentUser] = useState('');
+    const [attendance, setAttendance] = useState([]);
 
     /**
      * Valida la respuesta de guardado
@@ -94,6 +96,7 @@ const Users = () => {
         setGrants(grantsList);
         setCurrentStore(userTemp.store);
         setCurrentUser(userTemp.username);
+        setAttendance(userTemp.attendance);
     };
 
     /**
@@ -155,23 +158,30 @@ const Users = () => {
             />
             <Action label={'Agregar un usuario'} type={ACTION_TYPES.INCREASE} action={() => setOpenModal(true)} />
         </div>
+        <h3>Asistecia de la semana</h3>
+        <Attendance attendanceList={attendance}/>
         <h3>Selecciona la tienda y los permisos asociados al usuario</h3>
         <div className='grants-container'>
         {grants.length > 0 &&
             <>
-                <Picker
-                    id={'stores'}
-                    label={'Tiendas'}
-                    options={storesList}
-                    control={control}
-                    defaultValue={currentStore}
-                    changeEvent={e => setCurrentStore(e)}
-                />
+                <div className='user-picker'>
+                    <Picker
+                        id={'stores'}
+                        label={'Tiendas'}
+                        options={storesList}
+                        control={control}
+                        defaultValue={currentStore}
+                        changeEvent={e => setCurrentStore(e)}
+                    />
+                </div>
                 <p>Permisos</p>
-                {grants.map(grant => createCheckboxItem(grant))}
+                <div className='permission-container'>
+                    {grants.map(grant => createCheckboxItem(grant))}
+                </div>
                 <div className=''>
                     <Action label={''} type={ACTION_TYPES.SAVE} action={() => saveNewInfoUser()} />
                 </div>
+                
             </>
         }
         </div>
