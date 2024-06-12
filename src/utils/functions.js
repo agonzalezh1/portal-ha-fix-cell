@@ -133,13 +133,11 @@ export const validateLocation = ({user, storeInfo, latitude, longitude}) => {
  * @returns Bandera que indica si ya tiene login en el dia actual
  */
 export const hasLoginToday = (lastLogin) => {
-    const dateLastlogin = new Date(lastLogin);
     const currentDate = new Date();
-
     currentDate.setHours(0,0,0,0);
-    dateLastlogin.setHours(0,0,0,0);
+    lastLogin.setHours(0,0,0,0);
 
-    if(currentDate.getTime() === dateLastlogin.getTime()) {
+    if(currentDate.getTime() === lastLogin.getTime()) {
         return true;
     } else {
         return false;

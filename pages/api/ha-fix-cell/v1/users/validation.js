@@ -42,8 +42,8 @@ const handler = async (req, res) => {
                     latitude,
                     longitude
                 })) {
+                    const lastLogin = result[0].attendance.at(-1);
 
-                    const lastLogin = new Date(String(result[0].attendance.at(-1)));
                     if(!hasLoginToday(lastLogin)) {
                         await connectDB();
                         await Employees.updateOne(
