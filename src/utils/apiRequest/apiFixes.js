@@ -64,7 +64,7 @@ export const addAdvancePayment = async({ folio, advancePayment }) => {
     }
 };
 
-export const fixTotalPayment = async({ idStore, folio, total, advancePayment, paymentType, deliveryDate }) => {
+export const fixTotalPayment = async({ idStore, folio, total, advancePayment, paymentType, deliveryDate, idSale }) => {
     const totalAdvancePayment = advancePayment.reduce( (acc, current) => acc + current.amount, 0);
     const missingAmount = total - totalAdvancePayment;
     const initialPayment = { cashPayment: 0, cardPayment: 0 };
@@ -92,7 +92,7 @@ export const fixTotalPayment = async({ idStore, folio, total, advancePayment, pa
     const config = {
         method: 'put',
         url: urlApis.fixesPayments,
-        data: { idStore, folio, deliveryDate, fixPayment: {...payment} },
+        data: { idStore, folio, deliveryDate, fixPayment: {...payment}, idSale },
         timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 

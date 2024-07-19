@@ -6,6 +6,7 @@ import { useSpinner } from '../../hooks/useSpinner';
 import { getSalesByStore } from '../../utils/apiRequest/apiStoresSales';
 import { addSales } from '../../storage/salesSlice';
 import { PAYMENT_TYPE } from '../../utils/constants';
+import { v4 as uuidv4 } from 'uuid';
 import Modal from '../Modal/Modal';
 import ChangeModal from '../Sales/ChangeModal/ChangeModal';
 
@@ -54,7 +55,7 @@ const FixPayment = ({ folio, total, advancePayment, paymentType, onFinish }) => 
         const currentDate = new Date().setSeconds(0,0);
 
         loadingSpinner(true, 'Guardando venta...');
-        const apiResp = await fixTotalPayment({ folio, total, advancePayment, paymentType, deliveryDate: currentDate, idStore: currentStore });
+        const apiResp = await fixTotalPayment({ folio, total, advancePayment, paymentType, deliveryDate: currentDate, idStore: currentStore, idSale: uuidv4() });
         loadingSpinner(false);
         onFinish(apiResp);
 
