@@ -97,18 +97,28 @@ const updateSales = async ({idStore, total, saleType, paymentType, products, uui
  * @param {string} idStore Identificador de la tienda
  * @param {string} paymentType Forma de pago
  * @param {number} total Monto de la venta del producto
+ * @param {string} productName Nombre del producto que se va a borrar
  * @returns Resultado de la actualización. Valor de la base de datos
  */
-const deleteSale = async ({ idSale, idStore, paymentType, total }) => {
+const deleteSale = async ({ idSale, idStore, paymentType, total, productName }) => {
     const currentPeriod = getPeriod();
     let query;
 
-    if ( paymentType === PAYMENT_TYPE.CASH) {
-        query = { 'sales.$[updatePeriod].products.cashPayment': (total * -1), 'dailySales.products.cashPayment': (total * -1) }
-    } else {
-        query = { 'sales.$[updatePeriod].products.cardPayment': (total * -1), 'dailySales.products.cardPayment': (total * -1) }
+    // Descuento en reparaciones
+    if (productName.includes('Reparación')) {
+        if ( paymentType === PAYMENT_TYPE.CASH ) {
+            query = { 'sales.$[updatePeriod].fixes.cashPayment': (total * -1), 'dailySales.fixes.cashPayment': (total * -1) }
+        } else {
+            query = { 'sales.$[updatePeriod].fixes.cardPayment': (total * -1), 'dailySales.fixes.cardPayment': (total * -1) }
+        }
+    } else { // Descuento en productos
+        if ( paymentType === PAYMENT_TYPE.CASH ) {
+            query = { 'sales.$[updatePeriod].products.cashPayment': (total * -1), 'dailySales.products.cashPayment': (total * -1) }
+        } else {
+            query = { 'sales.$[updatePeriod].products.cardPayment': (total * -1), 'dailySales.products.cardPayment': (total * -1) }
+        }
     }
-  
+
     const result = await Stores.updateOne(
         { _id: new Types.ObjectId(idStore) },
         {
@@ -136,7 +146,7 @@ const handler = async (req, res) => {
 
     try {
         await connectDB();
-        const { products, idStore, total, saleType, paymentType, idSale } = req.body;
+        const { products, idStore, total, saleType, paymentType, idSale, productName } = req.body;
         /**
          * Actualizacion del inventario
          * Recibe una lista de productos junto con el total
@@ -169,7 +179,7 @@ const handler = async (req, res) => {
 
         } else if( req.method === 'DELETE') {
 
-            const resp3 = await deleteSale({ idSale, idStore, paymentType, total });
+            const resp3 = await deleteSale({ idSale, idStore, paymentType, total, productName });
 
             if (resp3.modifiedCount !== 0) {
                 message = 'Se eliminó la venta correctamente';

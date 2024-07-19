@@ -27,6 +27,7 @@ const SalesList = ({list, onFinish}) => {
                 paymentType: product.paymentType,
                 total: product.amount,
                 idStore: currentStore,
+                productName: product.productName,
             }
             const apiResp = await deleteProductSold(body);
             onFinish(apiResp);

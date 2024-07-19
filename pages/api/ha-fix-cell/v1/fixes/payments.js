@@ -12,7 +12,7 @@ import { getPeriod } from '../../../../../src/utils/functions';
  *                  Acumulado de todos los abonos y agrupados por tipo
  * @param {number} folio Identificador de la reparacion
  */
-const updateFixSales = async ({ idStore, fixPayment, folio }) => {
+const updateFixSales = async ({ idStore, fixPayment, folio, idSale }) => {
     const currentPeriod = getPeriod();
     const query = {
         'sales.$[updatePeriod].fixes.cashPayment': fixPayment.cashPayment,
@@ -24,13 +24,13 @@ const updateFixSales = async ({ idStore, fixPayment, folio }) => {
     const arrayFixes = [];
     if ( fixPayment.cashPayment !== 0 ) {
         arrayFixes.push({
-            paymentType: PAYMENT_TYPE.CASH,id: 'N/A', count: 0, amount: fixPayment.cashPayment, productName: `Reparación - ${folio}`,
+            paymentType: PAYMENT_TYPE.CASH, id: 'N/A', count: 0, amount: fixPayment.cashPayment, productName: `Reparación - ${folio}`, idSale,
         });
     }
 
     if ( fixPayment.cardPayment !== 0 ) {
         arrayFixes.push({
-            paymentType: PAYMENT_TYPE.CARD, id: 'N/A', count: 0, amount: fixPayment.cardPayment, productName: `Reparación - ${folio}`,
+            paymentType: PAYMENT_TYPE.CARD, id: 'N/A', count: 0, amount: fixPayment.cardPayment, productName: `Reparación - ${folio}`, idSale,
         });
     }
 
@@ -63,7 +63,7 @@ const handler = async (req, res) => {
     let response;
 
     try {
-        const { advancePayment, idStore, folio, fixPayment, deliveryDate } = req.body;
+        const { advancePayment, idStore, folio, fixPayment, deliveryDate, idSale } = req.body;
         await connectDB();
         switch (req.method) {
             /**
@@ -72,7 +72,7 @@ const handler = async (req, res) => {
             case 'PUT':
                 const errores = [];
 
-                const resp1 = await updateFixSales({ idStore, fixPayment, folio });
+                const resp1 = await updateFixSales({ idStore, fixPayment, folio, idSale });
                 if (resp1.esError) {
                     errores.push(resp1);
                 } else {

@@ -17,11 +17,11 @@ export const updateStocktaking = async ({ products, idStore, total, saleType, pa
     }
 };
 
-export const deleteProductSold = async ({idSale, paymentType, total, idStore}) => {
+export const deleteProductSold = async ({idSale, paymentType, total, idStore, productName}) => {
     const config = {
         method: 'delete',
         url: urlApis.stocktaking,
-        data: {idSale, paymentType, total, idStore},
+        data: {idSale, paymentType, total, idStore, productName},
         timeout: environmentVariables.TIMEOUT_GLOBAL,
     };
 
