@@ -22,6 +22,26 @@
     }
 }
 
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .fixes-admin-container {   
+ 
+        .folio-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+    
+        .details-container {
+            overflow-y: scroll;
+            height: 550px;
+            .new-folio {
+                display: flex;
+            }
+        }
+    }
+}
+
 /**********************************
     CreateFolio Component
 ***********************************/
@@ -97,7 +117,12 @@
         .date-admission {
             display: flex;
             gap: 10px;
-            width: 40%
+            width: 40%;
+
+            .warranty {
+                width: 24px;
+                height: 24px;
+            }
         }
         .status {
             width: 35%;
@@ -154,6 +179,84 @@
         width: 100%;
         border: 1px solid $secondary-400;
         margin-bottom: 20px;
+    }
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .fix-details-container {    
+        .info {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+    
+            .folio { width: 100% }
+            .customer-name { width: 100% }
+            .phone-number { width: 100% }
+            .date-admission {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                width: 100%;
+
+                .warranty {
+                    width: 32px;
+                    height: 32px;
+                }
+            }
+            .status {
+                width: 100%;
+                display: flex;
+                gap: 5px;
+                .picker { width: 100%}
+            }
+        }
+    
+        .comments {
+            .item {
+                display: flex;
+                align-items: flex-start;
+                height: auto;
+                gap: 0;
+                flex-wrap: wrap;
+                margin-bottom: 24px;
+                text-align: justify;
+            }
+        }
+    
+        .add-comment {
+            height: 150px;
+        }
+    
+        .advance-payment {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            button { width: 100% }
+        }
+    
+        .total {
+            width: 100px;
+            margin: 16px 0;
+        }
+    
+        .save {
+            width: 100%;
+            margin-bottom: 16px;
+        }
+    
+        .payment-type {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+    
+        .border {
+            width: 100%;
+            border: 1px solid $secondary-400;
+            margin-bottom: 20px;
+        }
     }
 }
 

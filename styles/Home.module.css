@@ -17,3 +17,10 @@
     background-color: #ecf0f3;
     box-shadow: 0 0 10px rgb(61 61 61 / 25%);
 }
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .login_container {
+        height: 550px;
+        width: 350px;
+    }
+}

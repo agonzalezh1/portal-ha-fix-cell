@@ -140,7 +140,9 @@ const FixDetails = ({ folio, customerName, phoneNumber = '', fixType, comments, 
                 <p className='bold phone-number'>{`Contacto: ${phoneMask(phoneNumber)}`}</p>
                 {status === 5 && <div className='date-admission'>
                     <p>Fecha de entrega: <span className='bold'>{toLocalDateString(deliveryDate)}</span></p>
-                    <Image src={`/img/icons/${getWarranty() ? 'warranty': 'noWarranty'}.png`} width={20} height={20} alt={'icon'} />
+                    <div className='warranty'>
+                        <Image src={`/img/icons/${getWarranty() ? 'warranty': 'noWarranty'}.png`} width={200} height={200} alt={'icon'} />
+                    </div>
                 </div>}
                 {status !== 5 && <p className='date-admission'>Fecha de recepción: <span className='bold'>{toLocalDateString(date)}</span></p>}
                 <div className='status'>

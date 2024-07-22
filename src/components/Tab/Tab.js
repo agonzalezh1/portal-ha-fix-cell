@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { isDesktop } from 'react-device-detect';
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 import Stores from '../Stores/Stores';
@@ -8,6 +9,7 @@ import Sales from '../Sales/Sales';
 import Users from '../Users/Users';
 import Fixes from '../Fixes/Fixes';
 import Tools from '../Tools/Tools';
+import NavBar from './Navbar/Navbar';
 import TabNavItem from './TabNavItem/TabNavItem';
 import TabContent from './TabContent/TabContent';
 import Footer from '../Footer/Footer';
@@ -20,6 +22,7 @@ import { SERVICE_TYPE } from '../../utils/constants';
  */
 const Tab = ({ items }) => {
     const [activeTab, setActiveTab] = useState(items[0]);
+    const [closeMenu, setCloseMenu] = useState(true);
     const history = useRouter();
 
     /**
@@ -36,19 +39,26 @@ const Tab = ({ items }) => {
      */
     const getIcon = idService => SERVICE_TYPE[`${idService}`].icon;
 
+    useEffect(() => {
+        setCloseMenu(true);
+    }, [activeTab]);
+
     return (
         <div className='tab-container'>
             <div className='nav'>
                 <div className='logo' onClick={() => history.push('/')}>
-                    <Image src={'/img/logo.svg'} width={150} height={50} alt={'logo'}/>
+                    <Image src={'/img/logo.svg'} width={150} height={50} alt={'logo'} />
                 </div>
-                {items.map(item => <TabNavItem
-                    key={`tabnav-${item}`}
-                    title={getTitle(item)}
-                    id={item}
-                    setActiveTab={setActiveTab}
-                    icon={getIcon(item)}
-                />)}
+                {isDesktop && 
+                    items.map(item => <TabNavItem
+                        key={`tabnav-${item}`}
+                        title={getTitle(item)}
+                        id={item}
+                        setActiveTab={setActiveTab}
+                        icon={getIcon(item)}
+                    />)
+                }
+                {!isDesktop && <NavBar openMenu={!closeMenu} onCloseMenu={e => setCloseMenu(e)} items={items} setActiveTab={setActiveTab}/>}
             </div>
             <div className='outlet'>
                 <TabContent id={1} activeTab={activeTab}>
