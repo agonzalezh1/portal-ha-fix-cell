@@ -59,12 +59,12 @@ const Products = () => {
         <h1>Inventario</h1>
         <div className='search-create-product-container'>
             <Search label={'Nombre del producto'} eventSearch={e => searchProduct(e)} />
-            {userType === USER_TYPE.ADMIN &&
+            {(userType === USER_TYPE.ADMIN || userType === USER_TYPE.SUPERVISOR) &&
                 <Action label={'Agregar un producto'} type={ACTION_TYPES.INCREASE} action={() => setOpenModal(true)} />
             }
         </div>
         <div className='table'>
-        {userType === USER_TYPE.ADMIN &&
+        {(userType === USER_TYPE.ADMIN || userType === USER_TYPE.SUPERVISOR) &&
             productsList.map(product => <UpdateProduct key={product.id} product={product} />)
         }
         {userType === USER_TYPE.SELLER &&
