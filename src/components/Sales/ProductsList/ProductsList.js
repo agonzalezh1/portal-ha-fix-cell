@@ -126,7 +126,7 @@ const ProductsList = ({ productsList, addProduct }) => {
                 state={priceType.type}
                 value={productSelected.publicPrice}
             />
-            {userType === USER_TYPE.ADMIN && <>
+            {(userType === USER_TYPE.ADMIN || userType === USER_TYPE.SUPERVISOR) && <>
                 <RadioButton
                     id={`radio-button-${PRICES_TYPE.MID_WHOLE_SALE}`}
                     label={`Medio mayoreo: $${productSelected.midWholesalePrice}`}

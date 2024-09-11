@@ -132,8 +132,9 @@ export const NOTIFICATION_TYPES = Object.freeze({
 });
 
 export const USER_TYPE = Object.freeze({
-    ADMIN: 1,
-    SELLER: 2,
+    SELLER: 1,
+    SUPERVISOR: 2,
+    ADMIN: 3,
 });
 
 export const SALES_TYPE = Object.freeze({

@@ -50,7 +50,7 @@ const SalesList = ({list, onFinish}) => {
                     { product.paymentType === PAYMENT_TYPE.CASH && <Image src={'/img/cash.png'} width={20} height={20} alt={'icon'}/>}
                     { product.paymentType === PAYMENT_TYPE.CARD && <Image src={'/img/card.png'} width={20} height={20} alt={'icon'}/>}
                 </td>
-                {userType === USER_TYPE.ADMIN && <td onClick={() => removeProduct(index)}>
+                {(userType === USER_TYPE.ADMIN || userType === USER_TYPE.SUPERVISOR) && <td onClick={() => removeProduct(index)}>
                     <Image src={'/img/icons/delete.png'} width={20} height={20} alt={'icon'}/>
                 </td>}
                 {userType === USER_TYPE.SELLER && <td/>}
